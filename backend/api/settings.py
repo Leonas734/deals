@@ -129,3 +129,6 @@ AUTH_USER_MODEL = 'deals.CustomUser'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# 24 hours. Used in utils.EmailVerificationTokenGenerator
+EMAIL_VERIFICATION_TIMEOUT = 86400

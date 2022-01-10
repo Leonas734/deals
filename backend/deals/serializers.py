@@ -1,5 +1,4 @@
 from rest_framework import serializers
-
 from deals.models import CustomUser
 
 class CreateCustomUserSerializer(serializers.ModelSerializer):

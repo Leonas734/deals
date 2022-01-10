@@ -1,0 +1,3 @@
+Dear {{ username }},
+Please follow this link to verify your email address.
+{{ url }}
