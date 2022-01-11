@@ -31,3 +31,13 @@ Optional fields: **None**
 Permissions: **None**
 
 Returns = {'message' : 'Email verified.'}, status_code = 200
+
+> /api/user/verify_email/new_token/ **GET**
+
+Required fields = **Authorization - 'Bearer {jwt-token}'**
+
+Optional fields: **None**
+
+Permissions: **Authenticed**
+
+Returns = {'message' : 'Email verification sent. Please check your inbox.'}, status_code = 200
