@@ -1,15 +1,15 @@
 import pytest
 
 
-ALL_METOHDS = ["get", "post", "put", "patch", "delete"]
+ALL_METOHDS = ['get', 'post', 'put', 'patch', 'delete']
 
 @pytest.mark.django_db
 def test_normal_user_methods(client):
-    allowed_methods = ["post",]
+    allowed_methods = ['post',]
     for method in ALL_METOHDS:
         
         resp = getattr(client, method)(
-            '/api/user/',
+            '/api/sign_up/',
             {}
         )
         if method in allowed_methods:
@@ -20,11 +20,11 @@ def test_normal_user_methods(client):
 
 @pytest.mark.django_db
 def test_email_verification_methods(client):
-    allowed_methods = ["post",]
+    allowed_methods = ['post',]
     for method in ALL_METOHDS:
         
         resp = getattr(client, method)(
-            '/api/user/',
+            f'/api/user/invalid-user-id/verify_email/invalid-email-token/',
             {}
         )
         if method in allowed_methods:
