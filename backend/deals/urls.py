@@ -1,11 +1,13 @@
-from rest_framework import routers
-from deals.views import UserViewSet, SignUpView, LogInView
+from deals.views import SignUpView, LogInView, EmailVerificationView, UpdateUserEmailView
 
 from django.urls import path
-router = routers.SimpleRouter()
-router.register(r'user', UserViewSet)
 urlpatterns = [
     path('sign_up/', SignUpView.as_view(), name='sign_up'),
     path('log_in/', LogInView.as_view(), name='log_in'),
+    path('email_verification/<str:user_id>/<str:token>/',
+    EmailVerificationView.as_view({'post': 'create'} ), name='verify_email'),
+    path('email_verification/new_token/',
+    EmailVerificationView.as_view({'get': 'list'} ), name='verify_email_resend'),
+    path('user/update_email/',
+    UpdateUserEmailView.as_view({'post': 'create'}), name='update_user_email'),
 ]
-urlpatterns += router.urls

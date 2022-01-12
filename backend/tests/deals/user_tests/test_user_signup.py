@@ -1,6 +1,7 @@
 import pytest
 import os
 from django.contrib.auth import get_user_model
+from django.conf import settings
 
 from tests.deals.testing_fixtures import test_user_1
 from tests.deals.testing_variables import (
@@ -13,11 +14,11 @@ from tests.deals.testing_variables import (
 def test_create_user_model(test_user_1):
     assert test_user_1.username == TEST_USER_1_USERNAME
     assert test_user_1.email == TEST_USER_1_EMAIL
-    assert test_user_1.profile_picture.name == f'profile_pictures/{DEFAULT_PROFILE_PIC}'
+    assert test_user_1.profile_picture.name == f'{settings.PROFILE_PICTURE_DIR}/{DEFAULT_PROFILE_PIC}'
     assert test_user_1.email_verification_token_date != None
     assert test_user_1.email_verified == False
     assert get_user_model().objects.count() == 1
-    assert os.path.exists(f'{os.getcwd()}/media/profile_pictures/{DEFAULT_PROFILE_PIC}')
+    assert os.path.exists(f'{settings.MEDIA_ROOT}/{settings.PROFILE_PICTURE_DIR}/{DEFAULT_PROFILE_PIC}')
 
 @pytest.mark.django_db
 def test_user_signup_success(client):

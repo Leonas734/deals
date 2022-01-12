@@ -112,6 +112,7 @@ class SendEmail:
         self.url = "http://localhost:8000"
 
     def send_verification_for_email_address(self, user):
+        user.refresh_from_db()
         token = email_token_generator.make_token(user)
         data = {
             "username": user.username,

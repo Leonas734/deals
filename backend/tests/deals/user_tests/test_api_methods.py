@@ -22,9 +22,8 @@ def test_create_user_default_methods(client):
 def test_email_verification_methods(client):
     allowed_methods = ['post',]
     for method in ALL_METHODS:
-        
         resp = getattr(client, method)(
-            '/api/user/invalid-user-id/verify_email/invalid-email-token/',
+            '/api/email_verification/invalid-user-id/invalid-email-token/',
             {}
         )
         if method in allowed_methods:
@@ -38,10 +37,24 @@ def test_email_verification_new_token_methods(
     test_user_1, test_user_1_access_token, api_client):
     allowed_methods = ['get',]
     api_client.credentials(HTTP_AUTHORIZATION='Bearer ' + test_user_1_access_token)
-    
     for method in ALL_METHODS:
         resp = getattr(api_client, method)(
-            '/api/user/verify_email/new_token/',
+            '/api/email_verification/new_token/',
+        )
+        if method in allowed_methods:
+            assert resp.status_code != 405
+        else:
+            # 405 == METHOD NOT ALLOWED
+            assert resp.status_code == 405
+
+@pytest.mark.django_db
+def test_update_user_email_methods(
+    test_user_1, test_user_1_access_token, api_client):
+    allowed_methods = ['post',]
+    api_client.credentials(HTTP_AUTHORIZATION='Bearer ' + test_user_1_access_token)
+    for method in ALL_METHODS:
+        resp = getattr(api_client, method)(
+            '/api/user/update_email/',
         )
         if method in allowed_methods:
             assert resp.status_code != 405

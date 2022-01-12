@@ -4,7 +4,7 @@
 
 > /api/sign_up/ **POST**
 
-Required fields = {'username', 'email', 'password', 'repeat_password'}
+Required fields: {'username', 'email', 'password', 'repeat_password'}
 
 Optional fields: **None**
 
@@ -12,9 +12,11 @@ Permissions: **None**
 
 Returns = {'username' : 'submitted-username'}, status_code = 201
 
+### Log in
+
 > /api/log_in/ **POST**
 
-Required fields = {'username', 'password'}
+Required fields: {'username', 'password'}
 
 Optional fields: **None**
 
@@ -22,22 +24,38 @@ Permissions: **None**
 
 Returns = {'access' : 'jwt-token', 'refresh' : 'jwt-token'}, status_code = 200
 
-> /api/user/{user_id}/verify_email/{email_verification_token}/ **POST**
+### Verify email
 
-Required fields = **None**
+> /api/email_verification/{string:user_id}/{string:email_verification_token}/ **POST**
+
+Required fields: **None**
 
 Optional fields: **None**
 
 Permissions: **None**
 
-Returns = {'message' : 'Email verified.'}, status_code = 200
+Returns = {'detail' : 'Email verified.'}, status_code = 200
 
-> /api/user/verify_email/new_token/ **GET**
+### Request new email verification email
 
-Required fields = **Authorization - 'Bearer {jwt-token}'**
+> /api/email_verification/new_token/ **GET**
+
+Required fields: 'Bearer {jwt-token}'
 
 Optional fields: **None**
 
 Permissions: **Authenticed**
 
-Returns = {'message' : 'Email verification sent. Please check your inbox.'}, status_code = 200
+Returns = {'detail' : 'Email verification sent. Please check your inbox.'}, status_code = 200
+
+### Update user email
+
+> /api/user/update_email/ **POST**
+
+Required fields: {'Bearer jwt-token', 'password', 'email'}
+
+Optional fields: **None**
+
+Permissions: **Authenticed**
+
+Returns = {'detail' : 'Email updated successfully.'}, status_code = 200
