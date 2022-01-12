@@ -29,7 +29,6 @@ def test_user_2():
         password=TEST_USER_2_PASSWORD
     )
     
-
 @pytest.fixture
 def api_client():
     from rest_framework.test import APIClient

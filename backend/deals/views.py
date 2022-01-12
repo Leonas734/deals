@@ -8,7 +8,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from deals.models import CustomUser
 from deals.serializers import (
     CreateUserSerializer, LogInSerializer,
-    UpdateUserEmailSerializer,
+    UpdateUserEmailSerializer, UpdateUserProfilePictureSerializer,
     )
 from deals.utils import email_token_generator, send_email
 
@@ -73,7 +73,7 @@ class UpdateUserEmailView(mixins.CreateModelMixin,
         instance = request.user
         serializer = UpdateUserEmailSerializer(instance, data=request.data)
         serializer.is_valid(raise_exception=True)
-
+        
         user = authenticate(username=request.user.username, password=serializer.validated_data['password'])
         if not user:
             return Response({'password': 'Invalid password.'}, status=status.HTTP_400_BAD_REQUEST)
@@ -83,4 +83,20 @@ class UpdateUserEmailView(mixins.CreateModelMixin,
         instance.save()
         send_email.send_verification_for_email_address(instance)
         return Response({'detail': 'Email updated successfully.'}, status=status.HTTP_200_OK)
+    
+class UpdateUserProfilePictureView(mixins.CreateModelMixin,
+                            viewsets.GenericViewSet):
+    def create(self, request, *args, **kwargs):
+        self.permission_classes = (IsAuthenticated,)
+        self.check_permissions(request,)
+        instance = request.user
+        serializer = UpdateUserProfilePictureSerializer(instance, data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        user = authenticate(username=request.user.username, password=serializer.validated_data['password'])
+        if not user:
+            return Response({'password': 'Invalid password.'}, status=status.HTTP_400_BAD_REQUEST)
+        instance.profile_picture = serializer.validated_data['profile_picture']
+        instance.save()
+        return Response({'detail': 'Profile picture updated successfully.'}, status=status.HTTP_200_OK)
     

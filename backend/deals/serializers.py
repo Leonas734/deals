@@ -60,3 +60,8 @@ class UpdateUserEmailSerializer(serializers.ModelSerializer):
         if self.instance.email == value:
             raise serializers.ValidationError('Email is current email address.')
         return value
+
+class UpdateUserProfilePictureSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ['profile_picture', 'password']

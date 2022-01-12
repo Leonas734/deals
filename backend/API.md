@@ -59,3 +59,15 @@ Optional fields: **None**
 Permissions: **Authenticed**
 
 Returns = {'detail' : 'Email updated successfully.'}, status_code = 200
+
+### Update user profile picture
+
+> /api/user/update_profile_picture/ **POST**
+
+Required fields: {'Bearer jwt-token', 'password', 'profile_picture'}
+
+Optional fields: **None**
+
+Permissions: **Authenticed**
+
+Returns = {'detail' : 'Profile picture updated successfully.'}, status_code = 200

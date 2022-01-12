@@ -1,4 +1,7 @@
-from deals.views import SignUpView, LogInView, EmailVerificationView, UpdateUserEmailView
+from deals.views import (
+    SignUpView, LogInView, EmailVerificationView, UpdateUserEmailView,
+    UpdateUserProfilePictureView,
+    )
 
 from django.urls import path
 urlpatterns = [
@@ -10,4 +13,6 @@ urlpatterns = [
     EmailVerificationView.as_view({'get': 'list'} ), name='verify_email_resend'),
     path('user/update_email/',
     UpdateUserEmailView.as_view({'post': 'create'}), name='update_user_email'),
+    path('user/update_profile_picture/',
+    UpdateUserProfilePictureView.as_view({'post': 'create'}), name='update_user_profile_picture'),
 ]
