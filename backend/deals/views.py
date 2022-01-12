@@ -68,7 +68,8 @@ class EmailVerificationView(mixins.CreateModelMixin,
 class UpdateUserEmailView(mixins.CreateModelMixin,
                             viewsets.GenericViewSet):
     def create(self, request, *args, **kwargs):
-        self.check_permissions(IsAuthenticated,)
+        self.permission_classes = (IsAuthenticated,)
+        self.check_permissions(request,)
         instance = request.user
         serializer = UpdateUserEmailSerializer(instance, data=request.data)
         serializer.is_valid(raise_exception=True)

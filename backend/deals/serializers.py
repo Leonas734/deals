@@ -55,3 +55,8 @@ class UpdateUserEmailSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
         fields = ['email', 'password']
+
+    def validate_email(self, value):
+        if self.instance.email == value:
+            raise serializers.ValidationError('Email is current email address.')
+        return value
