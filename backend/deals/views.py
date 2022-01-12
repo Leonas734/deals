@@ -9,6 +9,7 @@ from deals.models import CustomUser
 from deals.serializers import (
     CreateUserSerializer, LogInSerializer,
     UpdateUserEmailSerializer, UpdateUserProfilePictureSerializer,
+    UpdateUserPasswordSerializer
     )
 from deals.utils import email_token_generator, send_email
 
@@ -99,4 +100,25 @@ class UpdateUserProfilePictureView(mixins.CreateModelMixin,
         instance.profile_picture = serializer.validated_data['profile_picture']
         instance.save()
         return Response({'detail': 'Profile picture updated successfully.'}, status=status.HTTP_200_OK)
+    
+class UpdateUserPasswordView(mixins.CreateModelMixin,
+                            viewsets.GenericViewSet):
+    def create(self, request, *args, **kwargs):
+        self.permission_classes = (IsAuthenticated,)
+        self.check_permissions(request)
+        instance = request.user
+        serializer = UpdateUserPasswordSerializer(instance, data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        user = authenticate(username=request.user.username, password=serializer.validated_data['password'])
+        if not user:
+            return Response({'password': 'Invalid password.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # User trying update password to current password
+        user = authenticate(username=request.user.username, password=serializer.validated_data['new_password'])
+        if user:
+            return Response({'new_password': 'Please enter a new password.'}, status=status.HTTP_400_BAD_REQUEST)
+        instance.set_password(serializer.validated_data['new_password'])
+        instance.save()
+        return Response({'detail': 'Password updated successfully.'}, status=status.HTTP_200_OK)
     

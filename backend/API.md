@@ -71,3 +71,15 @@ Optional fields: **None**
 Permissions: **Authenticed**
 
 Returns = {'detail' : 'Profile picture updated successfully.'}, status_code = 200
+
+### Update user password
+
+> /api/user/update_password/ **POST**
+
+Required fields: {'Bearer jwt-token', 'password', 'new_password', 'new_password_repeat'}
+
+Optional fields: **None**
+
+Permissions: **Authenticed**
+
+Returns = {'detail' : 'Password updated successfully.'}, status_code = 200

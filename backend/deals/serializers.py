@@ -65,3 +65,16 @@ class UpdateUserProfilePictureSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
         fields = ['profile_picture', 'password']
+
+class UpdateUserPasswordSerializer(serializers.ModelSerializer):
+    # Source ensures new_password fields follow same config as CustomUser.password field
+    new_password = serializers.CharField(max_length=128)
+    new_password_repeat = serializers.CharField(max_length=128)
+    class Meta:
+        model = CustomUser
+        fields = ['password', 'new_password_repeat', 'new_password',]
+
+    def validate(self, data):
+        if data['new_password'] != data['new_password_repeat']:
+            raise serializers.ValidationError({'new_password': 'Passwords do not match.'})
+        return data
