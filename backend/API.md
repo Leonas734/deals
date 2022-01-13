@@ -83,3 +83,37 @@ Optional fields: **None**
 Permissions: **Authenticed**
 
 Returns = {'detail' : 'Password updated successfully.'}, status_code = 200
+
+### Get all deals
+
+> /api/user/deal/ **GET**
+
+### Create new deal
+
+> /api/user/deal/ **POST**
+
+Required fields: {'Bearer jwt-token', 'title', 'description', 'category'}
+
+Optional fields: {
+'image', 'price', 'url', 'instore_only', 'postage_cost',
+'sent_from', 'deal_start_date', 'deal_end_date',
+}
+
+Permissions: **Authenticed, verified email**
+
+Returns = {all details}, status_code = 200
+
+### Update deal
+
+> /api/user/deal/ **POST**
+
+Required fields: **None**
+
+Optional fields: {
+'image', 'price', 'url', 'instore_only', 'postage_cost',
+'sent_from', 'deal_start_date', 'deal_end_date',
+}
+
+Permissions: **Authenticed, verified email, is owner of object**
+
+Returns = {all details}, status_code = 201

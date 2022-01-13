@@ -127,6 +127,7 @@ class DealViewSet(viewsets.ModelViewSet):
     serializer_class = DealSerializer
     queryset = Deal.objects.all()
     permission_classes = []
+    http_method_names = ['get', 'post', 'patch', 'delete']
 
     def get_permissions(self):
         if self.action == 'list':

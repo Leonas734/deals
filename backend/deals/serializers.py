@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from deals.models import CustomUser, Deal
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from django.utils.timezone import now
 
 class CreateUserSerializer(serializers.ModelSerializer):
     password_repeat = serializers.CharField(write_only=True)
@@ -98,4 +99,19 @@ class DealSerializer(serializers.ModelSerializer):
         if attrs.get('instore_only') and (
             attrs.get('postage_cost') or attrs.get('sent_from')):
             raise serializers.ValidationError({'detail': 'Please select either instore only or shipping only.'})
+
+        # Ensures Deal start date is before deal end date
+        if (attrs.get('deal_start_date') != None and attrs.get('deal_end_date') != None) and (
+            attrs.get('deal_start_date') > attrs.get('deal_end_date')):
+            raise serializers.ValidationError({'detail': 'Invalid dates.'})
+
+        if self.context['request'].method == 'PATCH':
+            attrs['updated'] = now()
+            # If user updating their Deal to postage or shipping
+            # reset the other so both options are never selected.
+            if attrs.get('instore_only'):
+                attrs['postage_cost'] = 0
+                attrs['sent_from'] = None
+            if attrs.get('postage_cost') or attrs.get('sent_from'):
+                attrs['instore_only'] = False
         return super().validate(attrs)
