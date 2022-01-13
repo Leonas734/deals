@@ -62,3 +62,20 @@ class Deal(models.Model):
     @property
     def rating(self):
         return len(self.up_votes) - len(self.down_votes)
+
+    def upvote(self, username):
+        if username not in self.up_votes:
+            self.up_votes.append(username)
+        self.save()
+
+    def downvote(self, username):
+        if username not in self.down_votes:
+            self.down_votes.append(username)
+        self.save()
+
+    def unvote(self, username):
+        if username in self.down_votes:
+            self.down_votes.remove(username)
+        if username in self.up_votes:
+            self.up_votes.remove(username)
+        self.save()

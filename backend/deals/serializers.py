@@ -115,3 +115,6 @@ class DealSerializer(serializers.ModelSerializer):
             if attrs.get('postage_cost') or attrs.get('sent_from'):
                 attrs['instore_only'] = False
         return super().validate(attrs)
+
+class DealVoteSerializer(serializers.Serializer):
+    vote = serializers.BooleanField(allow_null=True)

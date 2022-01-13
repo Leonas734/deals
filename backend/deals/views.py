@@ -1,5 +1,6 @@
 from rest_framework import mixins
 from rest_framework import viewsets, status, generics
+from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -10,7 +11,7 @@ from deals.models import CustomUser, Deal
 from deals.serializers import (
     CreateUserSerializer, LogInSerializer,
     UpdateUserEmailSerializer, UpdateUserProfilePictureSerializer,
-    UpdateUserPasswordSerializer, DealSerializer
+    UpdateUserPasswordSerializer, DealSerializer, DealVoteSerializer
     )
 from deals.utils import email_token_generator, send_email
 
@@ -132,10 +133,28 @@ class DealViewSet(viewsets.ModelViewSet):
     def get_permissions(self):
         if self.action == 'list':
             return [AllowAny(), ]
-        elif self.action == 'create':
-            return (IsAuthenticated(), IsVerified(),)
+        elif self.action == 'create' or self.action == 'vote':
+            return (IsAuthenticated(), IsVerified())
         else :
             return (IsOwnerOrReadOnly(), IsAuthenticated())
     
     def perform_create(self, serializer):
         return serializer.save(user=self.request.user)
+
+    @action(detail=True, methods=['post'])
+    def vote(self, request, pk=None):
+        deal = self.get_object()
+        serializer = DealVoteSerializer(data=request.data)
+        if serializer.is_valid():
+            if serializer.validated_data['vote'] == True:
+                deal.upvote(request.user.username)
+            if serializer.validated_data['vote'] == False:
+                deal.downvote(request.user.username)
+            if serializer.validated_data['vote'] == None:
+                deal.unvote(request.user.username)
+            deal.save()
+            return Response({'detail': 'Vote accepted.'},
+                             status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors,
+                            status=status.HTTP_400_BAD_REQUEST)

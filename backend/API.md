@@ -105,15 +105,39 @@ Returns = {all details}, status_code = 200
 
 ### Update deal
 
-> /api/user/deal/ **POST**
+> /api/user/deal/deal_id **POST**
 
 Required fields: **None**
 
 Optional fields: {
-'image', 'price', 'url', 'instore_only', 'postage_cost',
-'sent_from', 'deal_start_date', 'deal_end_date',
+'title', 'description', 'category','image', 'price', 'url', 'instore_only',
+'postage_cost', 'sent_from', 'deal_start_date', 'deal_end_date',
 }
 
 Permissions: **Authenticed, verified email, is owner of object**
 
 Returns = {all details}, status_code = 201
+
+### Delete deal
+
+> /api/user/deal/deal_id **DELETE**
+
+Required fields: **None**
+
+Optional fields: **None**
+
+Permissions: **Authenticed, verified email, is owner of object**
+
+Returns = {}, status_code = 204
+
+### Vote on deal
+
+> /api/user/deal/deal_id/vote **POST**
+
+Required fields: **None**
+
+Optional fields: {'vote': True, False or ''}
+
+Permissions: **Authenticed, verified email**
+
+Returns = {'detail': 'Vote accepted.'}, status_code = 200

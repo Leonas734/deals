@@ -39,3 +39,21 @@ def test_deal_methods_pk(
         else:
             # 405 == METHOD NOT ALLOWED
             assert resp.status_code == 405
+
+@pytest.mark.django_db
+def test_deal_methods_vote(
+    api_client, test_user_3_verified, test_user_3_access_token,
+    test_deal_1):
+    api_client.credentials(HTTP_AUTHORIZATION='Bearer ' + test_user_3_access_token)
+    allowed_methods = ['post']
+    for method in ALL_METHODS:
+        
+        resp = getattr(api_client, method)(
+            f'/api/deal/{str(test_deal_1.id)}/vote/',
+            {}
+        )
+        if method in allowed_methods:
+            assert resp.status_code != 405
+        else:
+            # 405 == METHOD NOT ALLOWED
+            assert resp.status_code == 405
