@@ -2,14 +2,15 @@ from rest_framework import mixins
 from rest_framework import viewsets, status, generics
 from rest_framework.response import Response
 from rest_framework.generics import get_object_or_404
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.views import TokenObtainPairView
+from deals.permissions import IsOwnerOrReadOnly, IsVerified
 
-from deals.models import CustomUser
+from deals.models import CustomUser, Deal
 from deals.serializers import (
     CreateUserSerializer, LogInSerializer,
     UpdateUserEmailSerializer, UpdateUserProfilePictureSerializer,
-    UpdateUserPasswordSerializer
+    UpdateUserPasswordSerializer, DealSerializer
     )
 from deals.utils import email_token_generator, send_email
 
@@ -122,3 +123,18 @@ class UpdateUserPasswordView(mixins.CreateModelMixin,
         instance.save()
         return Response({'detail': 'Password updated successfully.'}, status=status.HTTP_200_OK)
     
+class DealViewSet(viewsets.ModelViewSet):
+    serializer_class = DealSerializer
+    queryset = Deal.objects.all()
+    permission_classes = []
+
+    def get_permissions(self):
+        if self.action == 'list':
+            return [AllowAny(), ]
+        elif self.action == 'create':
+            return (IsAuthenticated(), IsVerified(),)
+        else :
+            return (IsOwnerOrReadOnly(), IsAuthenticated())
+    
+    def perform_create(self, serializer):
+        return serializer.save(user=self.request.user)

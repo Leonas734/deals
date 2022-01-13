@@ -4,7 +4,7 @@ from tests.deals.testing_fixtures import test_user_1, test_user_1_access_token, 
 from tests.deals.testing_variables import TEST_USER_1_PASSWORD
 
 @pytest.mark.django_db
-def test_update_email_field(test_user_1, api_client, test_user_1_access_token, mailoutbox):    
+def test_update_email_field(test_user_1, api_client, test_user_1_access_token):    
     new_email = 'new-email@email.com'
     api_client.credentials(HTTP_AUTHORIZATION='Bearer ' + test_user_1_access_token)
     resp = api_client.post(

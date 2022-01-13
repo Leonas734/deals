@@ -134,6 +134,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_PROFILE_PICTURE = 'DEFAULT-USER-PROFILE-PICTURE.jpg'
 PROFILE_PICTURE_DIR = 'profile_pictures'
 
+DEFAULT_DEAL_IMAGE = 'DEFAULT-DEAL-IMAGE.jpg'
+DEAL_IMAGE_DIR = 'deal_images'
+
 # 24 hours. Used in utils.EmailVerificationTokenGenerator
 EMAIL_VERIFICATION_TIMEOUT = 86400
 

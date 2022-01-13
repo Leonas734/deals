@@ -1,10 +1,15 @@
-
 from deals.views import (
     SignUpView, LogInView, EmailVerificationView, UpdateUserEmailView,
-    UpdateUserProfilePictureView, UpdateUserPasswordView
+    UpdateUserProfilePictureView, UpdateUserPasswordView, DealViewSet
     )
 
 from django.urls import path
+from rest_framework import routers
+
+router = routers.SimpleRouter()
+router.register(r'deal', DealViewSet)
+
+urlpatterns = router.urls
 urlpatterns = [
     path('sign_up/', SignUpView.as_view(), name='sign_up'),
     path('log_in/', LogInView.as_view(), name='log_in'),
@@ -19,3 +24,5 @@ urlpatterns = [
     path('user/update_password/',
     UpdateUserPasswordView.as_view({'post': 'create'}), name='update_user_password'),
 ]
+
+urlpatterns += router.urls

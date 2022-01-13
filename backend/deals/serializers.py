@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from deals.models import CustomUser
+from deals.models import CustomUser, Deal
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 class CreateUserSerializer(serializers.ModelSerializer):
@@ -78,3 +78,24 @@ class UpdateUserPasswordSerializer(serializers.ModelSerializer):
         if data['new_password'] != data['new_password_repeat']:
             raise serializers.ValidationError({'new_password': 'Passwords do not match.'})
         return data
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ('username', 'profile_picture')
+
+class DealSerializer(serializers.ModelSerializer):
+    rating = serializers.ReadOnlyField()
+    user = UserSerializer(read_only=True)
+    class Meta:
+        model = Deal
+        exclude = ('up_votes', 'down_votes',)
+        read_only_fields = (
+            'user', 'id', 'created', 'updated', 'rating',
+        )
+
+    def validate(self, attrs):
+        if attrs.get('instore_only') and (
+            attrs.get('postage_cost') or attrs.get('sent_from')):
+            raise serializers.ValidationError({'detail': 'Please select either instore only or shipping only.'})
+        return super().validate(attrs)
