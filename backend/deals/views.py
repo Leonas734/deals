@@ -147,13 +147,7 @@ class DealViewSet(viewsets.ModelViewSet):
         deal = self.get_object()
         serializer = DealVoteSerializer(data=request.data)
         if serializer.is_valid():
-            if serializer.validated_data['vote'] == True:
-                deal.upvote(request.user.username)
-            if serializer.validated_data['vote'] == False:
-                deal.downvote(request.user.username)
-            if serializer.validated_data['vote'] == None:
-                deal.unvote(request.user.username)
-            deal.save()
+            deal.vote(request.user.username, vote=serializer.validated_data['vote'])
             return Response({'detail': 'Vote accepted.'},
                              status=status.HTTP_200_OK)
         else:

@@ -45,8 +45,7 @@ def test_get_deal_by_no_auth(test_user_3_verified, api_client, test_deal_1):
 
 @pytest.mark.django_db
 def test_get_deal_by_pk_voted_up_by_user(test_user_3_verified, test_user_3_access_token, api_client, test_deal_1):
-    test_deal_1.upvote(test_user_3_verified.username)
-    test_deal_1.save()
+    test_deal_1.vote(test_user_3_verified.username, vote=True)
 
     api_client.credentials(HTTP_AUTHORIZATION='Bearer ' + test_user_3_access_token)
     resp = api_client.get(
@@ -74,8 +73,7 @@ def test_get_deal_by_pk_voted_up_by_user(test_user_3_verified, test_user_3_acces
 
 @pytest.mark.django_db
 def test_get_deal_by_pk_voted_down_by_user(test_user_3_verified, test_user_3_access_token, api_client, test_deal_1):
-    test_deal_1.downvote(test_user_3_verified.username)
-    test_deal_1.save()
+    test_deal_1.vote(test_user_3_verified.username, vote=False)
 
     api_client.credentials(HTTP_AUTHORIZATION='Bearer ' + test_user_3_access_token)
     resp = api_client.get(
