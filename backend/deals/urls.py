@@ -1,6 +1,7 @@
 from deals.views import (
     SignUpView, LogInView, EmailVerificationView, UpdateUserEmailView,
-    UpdateUserProfilePictureView, UpdateUserPasswordView, DealViewSet
+    UpdateUserProfilePictureView, UpdateUserPasswordView, DealViewSet,
+    CommentViewSet
     )
 
 from django.urls import path
@@ -23,6 +24,9 @@ urlpatterns = [
     UpdateUserProfilePictureView.as_view({'post': 'create'}), name='update_user_profile_picture'),
     path('user/update_password/',
     UpdateUserPasswordView.as_view({'post': 'create'}), name='update_user_password'),
+    path('deal_comment/<str:comment_id>/', CommentViewSet.as_view({'get': 'retrieve'}), name='get_deal_comment'),
+    path('deal_comment/', CommentViewSet.as_view({'post': 'create'}), name='create_deal_comment'),
+    path('deal_comment/<str:comment_id>/like/', CommentViewSet.as_view({'post': 'like'}), name='like_deal_comment')
 ]
 
 urlpatterns += router.urls

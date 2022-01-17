@@ -79,3 +79,49 @@ class Deal(models.Model):
         if username in self.up_votes:
             self.up_votes.remove(username)
         self.save()
+
+    def voted_by_user(self, username):
+        if username in self.up_votes:
+            return True
+        if username in self.down_votes:
+            return False
+        return
+
+class Comment(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="deal_comments")
+    deal = models.ForeignKey(Deal, on_delete=models.CASCADE, related_name="comments")
+    text = models.TextField(max_length=500, blank=False, null=False)
+    quoted_comment = models.ForeignKey("Comment", on_delete=models.CASCADE, null=True, blank=True)
+    likes = models.JSONField(default=list)
+    created = models.DateTimeField(auto_now_add=True)
+
+    @property
+    def quoted_comment_data(self):
+        if self.quoted_comment:
+            return dict(
+                id=str(self.quoted_comment.id),
+                user=self.quoted_comment.user.username,
+                text=self.quoted_comment.text,
+                date=self.quoted_comment.created
+            )
+        return None
+
+    @property
+    def total_likes(self):
+        return len(self.likes)
+
+    def like_comment(self, username):
+        if username not in self.likes:
+            self.likes.append(username)
+            self.save()
+            return True
+        else:
+            self.likes.remove(username)
+            self.save()
+            return False
+
+    def liked_by_user(self, username):
+        if username in self.likes:
+            return True
+        return False

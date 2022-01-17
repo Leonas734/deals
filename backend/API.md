@@ -86,11 +86,11 @@ Returns = {'detail' : 'Password updated successfully.'}, status_code = 200
 
 ### Get all deals
 
-> /api/user/deal/ **GET**
+> /api/deal/ **GET**
 
 ### Create new deal
 
-> /api/user/deal/ **POST**
+> /api/deal/ **POST**
 
 Required fields: {'Bearer jwt-token', 'title', 'description', 'category'}
 
@@ -105,7 +105,7 @@ Returns = {all details}, status_code = 200
 
 ### Update deal
 
-> /api/user/deal/deal_id **POST**
+> /api/deal/deal_id **POST**
 
 Required fields: **None**
 
@@ -120,7 +120,7 @@ Returns = {all details}, status_code = 201
 
 ### Delete deal
 
-> /api/user/deal/deal_id **DELETE**
+> /api/deal/deal_id **DELETE**
 
 Required fields: **None**
 
@@ -132,7 +132,7 @@ Returns = {}, status_code = 204
 
 ### Vote on deal
 
-> /api/user/deal/deal_id/vote **POST**
+> /api/deal/deal_id/vote **POST**
 
 Required fields: **None**
 
@@ -141,3 +141,51 @@ Optional fields: {'vote': True, False or ''}
 Permissions: **Authenticed, verified email**
 
 Returns = {'detail': 'Vote accepted.'}, status_code = 200
+
+### Create comment
+
+> /api/deal_comment/ **POST**
+
+Required fields: {'post_id', 'text'}
+
+Optional fields: **None**
+
+Permissions: **Authenticed, verified email**
+
+Returns = {'id', 'post_id', 'date', 'username', 'text', 'quoted_comment': **optional**}, status_code = 201
+
+### Get all deal comments
+
+> /api/deal/{deal_id}/comments/ **GET**
+
+Required fields: **None**
+
+Optional fields: **None**
+
+Permissions: **None**
+
+Returns = {'id', 'post_id', 'date', 'username', 'text', 'quoted_comment': **optional**}, status_code = 200
+
+### Get specific deal comment
+
+> /api/deal_comment/{test_comment_1.id}/ **GET**
+
+Required fields: **None**
+
+Optional fields: **None**
+
+Permissions: **None**
+
+Returns = {'id', 'post_id', 'date', 'username', 'text', 'quoted_comment': **optional**}, status_code = 200
+
+### Like deal comment
+
+> /api/deal_comment/{deal_id}/like/ **POST**
+
+Required fields: **None**
+
+Optional fields: **None**
+
+Permissions: **Authenticed, verified email**
+
+Returns = {'id', 'post_id', 'date', 'username', 'text', 'quoted_comment': **optional**}, status_code = 200

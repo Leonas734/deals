@@ -66,8 +66,9 @@ def test_create_deal_basic(test_user_3_verified, test_user_3_access_token, api_c
     assert resp.data['deal_end_date'] == None
     assert resp.data['created'] != None
     assert resp.data['updated'] == None
-    assert resp.data['rating'] == 0
-    assert len(resp.data) == 16
+    assert resp.data['rating'] == 1
+    assert resp.data['voted_by_user'] == True
+    assert len(resp.data) == 17
 
 @pytest.mark.django_db
 def test_create_deal_postage(test_user_3_verified, test_user_3_access_token, api_client):
@@ -101,8 +102,9 @@ def test_create_deal_postage(test_user_3_verified, test_user_3_access_token, api
     assert resp.data['deal_end_date'] == TEST_DEAL_1_DEAL_END_DATE
     assert resp.data['created'] != None
     assert resp.data['updated'] == None
-    assert resp.data['rating'] == 0
-    assert len(resp.data) == 16
+    assert resp.data['rating'] == 1
+    assert resp.data['voted_by_user'] == True
+    assert len(resp.data) == 17
 
 @pytest.mark.django_db
 def test_create_deal_instore(test_user_3_verified, test_user_3_access_token, api_client):
@@ -136,8 +138,9 @@ def test_create_deal_instore(test_user_3_verified, test_user_3_access_token, api
     assert resp.data['deal_end_date'] == TEST_DEAL_1_DEAL_END_DATE
     assert resp.data['created'] != None
     assert resp.data['updated'] == None
-    assert resp.data['rating'] == 0
-    assert len(resp.data) == 16
+    assert resp.data['rating'] == 1
+    assert resp.data['voted_by_user'] == True
+    assert len(resp.data) == 17
 
 @pytest.mark.django_db
 def test_create_deal_custom_image(test_user_3_access_token, api_client):

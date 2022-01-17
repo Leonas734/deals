@@ -1,7 +1,8 @@
 from rest_framework import serializers
-from deals.models import CustomUser, Deal
+from deals.models import CustomUser, Deal, Comment
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from django.utils.timezone import now
+from django.shortcuts import get_object_or_404
 
 class CreateUserSerializer(serializers.ModelSerializer):
     password_repeat = serializers.CharField(write_only=True)
@@ -68,7 +69,6 @@ class UpdateUserProfilePictureSerializer(serializers.ModelSerializer):
         fields = ['profile_picture', 'password']
 
 class UpdateUserPasswordSerializer(serializers.ModelSerializer):
-    # Source ensures new_password fields follow same config as CustomUser.password field
     new_password = serializers.CharField(max_length=128)
     new_password_repeat = serializers.CharField(max_length=128)
     class Meta:
@@ -88,6 +88,7 @@ class UserSerializer(serializers.ModelSerializer):
 class DealSerializer(serializers.ModelSerializer):
     rating = serializers.ReadOnlyField()
     user = UserSerializer(read_only=True)
+    voted_by_user = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = Deal
         exclude = ('up_votes', 'down_votes',)
@@ -116,5 +117,32 @@ class DealSerializer(serializers.ModelSerializer):
                 attrs['instore_only'] = False
         return super().validate(attrs)
 
+    def get_voted_by_user(self, obj):
+        username = self.context['request'].user.username
+        return obj.voted_by_user(username)
+
+        
+
 class DealVoteSerializer(serializers.Serializer):
     vote = serializers.BooleanField(allow_null=True)
+
+class CommentSerializer(serializers.ModelSerializer):
+    liked_by_user = serializers.SerializerMethodField(read_only=True)
+    quoted_comment_data = serializers.ReadOnlyField()
+    total_likes = serializers.ReadOnlyField()
+    user = UserSerializer(read_only=True)
+    class Meta:
+        model = Comment
+        exclude = ('likes',)
+        read_only_fields = (
+            'id', 'user', 'created',
+            )
+        extra_kwargs = {
+            'quoted_comment': {
+                'write_only': True
+            }
+        }
+
+    def get_liked_by_user(self, obj):
+        username = self.context['request'].user.username
+        return obj.liked_by_user(username)

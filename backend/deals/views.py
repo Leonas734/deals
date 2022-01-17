@@ -1,17 +1,18 @@
 from rest_framework import mixins
 from rest_framework import viewsets, status, generics
-from rest_framework.decorators import action
+from rest_framework.decorators import action, permission_classes
 from rest_framework.response import Response
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.views import TokenObtainPairView
 from deals.permissions import IsOwnerOrReadOnly, IsVerified
 
-from deals.models import CustomUser, Deal
+from deals.models import CustomUser, Deal, Comment
 from deals.serializers import (
     CreateUserSerializer, LogInSerializer,
     UpdateUserEmailSerializer, UpdateUserProfilePictureSerializer,
-    UpdateUserPasswordSerializer, DealSerializer, DealVoteSerializer
+    UpdateUserPasswordSerializer, DealSerializer, DealVoteSerializer,
+    CommentSerializer
     )
 from deals.utils import email_token_generator, send_email
 
@@ -131,7 +132,7 @@ class DealViewSet(viewsets.ModelViewSet):
     http_method_names = ['get', 'post', 'patch', 'delete']
 
     def get_permissions(self):
-        if self.action == 'list':
+        if self.action == 'list' or self.action == 'comments' or self.action == 'retrieve':
             return [AllowAny(), ]
         elif self.action == 'create' or self.action == 'vote':
             return (IsAuthenticated(), IsVerified())
@@ -139,7 +140,7 @@ class DealViewSet(viewsets.ModelViewSet):
             return (IsOwnerOrReadOnly(), IsAuthenticated())
     
     def perform_create(self, serializer):
-        return serializer.save(user=self.request.user)
+        return serializer.save(user=self.request.user, up_votes=[self.request.user.username])
 
     @action(detail=True, methods=['post'])
     def vote(self, request, pk=None):
@@ -158,3 +159,46 @@ class DealViewSet(viewsets.ModelViewSet):
         else:
             return Response(serializer.errors,
                             status=status.HTTP_400_BAD_REQUEST)
+    @action(detail=True, methods=['get'])
+    def comments(self, request, pk=None):
+        # Ensure deal exists
+        get_object_or_404(Deal, id=pk)
+        comments = Comment.objects.filter(deal=pk)
+        serializer = CommentSerializer(comments, many=True, context={'request': request})
+        return Response(serializer.data,
+                            status=status.HTTP_200_OK)
+
+class CommentViewSet(viewsets.ViewSet):
+
+    def get_permissions(self):
+        if self.action == 'create' or self.action == 'like':
+            permission_classes = [IsAuthenticated, IsVerified]
+        else:
+            permission_classes = [AllowAny]
+        return [permission() for permission in permission_classes]
+    
+
+    def create(self, request):
+        serializer = CommentSerializer(data=request.data, context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        serializer.save(user=self.request.user)
+        return Response(serializer.data,
+                        status=status.HTTP_201_CREATED)
+
+
+    def retrieve(self, request, comment_id=None):
+        comment = get_object_or_404(Comment, id=comment_id,)
+        serializer = CommentSerializer(comment, context={'request': request})
+        return Response(serializer.data,
+                             status=status.HTTP_200_OK)
+
+    @action(detail=True, methods=['post'])
+    def like(self, request, comment_id=None):
+        comment = get_object_or_404(Comment, id=comment_id)
+        comment.like_comment(self.request.user.username)
+        serializer = CommentSerializer(comment, context={'request': request})
+        return Response(serializer.data,
+                        status=status.HTTP_200_OK)
+
+
+

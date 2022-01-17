@@ -1,6 +1,6 @@
 import pytest
 
-from deals.models import CustomUser, Deal
+from deals.models import CustomUser, Deal, Comment
 from tests.deals.testing_variables import *
 
 @pytest.fixture
@@ -62,3 +62,11 @@ def test_deal_1(test_user_3_verified):
         user=test_user_3_verified, title=TEST_DEAL_1_TITLE, description=TEST_DEAL_1_DESCRIPTION,
         category=TEST_DEAL_1_CATEOGRY
         )
+
+@pytest.fixture
+def test_comment_1(test_user_3_verified, test_deal_1):
+    return Comment.objects.create(
+        user=test_user_3_verified,
+        deal = test_deal_1,
+        text = TEST_COMMENT_1_TEXT,
+    )
