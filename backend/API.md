@@ -1,191 +1,151 @@
-# USER
+# User API methods
 
-### Create User
+|      USAGE      |      URL      | METHOD | AUTH? | VERIFIED EMAIL? |
+| :-------------: | :-----------: | :----: | :---: | :-------------: |
+| Create new user | /api/sign_up/ |  POST  |  No   |       No        |
 
-> /api/sign_up/ **POST**
+**Required fields:** `{'username', 'email', 'password', 'repeat_password'}`
 
-Required fields: {'username', 'email', 'password', 'repeat_password'}
+**Returns:** `{'username' : <submitted-username>}, status_code = 201`
 
-Optional fields: **None**
+---
 
-Permissions: **None**
+|    USAGE    |     URL      | METHOD | AUTH? | VERIFIED EMAIL? |
+| :---------: | :----------: | :----: | :---: | :-------------: |
+| Log in user | /api/log_in/ |  POST  |  No   |       No        |
 
-Returns = {'username' : 'submitted-username'}, status_code = 201
+**Required fields:** `{'username', 'password'}`
 
-### Log in
+username field can be email address or username⚠️
 
-> /api/log_in/ **POST**
+**Returns:** `{'refresh' : <jwt-token>, 'access': <jwt-token>}, status_code = 200`
 
-Required fields: {'username', 'password'}
+---
 
-Optional fields: **None**
+|                USAGE                 |                URL                 | METHOD | AUTH? | VERIFIED EMAIL? |
+| :----------------------------------: | :--------------------------------: | :----: | :---: | :-------------: |
+| Request new email verification email | /api/email_verification/new_token/ |  GET   |  Yes  |       No        |
 
-Permissions: **None**
+**Required fields:** `None`
 
-Returns = {'access' : 'jwt-token', 'refresh' : 'jwt-token'}, status_code = 200
+**Returns:** `{'detail': 'Email verification sent. Please check your inbox.'}, status_code = 200`
 
-### Verify email
+---
 
-> /api/email_verification/{string:user_id}/{string:email_verification_token}/ **POST**
+|           USAGE           |           URL           | METHOD | AUTH? | VERIFIED EMAIL? |
+| :-----------------------: | :---------------------: | :----: | :---: | :-------------: |
+| Update user email address | /api/user/update_email/ |  POST  |  Yes  |       No        |
 
-Required fields: **None**
+**Required fields:** `{'password', 'email'}`
 
-Optional fields: **None**
+Email verification automatically sent to new email address⚠️
 
-Permissions: **None**
+**Returns:** `{'detail': 'Email updated successfully.'}, status_code = 200`
 
-Returns = {'detail' : 'Email verified.'}, status_code = 200
+---
 
-### Request new email verification email
+|            USAGE            |                URL                | METHOD | AUTH? | VERIFIED EMAIL? |
+| :-------------------------: | :-------------------------------: | :----: | :---: | :-------------: |
+| Update user profile picture | /api/user/update_profile_picture/ |  POST  |  Yes  |       No        |
 
-> /api/email_verification/new_token/ **GET**
+**Required fields:** `{'password', 'profile_picture'}`
 
-Required fields: 'Bearer {jwt-token}'
+**Returns:** `{'detail': 'Profile picture updated successfully.'}, status_code = 200`
 
-Optional fields: **None**
+---
 
-Permissions: **Authenticed**
+|        USAGE         |            URL             | METHOD | AUTH? | VERIFIED EMAIL? |
+| :------------------: | :------------------------: | :----: | :---: | :-------------: |
+| Update user password | /api/user/update_password/ |  POST  |  Yes  |       No        |
 
-Returns = {'detail' : 'Email verification sent. Please check your inbox.'}, status_code = 200
+**Required fields:** `{'password', 'new_password', 'new_password_repeat'}`
 
-### Update user email
+User requested to relog once jwt-access token expires. Expire time inside settings.py file⚠️
 
-> /api/user/update_email/ **POST**
+**Returns:** `{'detail': 'Password updated successfully.'}, status_code = 200`
 
-Required fields: {'Bearer jwt-token', 'password', 'email'}
+# Deal API methods
 
-Optional fields: **None**
+|     USAGE     |    URL     | METHOD | AUTH? | VERIFIED EMAIL? |
+| :-----------: | :--------: | :----: | :---: | :-------------: |
+| Get all deals | /api/deal/ |  GET   |  No   |       No        |
 
-Permissions: **Authenticed**
+**Required fields:** `None`
 
-Returns = {'detail' : 'Email updated successfully.'}, status_code = 200
+**Returns:** `Array with all deals, status_code = 200`
 
-### Update user profile picture
+---
 
-> /api/user/update_profile_picture/ **POST**
+|      USAGE      |    URL     | METHOD | AUTH? | VERIFIED EMAIL? |
+| :-------------: | :--------: | :----: | :---: | :-------------: |
+| Create new deal | /api/deal/ |  POST  |  Yes  |       Yes       |
 
-Required fields: {'Bearer jwt-token', 'password', 'profile_picture'}
+**Required fields:** `{'title', 'description', 'category'}`
 
-Optional fields: **None**
+Category & sent_from must match one of the choice_fields from Deal model inside models.py⚠️
 
-Permissions: **Authenticed**
+**Optional fields:** `{'image', 'price', 'url', 'instore_only', 'postage_cost', 'sent_from', 'deal_start_date', 'deal_end_date'}`
 
-Returns = {'detail' : 'Profile picture updated successfully.'}, status_code = 200
+If instore_only: True, postage_cost and sent_from must be excluded. Vice versa, exclude instore_only if including postage details⚠️
 
-### Update user password
+**Returns:** `{'id', 'rating', 'user': {'username', 'profile_picture}, 'voted_by_user', 'title', 'description', 'image', 'price', 'url', 'category', 'instore_only', 'postage_cost', 'sent_from', 'deal_start_date', 'deal_end_date', 'created', 'updated'}, status_code = 201`
 
-> /api/user/update_password/ **POST**
+voted_by_user = Checks if current user has voted on this deal. True=Up vote, False=Down vote, None=No vote. ⚠️
 
-Required fields: {'Bearer jwt-token', 'password', 'new_password', 'new_password_repeat'}
+---
 
-Optional fields: **None**
+|        USAGE        |         URL         | METHOD | AUTH? | VERIFIED EMAIL? |
+| :-----------------: | :-----------------: | :----: | :---: | :-------------: |
+| Update deal details | /api/deal/<deal_id> | PATCH  |  Yes  |       Yes       |
 
-Permissions: **Authenticed**
+**Optional fields:** `{'title', 'description', 'category','image', 'price', 'url', 'instore_only','postage_cost', 'sent_from', 'deal_start_date', 'deal_end_date',}`
 
-Returns = {'detail' : 'Password updated successfully.'}, status_code = 200
+**Returns:** `{Standard deal view. Check create new deal API method for more info.}, status_code = 200`
 
-### Get all deals
+User must be owner of Deal object to be able to modify it. ⚠️
 
-> /api/deal/ **GET**
+---
 
-### Create new deal
+|    USAGE    |         URL         | METHOD | AUTH? | VERIFIED EMAIL? |
+| :---------: | :-----------------: | :----: | :---: | :-------------: |
+| Delete deal | /api/deal/<deal_id> | DELETE |  Yes  |       Yes       |
 
-> /api/deal/ **POST**
+User must be owner of Deal object to be able to delete it. ⚠️
 
-Required fields: {'Bearer jwt-token', 'title', 'description', 'category'}
+**Returns:** `status_code = 204`
 
-Optional fields: {
-'image', 'price', 'url', 'instore_only', 'postage_cost',
-'sent_from', 'deal_start_date', 'deal_end_date',
-}
+---
 
-Permissions: **Authenticed, verified email**
+|    USAGE     |            URL            | METHOD | AUTH? | VERIFIED EMAIL? |
+| :----------: | :-----------------------: | :----: | :---: | :-------------: |
+| Vote on deal | /api/deal/<deal_id>/vote/ |  POST  |  Yes  |       Yes       |
 
-Returns = {all details}, status_code = 200
+**Required fields:** `{'vote': True/False/None}`
 
-### Update deal
+True = Up vote, False = Down vote, None = Neutral. ⚠️
 
-> /api/deal/deal_id **POST**
+**Returns:** `{'detail': 'Vote accepted.'}, status_code = 200`
 
-Required fields: **None**
+# Comment API methods
 
-Optional fields: {
-'title', 'description', 'category','image', 'price', 'url', 'instore_only',
-'postage_cost', 'sent_from', 'deal_start_date', 'deal_end_date',
-}
+|        USAGE         |        URL         | METHOD | AUTH? | VERIFIED EMAIL? |
+| :------------------: | :----------------: | :----: | :---: | :-------------: |
+| Post comment on deal | /api/deal_comment/ |  POST  |  Yes  |       Yes       |
 
-Permissions: **Authenticed, verified email, is owner of object**
+**Required fields:** `{'deal', 'text'}`
 
-Returns = {all details}, status_code = 201
+**Returns:** `{'id', 'deal', 'created', 'user': {'username', 'profile_picture'}, 'text', 'quoted_comment', 'liked_by_user', 'total_likes'}, status_code = 201`
 
-### Delete deal
+|         USAGE         |              URL              | METHOD | AUTH? | VERIFIED EMAIL? |
+| :-------------------: | :---------------------------: | :----: | :---: | :-------------: |
+| Get all deal comments | /api/deal/{deal_id}/comments/ |  GET   |  No   |       No        |
 
-> /api/deal/deal_id **DELETE**
+**Returns:** `{Returns array of deal comments. Check "post comment on deal" method for more details}, status_code = 201`
 
-Required fields: **None**
+|         USAGE         |                URL                | METHOD | AUTH? | VERIFIED EMAIL? |
+| :-------------------: | :-------------------------------: | :----: | :---: | :-------------: |
+| Get all deal comments | /api/deal_comment/{deal_id}/like/ |  POST  |  Yes  |       Yes       |
 
-Optional fields: **None**
+Each time url is hit with post request, it will either unlike or like, depending on previous state ⚠️
 
-Permissions: **Authenticed, verified email, is owner of object**
-
-Returns = {}, status_code = 204
-
-### Vote on deal
-
-> /api/deal/deal_id/vote **POST**
-
-Required fields: **None**
-
-Optional fields: {'vote': True, False or ''}
-
-Permissions: **Authenticed, verified email**
-
-Returns = {'detail': 'Vote accepted.'}, status_code = 200
-
-### Create comment
-
-> /api/deal_comment/ **POST**
-
-Required fields: {'post_id', 'text'}
-
-Optional fields: **None**
-
-Permissions: **Authenticed, verified email**
-
-Returns = {'id', 'post_id', 'date', 'username', 'text', 'quoted_comment': **optional**}, status_code = 201
-
-### Get all deal comments
-
-> /api/deal/{deal_id}/comments/ **GET**
-
-Required fields: **None**
-
-Optional fields: **None**
-
-Permissions: **None**
-
-Returns = {'id', 'post_id', 'date', 'username', 'text', 'quoted_comment': **optional**}, status_code = 200
-
-### Get specific deal comment
-
-> /api/deal_comment/{test_comment_1.id}/ **GET**
-
-Required fields: **None**
-
-Optional fields: **None**
-
-Permissions: **None**
-
-Returns = {'id', 'post_id', 'date', 'username', 'text', 'quoted_comment': **optional**}, status_code = 200
-
-### Like deal comment
-
-> /api/deal_comment/{deal_id}/like/ **POST**
-
-Required fields: **None**
-
-Optional fields: **None**
-
-Permissions: **Authenticed, verified email**
-
-Returns = {'id', 'post_id', 'date', 'username', 'text', 'quoted_comment': **optional**}, status_code = 200
+**Returns:** `{'id', 'deal', 'created', 'user': {'username', 'profile_picture'}, 'text', 'quoted_comment', 'liked_by_user','total_likes'}`

@@ -13,8 +13,10 @@ fi
 
 python manage.py flush --no-input
 python manage.py migrate
+python manage.py loaddata user-seed.json
+python manage.py loaddata deal-seed.json
+python manage.py loaddata comment-seed.json
 
 echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser(username='admin', email='admin@myproject.com', password='password')" | python manage.py shell
 echo "Superuser created"
-
 exec "$@"

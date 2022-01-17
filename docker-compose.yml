@@ -20,6 +20,14 @@ services:
       - POSTGRES_USER=backend
       - POSTGRES_PASSWORD=backend
       - POSTGRES_DB=backend_dev
+  smtp-server:
+    image: mailhog/mailhog
+    expose:
+      - 1025
+      - 8025
+    ports:
+      - "1025:1025"
+      - "8025:8025"
 
 volumes:
   postgres_data:
