@@ -124,3 +124,12 @@ def test_get_deal_by_pk_no_votes(test_user_3_verified, test_user_3_access_token,
     assert resp.data['rating'] == 0
     assert resp.data['voted_by_user'] == None
     assert len(resp.data) == 17
+
+@pytest.mark.django_db
+def test_get_deal_by_category(test_user_3_verified, api_client, test_deal_1):
+    resp = api_client.get(
+        f'/api/deal/{test_deal_1.category}/category/',
+    )
+    assert resp.status_code == 200
+    assert len(resp.data) == 1
+    assert resp.data[0]['category'] == test_deal_1.category

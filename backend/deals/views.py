@@ -132,7 +132,12 @@ class DealViewSet(viewsets.ModelViewSet):
     http_method_names = ['get', 'post', 'patch', 'delete']
 
     def get_permissions(self):
-        if self.action == 'list' or self.action == 'comments' or self.action == 'retrieve':
+        print(self.action)
+        if (self.action == 'list' or 
+            self.action == 'comments' or 
+            self.action == 'retrieve' or 
+            self.action == 'category'):
+
             return [AllowAny(), ]
         elif self.action == 'create' or self.action == 'vote':
             return (IsAuthenticated(), IsVerified())
@@ -141,6 +146,13 @@ class DealViewSet(viewsets.ModelViewSet):
     
     def perform_create(self, serializer):
         return serializer.save(user=self.request.user, up_votes=[self.request.user.username])
+
+    @action(detail=True, methods=['get'])
+    def category(self, request, pk=None):
+        filtered_deals = Deal.objects.filter(category=pk.upper())
+        serializer = self.serializer_class(filtered_deals, many=True, context={'request': request})
+        return Response(serializer.data,
+                            status=status.HTTP_200_OK)
 
     @action(detail=True, methods=['post'])
     def vote(self, request, pk=None):
