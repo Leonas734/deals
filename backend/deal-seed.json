@@ -1,0 +1,47 @@
+[
+  {
+    "model": "deals.deal",
+    "pk": "805dca15-a448-4e6e-85f1-5473fd96a120",
+    "fields": {
+      "user": "ee705b2b-cdb5-43aa-8f94-c8b806304c50",
+      "title": "24 months 0% intereset CC, 0% balance transfer fee!",
+      "description": "Great offer from xyz company. No interest for the first 24 months and there are no fees for balance transfers.",
+      "category": "FINANCE & INSURANCE",
+      "image": "/deal_images/credit-card-image.jpg",
+      "url": "https://localhost:8000",
+      "up_votes": ["test-user-1", "test-user-2", "test-user-3"],
+      "created": "2022-01-07T14:07:13.540000Z"
+    }
+  },
+  {
+    "model": "deals.deal",
+    "pk": "75e3fe96-b8c6-4545-bf95-971f12a015b4",
+    "fields": {
+      "user": "30509c1e-ce8d-4093-9954-d6b5626bed49",
+      "title": "WiFi printer 30% off, free delivery",
+      "description": "Good value for money. Never seen it this cheap before. Comes with black and white ink cartiridge.",
+      "category": "ELECTRONICS",
+      "image": "/deal_images/printer-image.jpg",
+      "price": "24.99",
+      "postage_cost": "0.00",
+      "url": "https://localhost:8000",
+      "up_votes": ["test-user-1", "test-user-2", "test-user-3"],
+      "created": "2022-01-11T14:07:13.540000Z"
+    }
+  },
+  {
+    "model": "deals.deal",
+    "pk": "dd037943-f531-457b-bfb0-737b0db2d9b4",
+    "fields": {
+      "user": "b39e7ede-7dbd-4d43-ac3f-86259e21b7ee",
+      "title": "50% off Sofa! £9.99 for delivery, multiple colours",
+      "description": "Other colours in stock. Limited supply. Comes with 1 year warranty.",
+      "category": "HOME & GARDEN",
+      "image": "/deal_images/sofa-image.jpg",
+      "url": "https://localhost:8000/sale/",
+      "price": "299.99",
+      "up_votes": ["test-user-3"],
+      "created": "2022-01-06T14:07:13.540000Z"
+    }
+  }
+]

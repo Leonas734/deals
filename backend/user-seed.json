@@ -1,0 +1,29 @@
+[
+  {
+    "model": "deals.customuser",
+    "pk": "ee705b2b-cdb5-43aa-8f94-c8b806304c50",
+    "fields": {
+      "username": "test-user-1",
+      "email": "test-user-1@test-email.com",
+      "password": "test-user-1-password"
+    }
+  },
+  {
+    "model": "deals.customuser",
+    "pk": "30509c1e-ce8d-4093-9954-d6b5626bed49",
+    "fields": {
+      "username": "test-user-2",
+      "email": "test-user-2@test-email.com",
+      "password": "test-user-2-password"
+    }
+  },
+  {
+    "model": "deals.customuser",
+    "pk": "b39e7ede-7dbd-4d43-ac3f-86259e21b7ee",
+    "fields": {
+      "username": "test-user-3",
+      "email": "test-user-3@test-email.com",
+      "password": "test-user-3-password"
+    }
+  }
+]

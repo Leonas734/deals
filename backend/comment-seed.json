@@ -1,0 +1,35 @@
+[
+  {
+    "model": "deals.comment",
+    "pk": "79e269bf-7488-422e-bca6-44ccb73006be",
+    "fields": {
+      "user": "ee705b2b-cdb5-43aa-8f94-c8b806304c50",
+      "deal": "75e3fe96-b8c6-4545-bf95-971f12a015b4",
+      "text": "I purchased one a year back. WiFi works really well compared to previous printer I owned.",
+      "likes": ["test-user-2"],
+      "created": "2022-01-11T16:22:11.540000Z"
+    }
+  },
+  {
+    "model": "deals.comment",
+    "pk": "2ddc8039-460b-45a8-85e4-1041976403c2",
+    "fields": {
+      "user": "30509c1e-ce8d-4093-9954-d6b5626bed49",
+      "deal": "805dca15-a448-4e6e-85f1-5473fd96a120",
+      "text": "Very good deal!!! Make sure to check T&C's before applying.",
+      "likes": ["test-user-1", "test-user-2", "test-user-3"],
+      "created": "2022-01-08T21:02:13.540000Z"
+    }
+  },
+  {
+    "model": "deals.comment",
+    "pk": "3fe3046a-e7aa-4ecc-8e62-0fffb9c42a8b",
+    "fields": {
+      "user": "ee705b2b-cdb5-43aa-8f94-c8b806304c50",
+      "deal": "805dca15-a448-4e6e-85f1-5473fd96a120",
+      "text": "Good point!",
+      "quoted_comment": "2ddc8039-460b-45a8-85e4-1041976403c2",
+      "created": "2022-01-08T21:02:13.540000Z"
+    }
+  }
+]
