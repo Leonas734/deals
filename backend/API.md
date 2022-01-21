@@ -4,7 +4,7 @@
 | :-------------: | :-----------: | :----: | :---: | :-------------: |
 | Create new user | /api/sign_up/ |  POST  |  No   |       No        |
 
-**Required fields:** `{'username', 'email', 'password', 'repeat_password'}`
+**Required fields:** `{'username', 'email', 'password', 'password_repeat'}`
 
 **Returns:** `{'username' : <submitted-username>}, status_code = 201`
 
@@ -19,6 +19,16 @@
 username field can be email address or username⚠️
 
 **Returns:** `{'refresh' : <jwt-token>, 'access': <jwt-token>}, status_code = 200`
+
+---
+
+|    USAGE     |                      URL                      | METHOD | AUTH? | VERIFIED EMAIL? |
+| :----------: | :-------------------------------------------: | :----: | :---: | :-------------: |
+| Verify email | /api/email_verification/<user.id>/<token.id>/ |  POST  |  No   |       No        |
+
+**Required fields:** `None`
+
+**Returns:** `{'detail': 'Email successfully verified.'}, status_code = 200`
 
 ---
 
@@ -136,11 +146,15 @@ True = Up vote, False = Down vote, None = Neutral. ⚠️
 
 **Returns:** `{'id', 'deal', 'created', 'user': {'username', 'profile_picture'}, 'text', 'quoted_comment', 'liked_by_user', 'total_likes'}, status_code = 201`
 
+---
+
 |         USAGE         |              URL              | METHOD | AUTH? | VERIFIED EMAIL? |
 | :-------------------: | :---------------------------: | :----: | :---: | :-------------: |
 | Get all deal comments | /api/deal/{deal_id}/comments/ |  GET   |  No   |       No        |
 
 **Returns:** `{Returns array of deal comments. Check "post comment on deal" method for more details}, status_code = 201`
+
+---
 
 |         USAGE         |                URL                | METHOD | AUTH? | VERIFIED EMAIL? |
 | :-------------------: | :-------------------------------: | :----: | :---: | :-------------: |
@@ -148,4 +162,14 @@ True = Up vote, False = Down vote, None = Neutral. ⚠️
 
 Each time url is hit with post request, it will either unlike or like, depending on previous state ⚠️
 
-**Returns:** `{'id', 'deal', 'created', 'user': {'username', 'profile_picture'}, 'text', 'quoted_comment', 'liked_by_user','total_likes'}`
+## **Returns:** `{'id', 'deal', 'created', 'user': {'username', 'profile_picture'}, 'text', 'quoted_comment', 'liked_by_user','total_likes'}, status_code = 200`
+
+---
+
+|           USAGE           |              URL               | METHOD | AUTH? | VERIFIED EMAIL? |
+| :-----------------------: | :----------------------------: | :----: | :---: | :-------------: |
+| Get all deals by category | /api/deal/<category>/cateogry/ |  GET   |  No   |       No        |
+
+Category field must be a valid. Check choice_fields inside models.py Deal model for more detail. ⚠️
+
+**Returns:** `Array with all deals filtered by category, status_code = 200`

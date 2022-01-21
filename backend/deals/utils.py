@@ -116,7 +116,7 @@ class SendEmail:
         token = email_token_generator.make_token(user)
         data = {
             "username": user.username,
-            "url": self.url+f"/api/user/{user.id}/verify_email/{token}/",
+            "url": self.url+f"/api/email_verification/{user.id}/{token}/",
         }
         html_template = render_to_string("deals/email_templates/verify_email.html", data)
         text_template = render_to_string("deals/email_templates/verify_email.txt", data)
