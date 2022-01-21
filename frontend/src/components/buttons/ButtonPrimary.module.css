@@ -1,0 +1,21 @@
+.button-primary {
+  flex-grow: 1;
+  text-align: center;
+  border: solid 2px white;
+  background-color: #ff7a00;
+  border-radius: 0.5rem;
+  margin: 1rem;
+  color: white;
+  font-size: 3rem;
+  cursor: pointer;
+  transition: all 0.5s ease-out;
+  padding: 0 0.5rem;
+}
+
+.button-primary:hover {
+  transform: scale(1.05);
+}
+
+.button-primary:active {
+  transform: scale(1);
+}
