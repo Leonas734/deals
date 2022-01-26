@@ -26,9 +26,10 @@ function RegisterModal({ setModalView, modalView }) {
     <>
       <ModalTemplate
         changeModalView={changeModalView}
-        dataCy={"register-modal"}>
+        dataCy={"register-modal"}
+        isOpen={modalView}>
         {response && (
-          <>
+          <div>
             <h1 className={styles["modal-title"]} data-cy="response-title">
               {response}
             </h1>
@@ -41,7 +42,7 @@ function RegisterModal({ setModalView, modalView }) {
               action={changeModalView}
               dataCy={"response-close-button"}
             />
-          </>
+          </div>
         )}
         {!response && (
           <>

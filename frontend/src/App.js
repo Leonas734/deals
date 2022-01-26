@@ -1,13 +1,22 @@
 import React from "react";
-import { BrowserRouter, Routes } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import Settings from "./components/settings/Settings";
 import Nav from "./components/nav/Nav";
 
+import { useAuth } from "./components/context/authContext";
+
 function App() {
+  const { state: authState } = useAuth();
   return (
     <>
       <BrowserRouter>
         <Nav />
-        <Routes></Routes>
+        <Routes>
+          <Route
+            path="account/settings"
+            element={!authState ? <Navigate replace to="/" /> : <Settings />}
+          />
+        </Routes>
       </BrowserRouter>
     </>
   );

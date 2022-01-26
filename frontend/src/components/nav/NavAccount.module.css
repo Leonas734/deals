@@ -1,0 +1,48 @@
+.nav-account {
+  position: relative;
+  margin: 0 2rem;
+}
+.nav-account-image {
+  height: 5rem;
+  width: 5rem;
+  border-radius: 50%;
+  border: 3px solid #ffefcf;
+  cursor: pointer;
+}
+
+.nav-account-menu {
+  padding: 3rem 2rem 1rem 2rem;
+  clip-path: polygon(
+    70% 15%,
+    80% 0,
+    90% 15%,
+    100% 15%,
+    100% 100%,
+    0 100%,
+    0 15%
+  );
+  background-color: #ff7a00;
+  position: fixed;
+  right: 0.7%;
+  top: 7rem;
+}
+
+.account-menu-link {
+  text-decoration: none;
+  color: white;
+  font-size: 4rem;
+  text-align: center;
+  margin: 0.5rem;
+  cursor: pointer;
+  border-bottom: 2px solid #ffefcf;
+}
+
+.logout-title {
+  font-size: 4rem;
+}
+
+.logout-content > button {
+  font-size: 4rem;
+  padding: 0 5rem;
+  margin: 2rem;
+}

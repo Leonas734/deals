@@ -9,6 +9,8 @@
 
 .modal-main {
   position: fixed;
+  display: flex;
+  flex-direction: column;
   background: white;
   width: 60%;
   height: auto;
@@ -37,9 +39,9 @@
 }
 
 .modal-close-icon {
+  align-self: flex-end;
   height: 4rem;
   width: 4rem;
-  position: absolute;
   right: 0;
   top: 0.2rem;
   cursor: pointer;
@@ -61,6 +63,6 @@
 
 .input-form > button {
   font-size: 3rem;
-  margin: 1rem;
+  margin: 2rem 0;
   padding: 0.5rem;
 }

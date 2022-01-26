@@ -1,10 +1,12 @@
 import { React } from "react";
 import styles from "./ModalTemplate.module.css";
 import xIcon from "../../assets/x-icon.svg";
+import { createPortal } from "react-dom";
 
-function ModalTemplate({ changeModalView, children, dataCy }) {
+function ModalTemplate({ changeModalView, children, dataCy, isOpen }) {
+  if (!isOpen) return null;
   const backgroundId = "modal-background";
-  return (
+  return createPortal(
     <>
       <div
         onClick={(e) => {
@@ -28,7 +30,8 @@ function ModalTemplate({ changeModalView, children, dataCy }) {
           {children}
         </div>
       </div>
-    </>
+    </>,
+    document.body
   );
 }
 
