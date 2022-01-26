@@ -4,6 +4,11 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from django.utils.timezone import now
 from django.shortcuts import get_object_or_404
 
+class UserSerializer(serializers.ModelSerializer):    
+    class Meta:
+        model = CustomUser
+        fields = ('username', 'profile_picture')
+
 class CreateUserSerializer(serializers.ModelSerializer):
     password_repeat = serializers.CharField(write_only=True)
     
@@ -33,7 +38,7 @@ class LogInSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
-        user_data = CreateUserSerializer(user).data
+        user_data = UserSerializer(user).data
         for key, value in user_data.items():
             if key != 'id':
                 token[key] = value
@@ -79,11 +84,6 @@ class UpdateUserPasswordSerializer(serializers.ModelSerializer):
         if data['new_password'] != data['new_password_repeat']:
             raise serializers.ValidationError({'new_password': 'Passwords do not match.'})
         return data
-
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CustomUser
-        fields = ('username', 'profile_picture')
 
 class DealSerializer(serializers.ModelSerializer):
     rating = serializers.ReadOnlyField()
