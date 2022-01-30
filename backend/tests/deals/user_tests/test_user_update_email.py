@@ -60,7 +60,7 @@ def test_user_update_email_inbox(api_client, test_user_1_access_token, mailoutbo
     assert resp.status_code == 200
     assert len(mailoutbox) == 1
     assert mailoutbox[0].subject == 'Email verification'
-    assert mailoutbox[0].from_email == 'no-reply@compnay.com'
+    assert mailoutbox[0].from_email == 'no-reply@company.com'
     assert mailoutbox[0].to[0] == new_email
 
 @pytest.mark.django_db
@@ -84,7 +84,7 @@ def test_verified_user_update_email_inbox(test_user_1, api_client, test_user_1_a
     assert resp.status_code == 200
     assert len(mailoutbox) == 1
     assert mailoutbox[0].subject == 'Email verification'
-    assert mailoutbox[0].from_email == 'no-reply@compnay.com'
+    assert mailoutbox[0].from_email == 'no-reply@company.com'
     assert mailoutbox[0].to[0] == new_email
 
 @pytest.mark.django_db

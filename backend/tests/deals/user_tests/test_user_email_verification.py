@@ -96,7 +96,7 @@ def test_user_email_verification_inbox_email(client, mailoutbox):
     
     assert len(mailoutbox) == 1
     assert mailoutbox[0].subject == 'Email verification'
-    assert mailoutbox[0].from_email == 'no-reply@compnay.com'
+    assert mailoutbox[0].from_email == 'no-reply@company.com'
     assert mailoutbox[0].to[0] == user.email
 
 @pytest.mark.django_db
@@ -118,7 +118,7 @@ def test_user_email_verification_request_new_token(
     assert new_token != old_token
     assert len(mailoutbox) == 1
     assert mailoutbox[0].subject == 'Email verification'
-    assert mailoutbox[0].from_email == 'no-reply@compnay.com'
+    assert mailoutbox[0].from_email == 'no-reply@company.com'
     assert mailoutbox[0].to[0] == test_user_1.email
 
 @pytest.mark.django_db
