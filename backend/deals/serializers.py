@@ -9,6 +9,11 @@ class UserSerializer(serializers.ModelSerializer):
         model = CustomUser
         fields = ('username', 'profile_picture')
 
+class UserSerializerPrivate(serializers.ModelSerializer):    
+    class Meta:
+        model = CustomUser
+        fields = ('username', 'profile_picture', 'email_verified')
+
 class CreateUserSerializer(serializers.ModelSerializer):
     password_repeat = serializers.CharField(write_only=True)
     
@@ -38,7 +43,7 @@ class LogInSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
-        user_data = UserSerializer(user).data
+        user_data = UserSerializerPrivate(user).data
         for key, value in user_data.items():
             if key != 'id':
                 token[key] = value
@@ -120,8 +125,6 @@ class DealSerializer(serializers.ModelSerializer):
     def get_voted_by_user(self, obj):
         username = self.context['request'].user.username
         return obj.voted_by_user(username)
-
-        
 
 class DealVoteSerializer(serializers.Serializer):
     vote = serializers.BooleanField(allow_null=True)

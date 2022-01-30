@@ -4,6 +4,8 @@ from deals.views import (
     CommentViewSet
     )
 
+from rest_framework_simplejwt.views import TokenRefreshView
+
 from django.urls import path
 from rest_framework import routers
 
@@ -12,6 +14,7 @@ router.register(r'deal', DealViewSet)
 
 urlpatterns = router.urls
 urlpatterns = [
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('sign_up/', SignUpView.as_view(), name='sign_up'),
     path('log_in/', LogInView.as_view(), name='log_in'),
     path('email_verification/<str:user_id>/<str:token>/',

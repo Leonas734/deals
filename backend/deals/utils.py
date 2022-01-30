@@ -6,6 +6,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
 from django.utils.crypto import constant_time_compare, salted_hmac
 from django.utils.http import base36_to_int, int_to_base36
+import os
 
 
 class EmailVerificationTokenGenerator:
@@ -108,15 +109,15 @@ email_token_generator = EmailVerificationTokenGenerator()
 class SendEmail:
 
     def __init__(self):
-        self.company_email = "no-reply@compnay.com"
-        self.url = "http://localhost:8000"
+        self.company_email = "no-reply@company.com"
+        self.url = os.environ.get("FRONTEND_URL")
 
     def send_verification_for_email_address(self, user):
         user.refresh_from_db()
         token = email_token_generator.make_token(user)
         data = {
             "username": user.username,
-            "url": self.url+f"/api/email_verification/{user.id}/{token}/",
+            "url": f"{self.url}/email_verification/{user.id}/{token}/",
         }
         html_template = render_to_string("deals/email_templates/verify_email.html", data)
         text_template = render_to_string("deals/email_templates/verify_email.txt", data)
