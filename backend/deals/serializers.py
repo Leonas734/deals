@@ -93,7 +93,7 @@ class UpdateUserPasswordSerializer(serializers.ModelSerializer):
 class DealSerializer(serializers.ModelSerializer):
     rating = serializers.ReadOnlyField()
     user = UserSerializer(read_only=True)
-    voted_by_user = serializers.SerializerMethodField(read_only=True)
+    rated_by_user = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = Deal
         exclude = ('up_votes', 'down_votes',)
@@ -122,9 +122,9 @@ class DealSerializer(serializers.ModelSerializer):
                 attrs['instore_only'] = False
         return super().validate(attrs)
 
-    def get_voted_by_user(self, obj):
+    def get_rated_by_user(self, obj):
         username = self.context['request'].user.username
-        return obj.voted_by_user(username)
+        return obj.rated_by_user(username)
 
 class DealVoteSerializer(serializers.Serializer):
     vote = serializers.BooleanField(allow_null=True)

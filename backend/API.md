@@ -98,9 +98,9 @@ Category & sent_from must match one of the choice_fields from Deal model inside 
 
 If instore_only: True, postage_cost and sent_from must be excluded. Vice versa, exclude instore_only if including postage details⚠️
 
-**Returns:** `{'id', 'rating', 'user': {'username', 'profile_picture}, 'voted_by_user', 'title', 'description', 'image', 'price', 'url', 'category', 'instore_only', 'postage_cost', 'sent_from', 'deal_start_date', 'deal_end_date', 'created', 'updated'}, status_code = 201`
+**Returns:** `{'id', 'rating', 'user': {'username', 'profile_picture}, 'rated_by_user', 'title', 'description', 'image', 'price', 'url', 'category', 'instore_only', 'postage_cost', 'sent_from', 'deal_start_date', 'deal_end_date', 'created', 'updated'}, status_code = 201`
 
-voted_by_user = Checks if current user has voted on this deal. True=Up vote, False=Down vote, None=No vote. ⚠️
+rated_by_user = Checks if current user has voted on this deal. True=Up vote, False=Down vote, None=No vote. ⚠️
 
 ---
 
@@ -156,9 +156,9 @@ True = Up vote, False = Down vote, None = Neutral. ⚠️
 
 ---
 
-|         USAGE         |                URL                | METHOD | AUTH? | VERIFIED EMAIL? |
-| :-------------------: | :-------------------------------: | :----: | :---: | :-------------: |
-| Get all deal comments | /api/deal_comment/{deal_id}/like/ |  POST  |  Yes  |       Yes       |
+|       USAGE       |                URL                | METHOD | AUTH? | VERIFIED EMAIL? |
+| :---------------: | :-------------------------------: | :----: | :---: | :-------------: |
+| Like deal comment | /api/deal_comment/{deal_id}/like/ |  POST  |  Yes  |       Yes       |
 
 Each time url is hit with post request, it will either unlike or like, depending on previous state ⚠️
 

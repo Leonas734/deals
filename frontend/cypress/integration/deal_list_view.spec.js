@@ -241,7 +241,7 @@ describe("Deal rate functions", function () {
     cy.intercept(`/api/deal/${dealOne.id}/vote/`, {
       deal: {
         ...dealOne,
-        voted_by_user: true,
+        rated_by_user: true,
         rating: +dealOne.rating + 1,
       },
     }).as("dealVote");
@@ -259,7 +259,7 @@ describe("Deal rate functions", function () {
   it("Authorised user can undo up vote", function () {
     const dealOne = {
       ...this.stubDeals.deal_1,
-      voted_by_user: true,
+      rated_by_user: true,
       rating: +this.stubDeals.deal_1.rating + 1,
     };
     cy.intercept("GET", "/api/deal/", {
@@ -269,7 +269,7 @@ describe("Deal rate functions", function () {
     cy.intercept(`/api/deal/${dealOne.id}/vote/`, {
       deal: {
         ...dealOne,
-        voted_by_user: null,
+        rated_by_user: null,
         rating: +dealOne.rating - 1,
       },
     }).as("dealVote");
@@ -295,7 +295,7 @@ describe("Deal rate functions", function () {
     cy.intercept(`/api/deal/${dealOne.id}/vote/`, {
       deal: {
         ...dealOne,
-        voted_by_user: false,
+        rated_by_user: false,
         rating: +dealOne.rating - 1,
       },
     }).as("dealVote");
@@ -314,7 +314,7 @@ describe("Deal rate functions", function () {
   it("Authorised user can undo down vote", function () {
     const dealOne = {
       ...this.stubDeals.deal_1,
-      voted_by_user: false,
+      rated_by_user: false,
       rating: +this.stubDeals.deal_1.rating - 1,
     };
     cy.intercept("GET", "/api/deal/", {
@@ -325,7 +325,7 @@ describe("Deal rate functions", function () {
     cy.intercept(`/api/deal/${dealOne.id}/vote/`, {
       deal: {
         ...dealOne,
-        voted_by_user: null,
+        rated_by_user: null,
         rating: +dealOne.rating + 1,
       },
     }).as("dealVote");
@@ -344,7 +344,7 @@ describe("Deal rate functions", function () {
   it("Authorised user can down vote from up vote", function () {
     const dealOne = {
       ...this.stubDeals.deal_1,
-      voted_by_user: true,
+      rated_by_user: true,
       rating: +this.stubDeals.deal_1.rating + 1,
     };
     cy.intercept("GET", "/api/deal/", {
@@ -355,7 +355,7 @@ describe("Deal rate functions", function () {
     cy.intercept(`/api/deal/${dealOne.id}/vote/`, {
       deal: {
         ...dealOne,
-        voted_by_user: false,
+        rated_by_user: false,
         rating: +dealOne.rating - 2,
       },
     }).as("dealVote");
@@ -374,7 +374,7 @@ describe("Deal rate functions", function () {
   it("Authorised user can up vote from down vote", function () {
     const dealOne = {
       ...this.stubDeals.deal_1,
-      voted_by_user: false,
+      rated_by_user: false,
       rating: +this.stubDeals.deal_1.rating - 1,
     };
     cy.intercept("GET", "/api/deal/", {
@@ -385,7 +385,7 @@ describe("Deal rate functions", function () {
     cy.intercept(`/api/deal/${dealOne.id}/vote/`, {
       deal: {
         ...dealOne,
-        voted_by_user: true,
+        rated_by_user: true,
         rating: +dealOne.rating + 2,
       },
     }).as("dealVote");

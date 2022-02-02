@@ -29,7 +29,7 @@ function DealListView({ deal, setDeals }) {
           if (stateDeal.id === rateDealResponse.id) {
             return {
               ...stateDeal,
-              voted_by_user: rateDealResponse.voted_by_user,
+              rated_by_user: rateDealResponse.rated_by_user,
               rating: rateDealResponse.rating,
             };
           }
@@ -53,10 +53,10 @@ function DealListView({ deal, setDeals }) {
     }
     // null = no vote, true = vote up, false = vote down.
     if (e.target.id === "rate-deal-up") {
-      deal.voted_by_user === true ? (rating = null) : (rating = true);
+      deal.rated_by_user === true ? (rating = null) : (rating = true);
     }
     if (e.target.id === "rate-deal-down") {
-      deal.voted_by_user === false ? (rating = null) : (rating = false);
+      deal.rated_by_user === false ? (rating = null) : (rating = false);
     }
     rateDeal(deal.id, rating);
   }
@@ -88,7 +88,7 @@ function DealListView({ deal, setDeals }) {
         <img
           src={arrowUpIcon}
           className={
-            deal.voted_by_user === true
+            deal.rated_by_user === true
               ? styles["deal-list-view-rating-vote"]
               : null
           }
@@ -99,7 +99,7 @@ function DealListView({ deal, setDeals }) {
         <img
           src={arrowDownIcon}
           className={
-            deal.voted_by_user === false
+            deal.rated_by_user === false
               ? styles["deal-list-view-rating-vote"]
               : null
           }

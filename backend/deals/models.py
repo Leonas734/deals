@@ -79,7 +79,7 @@ class Deal(models.Model):
             self.down_votes.append(username)
         self.save()
 
-    def voted_by_user(self, username):
+    def rated_by_user(self, username):
         if username in self.up_votes:
             return True
         if username in self.down_votes:
