@@ -1,0 +1,15 @@
+.user-icon {
+  display: flex;
+  align-items: center;
+  width: 15rem;
+}
+.user-icon > img {
+  height: 3rem;
+  width: 3rem;
+  border-radius: 50%;
+}
+
+.user-icon > p {
+  font-size: 1.4rem;
+  margin: 1rem;
+}

@@ -130,6 +130,7 @@ function DealListView({ deal, setDeals }) {
           ""
         )}
         <UserIcon
+          dataCy={"deal-list-view-user-details"}
           username={deal.user.username}
           profilePictureUrl={deal.user.profile_picture}
         />

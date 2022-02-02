@@ -7,15 +7,20 @@ import { useAuth } from "../context/authContext";
 
 function EmailVerification() {
   const params = useParams();
-  const { verifyEmail, error, isPending, response } = useEmailVerification();
+  const {
+    verifyEmail,
+    emailVerificationError,
+    emailVerificationIsPending,
+    emailVerificationResponse,
+  } = useEmailVerification();
   const { dispatch } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (params.userId && params.emailToken && !response) {
+    if (params.userId && params.emailToken && !emailVerificationResponse) {
       verifyEmail(params.userId, params.emailToken);
     }
-    if (response && !error) {
+    if (emailVerificationResponse && !emailVerificationError) {
       dispatch({
         type: "logout",
       });
@@ -23,15 +28,17 @@ function EmailVerification() {
         navigate("/");
       }, 5000);
     }
-  }, [params, response]);
+  }, [params, emailVerificationResponse]);
   return (
     <div className={styles["container"]}>
-      {response && !error && (
+      {emailVerificationResponse && !emailVerificationError && (
         <p className={styles["text"]}>
-          {response.detail} Redirecting back to homepage...
+          {emailVerificationResponse.detail} Redirecting back to homepage...
         </p>
       )}
-      {error && <p className={styles["text"]}>{error.detail}</p>}
+      {emailVerificationError && (
+        <p className={styles["text"]}>{emailVerificationError.detail}</p>
+      )}
     </div>
   );
 }

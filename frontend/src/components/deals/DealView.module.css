@@ -1,0 +1,133 @@
+.deal-view-main {
+  background-color: #dddbdb;
+  margin: 0 25rem;
+}
+@media only screen and (max-width: 1150px) {
+  .deal-view-main {
+    background-color: #dddbdb;
+    margin: 0;
+  }
+}
+.deal-view-deal {
+  padding: 2rem;
+  display: flex;
+  column-gap: 2rem;
+}
+
+.deal-view-deal-image {
+  width: 60vw;
+  height: 80vh;
+}
+
+.deal-view-deal-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.deal-view-deal-details > h1 {
+  font-size: 4.5rem;
+}
+
+.deal-view-deal-details-posted {
+  margin-top: 1rem;
+  font-size: 1.5rem;
+}
+
+.deal-view-user-icon {
+  margin: 1rem 0;
+}
+
+.deal-view-user-icon > img {
+  margin: 1rem 0;
+  height: 4rem;
+  width: 4rem;
+}
+
+.deal-view-deal-price {
+  display: flex;
+  align-items: center;
+}
+
+.deal-view-deal-price > p {
+  font-size: 3rem;
+}
+
+.deal-view-deal-price > img {
+  height: 3rem;
+  width: 3rem;
+}
+
+.deal-view-deal-postage {
+  display: flex;
+  align-items: center;
+}
+
+.deal-view-deal-postage > img {
+  height: 3rem;
+  width: 3rem;
+}
+
+.deal-view-deal-postage > p {
+  font-size: 3rem;
+}
+
+.deal-view-get-deal-button {
+  cursor: pointer;
+  margin-top: auto;
+  background-color: #74b9ff;
+  padding: 0.5rem;
+  border-radius: 10px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  transition: all 0.5s;
+}
+
+.deal-view-get-deal-button:hover {
+  transform: scale(1.03);
+}
+
+.deal-view-get-deal-button > img {
+  height: 4rem;
+  grid-column: 3/4;
+  justify-self: end;
+}
+
+.deal-view-get-deal-button > p {
+  grid-column: 2/3;
+  font-size: 3rem;
+  justify-self: center;
+}
+.deal-view-deal-extras {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.deal-view-deal-rating {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 3rem;
+}
+
+.deal-view-deal-rating > img {
+  height: 4rem;
+  width: 4rem;
+}
+
+.deal-view-all-comments-icon {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+}
+
+.deal-view-all-comments-icon > p {
+  font-size: 3rem;
+  margin-right: 1rem;
+}
+
+.deal-view-all-comments-icon > img {
+  height: 4rem;
+  width: 4rem;
+}
