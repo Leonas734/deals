@@ -40,7 +40,7 @@ def test_get_deal_by_no_auth(test_user_3_verified, api_client, test_deal_1):
     assert resp.data['created'] != None
     assert resp.data['updated'] == None
     assert resp.data['rating'] == 0
-    assert resp.data['voted_by_user'] == None
+    assert resp.data['rated_by_user'] == None
     assert len(resp.data) == 17
 
 @pytest.mark.django_db
@@ -68,7 +68,7 @@ def test_get_deal_by_pk_voted_up_by_user(test_user_3_verified, test_user_3_acces
     assert resp.data['created'] != None
     assert resp.data['updated'] == None
     assert resp.data['rating'] == 1
-    assert resp.data['voted_by_user'] == True
+    assert resp.data['rated_by_user'] == True
     assert len(resp.data) == 17
 
 @pytest.mark.django_db
@@ -96,7 +96,7 @@ def test_get_deal_by_pk_voted_down_by_user(test_user_3_verified, test_user_3_acc
     assert resp.data['created'] != None
     assert resp.data['updated'] == None
     assert resp.data['rating'] == -1
-    assert resp.data['voted_by_user'] == False
+    assert resp.data['rated_by_user'] == False
     assert len(resp.data) == 17
 
 @pytest.mark.django_db
@@ -122,7 +122,7 @@ def test_get_deal_by_pk_no_votes(test_user_3_verified, test_user_3_access_token,
     assert resp.data['created'] != None
     assert resp.data['updated'] == None
     assert resp.data['rating'] == 0
-    assert resp.data['voted_by_user'] == None
+    assert resp.data['rated_by_user'] == None
     assert len(resp.data) == 17
 
 @pytest.mark.django_db

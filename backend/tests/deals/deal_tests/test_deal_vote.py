@@ -17,7 +17,7 @@ def test_deal_upvote(test_user_3_verified, test_user_3_access_token, api_client,
     )
     assert resp.status_code == 200
     print(resp.data['deal'])
-    assert resp.data['deal']['voted_by_user'] == True
+    assert resp.data['deal']['rated_by_user'] == True
     assert len(resp.data) == 1
     test_deal_1.refresh_from_db()
     assert test_deal_1.rating == 1
@@ -32,7 +32,7 @@ def test_deal_downvote(test_user_3_verified, test_user_3_access_token, api_clien
         }
     )
     assert resp.status_code == 200
-    assert resp.data['deal']['voted_by_user'] == False
+    assert resp.data['deal']['rated_by_user'] == False
     test_deal_1.refresh_from_db()
     assert test_deal_1.rating == -1
 
