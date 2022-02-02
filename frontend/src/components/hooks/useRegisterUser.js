@@ -1,42 +1,32 @@
 import { useState } from "react";
+import useAxios from "./useAxios";
 
 export const useRegisterUser = () => {
   const [error, setError] = useState({});
   const [isPending, setIsPending] = useState(false);
   const [response, setResponse] = useState("");
+  const api = useAxios();
 
   const registerUser = async (username, email, password, passwordRepeat) => {
     setError(null);
     setIsPending(true);
     try {
       if (password !== passwordRepeat) {
-        throw new Error(
-          JSON.stringify({ password: ["Passwords do not match"] })
-        );
+        throw {
+          response: { data: { password: ["Passwords do not match"] } },
+        };
       }
-      const res = await fetch(
-        `http://${window.location.hostname}:8000/api/sign_up/`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            username,
-            email,
-            password,
-            password_repeat: passwordRepeat,
-          }),
-        }
-      );
 
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error(JSON.stringify(data));
-      }
-      setResponse(data["username"]);
+      const res = await api.post("/api/sign_up/", {
+        username,
+        email,
+        password,
+        password_repeat: passwordRepeat,
+      });
+
+      setResponse(res.data);
     } catch (err) {
-      setError({ ...JSON.parse(err.message) });
+      setError(err.response.data);
     }
     setIsPending(false);
   };

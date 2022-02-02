@@ -7,14 +7,14 @@ import ModalTemplate from "./ModalTemplate";
 import { useLoginUser } from "../hooks/useLoginUser";
 import { useAuth } from "../context/authContext";
 
-function LoginModal({ setModalView, modalView }) {
+function LoginModal({ setModalIsOpen, modalIsOpen }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const { loginUser, error, isPending, response } = useLoginUser();
   const { dispatch, state } = useAuth();
 
   function changeModalView() {
-    setModalView(!modalView);
+    setModalIsOpen(!modalIsOpen);
   }
 
   const handleLogin = (e) => {
@@ -25,16 +25,9 @@ function LoginModal({ setModalView, modalView }) {
   useEffect(() => {
     // API login successfull
     if (response) {
-      window.localStorage.setItem("deals.auth", JSON.stringify(response));
-      const [, payload] = response.access.split(".");
-      const decoded = JSON.parse(window.atob(payload));
       dispatch({
         type: "login",
-        payload: {
-          userId: decoded.id,
-          username: decoded.username,
-          profilePicture: decoded.profile_picture,
-        },
+        payload: response,
       });
       changeModalView();
     }
@@ -44,7 +37,7 @@ function LoginModal({ setModalView, modalView }) {
     <>
       <ModalTemplate
         changeModalView={changeModalView}
-        isOpen={modalView}
+        isOpen={modalIsOpen}
         dataCy={"login-modal"}>
         <h1 className={styles["modal-title"]}>Login</h1>
         <form className={styles["input-form"]} onSubmit={handleLogin}>

@@ -1,0 +1,43 @@
+{
+  "deal_1": {
+    "id": "805dca15-a448-4e6e-85f1-5473fd96a999",
+    "title": "24 months 0% intereset CC, 0% balance transfer fee!",
+    "description": "Great offer from xyz company. No interest for the first 24 months and there are no fees for balance transfers.",
+    "category": "FINANCE & INSURANCE",
+    "image": "http://127.0.0.1:8000/media/deal_images/credit-card-image.jpg",
+    "created": "2022-01-07T14:07:13.540000Z",
+    "deal_end_date": null,
+    "deal_start_date": null,
+    "instore_only": false,
+    "postage_cost": "0.00",
+    "rating": "3",
+    "sent_from": null,
+    "updated": null,
+    "url": "https://localhost:8000",
+    "user": {
+      "profile_picture": "http://127.0.0.1:8000/media/profile_pictures/DEFAULT-USER-PROFILE-PICTURE.jpg",
+      "username": "test-user-1"
+    }
+  },
+  "deal_2": {
+    "id": "75e3fe96-b8c6-4545-bf95-971f12a01888",
+    "title": "WiFi printer 30% off, free delivery",
+    "description": "Good value for money. Never seen it this cheap before. Comes with black and white ink cartiridge.",
+    "category": "ELECTRONICS",
+    "image": "http://127.0.0.1:8000/media/deal_images/printer-image.jpg",
+    "created": "2022-01-11T14:07:13.540000Z",
+    "deal_end_date": null,
+    "deal_start_date": null,
+    "instore_only": false,
+    "postage_cost": "0.00",
+    "price": "24.99",
+    "rating": 3,
+    "sent_from": null,
+    "updated": null,
+    "url": "https://localhost:8000",
+    "user": {
+      "profile_picture": "http://127.0.0.1:8000/media/profile_pictures/DEFAULT-USER-PROFILE-PICTURE.jpg",
+      "username": "test-user-2"
+    }
+  }
+}

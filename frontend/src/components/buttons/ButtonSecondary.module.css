@@ -1,11 +1,11 @@
 .button-secondary {
   flex-grow: 1;
   text-align: center;
-  border: solid 2px #ff7a00;
+  border: solid 2px #0984e3;
   background-color: white;
   border-radius: 0.5rem;
   margin: 1rem;
-  color: #ff7a00;
+  color: #0984e3;
   font-size: 3rem;
   cursor: pointer;
   transition: all 0.5s ease-out;

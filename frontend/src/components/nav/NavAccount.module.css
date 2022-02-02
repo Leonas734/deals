@@ -6,7 +6,7 @@
   height: 5rem;
   width: 5rem;
   border-radius: 50%;
-  border: 3px solid #ffefcf;
+  border: 3px solid #74b9ff;
   cursor: pointer;
 }
 
@@ -21,7 +21,7 @@
     0 100%,
     0 15%
   );
-  background-color: #ff7a00;
+  background-color: #74b9ff;
   position: fixed;
   right: 0.7%;
   top: 7rem;
@@ -29,12 +29,12 @@
 
 .account-menu-link {
   text-decoration: none;
-  color: white;
+  color: black;
   font-size: 4rem;
   text-align: center;
   margin: 0.5rem;
   cursor: pointer;
-  border-bottom: 2px solid #ffefcf;
+  border-bottom: 2px solid #636e72;
 }
 
 .logout-title {

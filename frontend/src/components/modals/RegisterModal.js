@@ -6,7 +6,7 @@ import Loader from "../misc/Loader";
 
 import { useRegisterUser } from "../hooks/useRegisterUser";
 
-function RegisterModal({ setModalView, modalView }) {
+function RegisterModal({ setModalIsOpen, modalIsOpen }) {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -14,7 +14,7 @@ function RegisterModal({ setModalView, modalView }) {
   const { registerUser, error, isPending, response } = useRegisterUser();
 
   function changeModalView() {
-    setModalView(!modalView);
+    setModalIsOpen(!modalIsOpen);
   }
 
   function handleCreateAccount(e) {
@@ -27,11 +27,11 @@ function RegisterModal({ setModalView, modalView }) {
       <ModalTemplate
         changeModalView={changeModalView}
         dataCy={"register-modal"}
-        isOpen={modalView}>
+        isOpen={modalIsOpen}>
         {response && (
           <div>
             <h1 className={styles["modal-title"]} data-cy="response-title">
-              {response}
+              {response.username}
             </h1>
             <p className={styles["modal-text"]} data-cy="response-text">
               Your account has been created. You can now login. But first please

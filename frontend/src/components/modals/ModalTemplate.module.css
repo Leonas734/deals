@@ -23,13 +23,13 @@
 .modal-title {
   font-size: 4rem;
   margin: 1rem;
-  color: #ff7a00;
+  color: #0984e3;
 }
 
 .modal-text {
-  font-size: 4rem;
+  font-size: 3rem;
   margin: 1rem;
-  color: #ff7a00;
+  color: #636e72;
 }
 
 .modal-error-message {

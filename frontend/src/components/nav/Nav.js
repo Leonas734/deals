@@ -66,14 +66,14 @@ const Nav = () => {
       </div>
       {showLoginModal && (
         <LoginModal
-          setModalView={setShowLoginModal}
-          modalView={showLoginModal}
+          setModalIsOpen={setShowLoginModal}
+          modalIsOpen={showLoginModal}
         />
       )}
       {showRegisterModal && (
         <RegisterModal
-          setModalView={setShowRegisterModal}
-          modalView={showRegisterModal}
+          setModalIsOpen={setShowRegisterModal}
+          modalIsOpen={showRegisterModal}
           dataCy="register-modal"
         />
       )}
