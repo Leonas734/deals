@@ -8,8 +8,13 @@ import { useAuth } from "../context/authContext";
 import DealListView from "./DealListView";
 
 function AllDeals() {
-  const { getAllDeals, error, isPending, allDeals, setAllDeals } =
-    useAllDeals();
+  const {
+    getAllDeals,
+    setAllDeals,
+    allDeals,
+    allDealsIsPending,
+    allDealsError,
+  } = useAllDeals();
   const userAuth = useAuth();
   useEffect(() => {
     getAllDeals();

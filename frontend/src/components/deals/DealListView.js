@@ -12,23 +12,25 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useRateDeal } from "../hooks/useRateDeal";
 import { useAuth } from "../context/authContext";
+import UserIcon from "../misc/UserIcon";
 
 function DealListView({ deal, setDeals }) {
-  const { rateDeal, response } = useRateDeal();
+  const { rateDeal, rateDealError, rateDealIsPending, rateDealResponse } =
+    useRateDeal();
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showVerifyEmailModal, setShowVerifyEmailModal] = useState(false);
   const { state: userAuthState } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (response) {
+    if (rateDealResponse) {
       setDeals((prevState) => {
         const newState = prevState.map((stateDeal) => {
-          if (stateDeal.id === response.id) {
+          if (stateDeal.id === rateDealResponse.id) {
             return {
               ...stateDeal,
-              voted_by_user: response.voted_by_user,
-              rating: response.rating,
+              voted_by_user: rateDealResponse.voted_by_user,
+              rating: rateDealResponse.rating,
             };
           }
           return stateDeal;
@@ -37,7 +39,7 @@ function DealListView({ deal, setDeals }) {
         return newState;
       });
     }
-  }, [response, userAuthState]);
+  }, [rateDealResponse, userAuthState]);
 
   function sendNewRating(e) {
     let rating = null;
@@ -127,17 +129,10 @@ function DealListView({ deal, setDeals }) {
         ) : (
           ""
         )}
-        <div
-          className={styles["deal-list-view-user-details"]}
-          data-cy="deal-list-view-user-details">
-          <img
-            src={userImg}
-            className={styles["deal-list-view-user-picture"]}
-          />
-          <p className={styles["deal-list-view-user-username"]}>
-            {deal.user.username}
-          </p>
-        </div>
+        <UserIcon
+          username={deal.user.username}
+          profilePictureUrl={deal.user.profile_picture}
+        />
         <div
           className={styles["deal-list-view-extras"]}
           data-cy="deal-list-view-extras">

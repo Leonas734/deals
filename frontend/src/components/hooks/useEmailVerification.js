@@ -2,9 +2,11 @@ import { useState } from "react";
 import useAxios from "./useAxios";
 
 export const useEmailVerification = () => {
-  const [error, setError] = useState(null);
-  const [isPending, setIsPending] = useState(false);
-  const [response, setResponse] = useState(null);
+  const [emailVerificationError, setEmailVerificationError] = useState(null);
+  const [emailVerificationIsPending, setEmailVerificationIsPending] =
+    useState(false);
+  const [emailVerificationResponse, setEmailVerificationResponse] =
+    useState(null);
   const api = useAxios();
 
   const verifyEmail = async (userId, emailToken) => {
@@ -13,14 +15,19 @@ export const useEmailVerification = () => {
         `/api/email_verification/${userId}/${emailToken}/`
       );
 
-      setResponse(res.data);
+      setEmailVerificationResponse(res.data);
     } catch (err) {
-      setError(err.response.data);
+      setEmailVerificationError(err.response.data);
     }
-    setIsPending(false);
+    setEmailVerificationIsPending(false);
   };
 
-  return { verifyEmail, error, isPending, response };
+  return {
+    verifyEmail,
+    emailVerificationError,
+    emailVerificationIsPending,
+    emailVerificationResponse,
+  };
 };
 
 export default useEmailVerification;

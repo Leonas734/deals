@@ -2,9 +2,9 @@ import { useState } from "react";
 import useAxios from "./useAxios";
 
 export const useRateDeal = () => {
-  const [error, setError] = useState({});
-  const [isPending, setIsPending] = useState(false);
-  const [response, setResponse] = useState(null);
+  const [rateDealError, setRateDealError] = useState({});
+  const [rateDealIsPending, setRateDealIsPending] = useState(false);
+  const [rateDealResponse, setRateDealResponse] = useState(null);
   const api = useAxios();
 
   /**
@@ -18,16 +18,12 @@ export const useRateDeal = () => {
       const res = await api.post(`/api/deal/${dealId}/vote/`, {
         vote,
       });
-      console.log(res.data);
-      console.log("SETTING RESPONSE");
-      setResponse(res.data.deal);
+      setRateDealResponse(res.data.deal);
     } catch (err) {
-      console.log("ERROR");
-      console.log(err.response);
-      setError(err.response.data);
+      setRateDealError(err.response.data);
     }
-    setIsPending(false);
+    setRateDealIsPending(false);
   };
 
-  return { rateDeal, error, isPending, response };
+  return { rateDeal, rateDealError, rateDealIsPending, rateDealResponse };
 };
