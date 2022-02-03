@@ -1,0 +1,15 @@
+.title {
+  color: var(--secondary);
+}
+
+.website {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: 7rem repeat(10, minmax(10vh, 1fr)) 20rem;
+}
+
+.footer {
+  background-color: blue;
+  grid-column: 1/13;
+  grid-row: 12/13;
+}

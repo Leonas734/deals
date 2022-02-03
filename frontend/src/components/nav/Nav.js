@@ -1,84 +1,61 @@
-import { React, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-
+import React from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./Nav.module.css";
 import searchIcon from "../../assets/search-icon.svg";
-import giftIcon from "../../assets/gift-icon.svg";
+import plusIcon from "../../assets/plus-icon.svg";
+import userIcon from "../../assets/user-icon.svg";
 
-import { useAuth } from "../context/authContext";
+function Nav() {
+  const [mobileView, setMobileView] = useState(false);
+  const [stickyNav, setStickyNav] = useState(false);
+  const navigate = useNavigate();
 
-import ButtonPrimary from "../buttons/ButtonPrimary";
-import ButtonSecondary from "../buttons/ButtonSecondary";
-import LoginModal from "../modals/LoginModal";
-import RegisterModal from "../modals/RegisterModal";
-import NavAccount from "./NavAccount";
-
-const Nav = () => {
-  const [showRegisterModal, setShowRegisterModal] = useState(false);
-  const [showLoginModal, setShowLoginModal] = useState(false);
-  const { state: authState, dispatch: authDispatch } = useAuth();
-
-  function logUserOut() {
-    authDispatch({ type: "logout" });
-  }
+  useEffect(() => {
+    window.addEventListener("resize", () => {
+      if (window.innerWidth <= 600) {
+        setMobileView(true);
+      } else {
+        setMobileView(false);
+      }
+    });
+  }, []);
 
   return (
-    <>
-      <div className={styles["nav-bar"]}>
-        <li className={styles["nav-logo"]}>
+    <div className={styles["nav"]} id="nav">
+      <h1 className={styles["nav-title"]} onClick={() => navigate("/")}>
+        Deals
+      </h1>
+      {!mobileView && (
+        <div className={styles["nav-search-bar"]}>
           <img
-            src={giftIcon}
-            className={styles["nav-logo__icon"]}
-            alt="Company icon"
-          />
-          <Link to="/" className={styles["nav-logo__text"]}>
-            deals
-          </Link>
-        </li>
-        <div className={styles["nav-search"]}>
-          <img
+            className={styles["nav-search-bar-icon"]}
             src={searchIcon}
-            alt="Search icon"
-            className={styles["nav-search__icon"]}
+            alt="Search"
           />
-          <input
-            type="text"
-            className={styles["nav-search__input"]}
-            placeholder="Search..."></input>
+          <input className={styles["nav-search-bar-input"]} />
         </div>
-        {!authState && (
-          <ButtonPrimary
-            text="Log in"
-            action={setShowLoginModal}
-            actionState={showLoginModal}
-            dataCy="nav-login-button"
-          />
+      )}
+      <div className={styles["nav-buttons"]}>
+        {mobileView && (
+          <div
+            className={`${styles["nav-button"]} ${styles["nav-button-search"]}`}>
+            <img src={searchIcon} className={styles["nav-icon"]} alt="Search" />
+          </div>
         )}
-        {!authState && (
-          <ButtonSecondary
-            text="Register"
-            action={setShowRegisterModal}
-            actionState={showRegisterModal}
-            dataCy="nav-register-button"
-          />
-        )}
-        {authState && <NavAccount user={authState} logout={logUserOut} />}
+        <div
+          className={`${styles["nav-button"]} ${styles["nav-button-login-register"]}`}>
+          <img src={userIcon} className={styles["nav-icon"]} alt="Person" />
+          <p>Login / Register</p>
+        </div>
+        <div
+          className={`${styles["nav-button"]} ${styles["nav-button-submit"]}`}>
+          <img src={plusIcon} className={styles["nav-icon"]} alt="Plus" />
+          <p>Submit</p>
+        </div>
       </div>
-      {showLoginModal && (
-        <LoginModal
-          setModalIsOpen={setShowLoginModal}
-          modalIsOpen={showLoginModal}
-        />
-      )}
-      {showRegisterModal && (
-        <RegisterModal
-          setModalIsOpen={setShowRegisterModal}
-          modalIsOpen={showRegisterModal}
-          dataCy="register-modal"
-        />
-      )}
-    </>
+    </div>
   );
-};
+}
 
 export default Nav;

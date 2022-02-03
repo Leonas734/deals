@@ -4,13 +4,9 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
-import { AuthProvider } from "./components/context/authContext";
-
 ReactDOM.render(
   <React.StrictMode>
-    <AuthProvider>
-      <App />
-    </AuthProvider>
+    <App />
   </React.StrictMode>,
   document.getElementById("root")
 );
@@ -19,9 +15,3 @@ ReactDOM.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
-
-// #0984e3 -- Primary
-// #74b9ff -- Secondary
-// #e9e9e9 -- Tritiary Very light
-// #dddbdb -- Tritiary Light
-// #636e72 -- Tritiary Dark

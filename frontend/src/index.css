@@ -1,9 +1,9 @@
 body {
-  font-family: "Mukta", sans-serif;
+  font-family: "Rubik", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #e9e9e9;
 }
+
 * {
   margin: 0;
   padding: 0;
@@ -14,7 +14,15 @@ body {
 *::after {
   box-sizing: inherit;
 }
+
 html {
   box-sizing: border-box;
   font-size: 62.5%;
+}
+
+:root {
+  --colour-primary: #1255e7;
+  --colour-secondary: #74b9ff;
+  --colour-grey: #b8b8b8;
+  --colour-grey-dark: #9b9b9b;
 }

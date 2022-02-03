@@ -1,32 +1,24 @@
 import React from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Settings from "./components/settings/Settings";
+import { AuthProvider } from "./components/context/authContext";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import styles from "./App.module.css";
 import Nav from "./components/nav/Nav";
-import AllDeals from "./components/deals/AllDeals";
-import EmailVerifcation from "./components/emails/EmailVerification";
-import DealView from "./components/deals/DealView";
-import { useAuth } from "./components/context/authContext";
+import Main from "./components/main/Main";
 
 function App() {
-  const { state: authState } = useAuth();
   return (
-    <>
-      <BrowserRouter>
-        <Nav />
-        <Routes>
-          <Route path="/" element={<AllDeals />} />
-          <Route
-            path="/email_verification/:userId/:emailToken"
-            element={<EmailVerifcation />}
-          />
-          <Route
-            path="account/settings"
-            element={!authState ? <Navigate replace to="/" /> : <Settings />}
-          />
-          <Route path="deal/:dealId" element={<DealView />} />
-        </Routes>
-      </BrowserRouter>
-    </>
+    <AuthProvider>
+      <div className={styles["website"]}>
+        <BrowserRouter>
+          <Nav />
+          <Routes>
+            <Route path="/" element={<Main />}></Route>
+          </Routes>
+        </BrowserRouter>
+
+        <div className={styles["footer"]} id="footer"></div>
+      </div>
+    </AuthProvider>
   );
 }
 
