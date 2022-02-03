@@ -2,8 +2,17 @@ import { React } from "react";
 import styles from "./ModalTemplate.module.css";
 import xIcon from "../../assets/x-icon.svg";
 import { createPortal } from "react-dom";
+import { useEffect } from "react";
 
 function ModalTemplate({ changeModalView, children, dataCy, isOpen }) {
+  useEffect(() => {
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        changeModalView();
+      }
+    });
+  });
+
   if (!isOpen) return null;
   const backgroundId = "modal-background";
   return createPortal(

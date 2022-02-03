@@ -14,7 +14,6 @@
   background-color: var(--colour-grey-dark);
   grid-column: 1/6;
   bottom: 2rem;
-  z-index: 99;
 }
 
 .nav-title {

@@ -2,7 +2,7 @@
   flex-grow: 1;
   text-align: center;
   border: solid 2px white;
-  background-color: #0984e3;
+  background-color: var(--colour-primary);
   border-radius: 0.5rem;
   margin: 1rem;
   color: white;

@@ -2,9 +2,9 @@ import { useState } from "react";
 import useAxios from "./useAxios";
 
 export const useRegisterUser = () => {
-  const [error, setError] = useState({});
+  const [error, setError] = useState(null);
   const [isPending, setIsPending] = useState(false);
-  const [response, setResponse] = useState("");
+  const [response, setResponse] = useState(null);
   const api = useAxios();
 
   const registerUser = async (username, email, password, passwordRepeat) => {

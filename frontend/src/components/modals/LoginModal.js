@@ -7,14 +7,19 @@ import ModalTemplate from "./ModalTemplate";
 import { useLoginUser } from "../hooks/useLoginUser";
 import { useAuth } from "../context/authContext";
 
-function LoginModal({ setModalIsOpen, modalIsOpen }) {
+function LoginModal({ setModalIsOpen, modalIsOpen, setRegisterModalIsOpen }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const { loginUser, error, isPending, response } = useLoginUser();
   const { dispatch, state } = useAuth();
 
   function changeModalView() {
-    setModalIsOpen(!modalIsOpen);
+    setModalIsOpen(false);
+  }
+
+  function openRegisterModal() {
+    setModalIsOpen(false);
+    setRegisterModalIsOpen(true);
   }
 
   const handleLogin = (e) => {
@@ -40,6 +45,10 @@ function LoginModal({ setModalIsOpen, modalIsOpen }) {
         isOpen={modalIsOpen}
         dataCy={"login-modal"}>
         <h1 className={styles["modal-title"]}>Login</h1>
+        <p className={styles["modal-create-new-account-text"]}>
+          Don't have an account?{" "}
+          <span onClick={openRegisterModal}>Create new account</span>.
+        </p>
         <form className={styles["input-form"]} onSubmit={handleLogin}>
           <label>
             <span>Username/Email</span>

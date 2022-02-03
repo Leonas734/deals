@@ -23,7 +23,12 @@
 .modal-title {
   font-size: 4rem;
   margin: 1rem;
-  color: #0984e3;
+  color: var(--colour-primary);
+}
+
+.modal-create-new-account-text {
+  font-size: 2.5rem;
+  padding: 1rem;
 }
 
 .modal-text {
@@ -65,4 +70,26 @@
   font-size: 3rem;
   margin: 2rem 0;
   padding: 0.5rem;
+}
+
+.modal-create-new-account-text > span {
+  color: blue;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+@media only screen and (max-width: 600px) {
+  .modal-main {
+    width: 80%;
+  }
+  .modal-title {
+    margin: 0;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  .input-form > label > input {
+    font-size: 2rem;
+    height: 4rem;
+  }
 }

@@ -1,21 +1,14 @@
 import React, { useState } from "react";
 import styles from "./NavAccount.module.css";
-import ModalTemplate from "../modals/ModalTemplate";
-import ButtonPrimary from "../buttons/ButtonPrimary";
-import ButtonSecondary from "../buttons/ButtonSecondary";
-import { Link } from "react-router-dom";
+import navStyles from "./Nav.module.css";
+import { useNavigate } from "react-router-dom";
 
 function NavAccount({ user, logout }) {
   const [showUserMenu, setShowUserMenu] = useState(false);
-  const [showLogoutConfirmation, setShowLogoutConfirmation] = useState(false);
-
   function showMenu() {
     setShowUserMenu(!showUserMenu);
   }
-
-  function showLogoutModal() {
-    setShowLogoutConfirmation(!showLogoutConfirmation);
-  }
+  const navigate = useNavigate();
 
   const profilePicture = new URL(
     user.profilePicture,
@@ -23,7 +16,7 @@ function NavAccount({ user, logout }) {
   ).href;
 
   return (
-    <div className={styles["nav-account"]}>
+    <div className={styles["nav-account"]} data-cy="nav-account-button">
       <img
         src={profilePicture}
         className={styles["nav-account-image"]}
@@ -32,45 +25,26 @@ function NavAccount({ user, logout }) {
         onClick={showMenu}
       />
       {showUserMenu && (
-        <div className={styles["nav-account-menu"]} data-cy="nav-account-menu">
-          <Link
-            onClick={showMenu}
-            to="account/settings"
-            className={styles["account-menu-link"]}>
-            Settings
-          </Link>
+        <div className={styles["nav-account-menu"]}>
+          <p className={styles["nav-account-menu-username"]}>{user.username}</p>
           <p
-            className={styles["account-menu-link"]}
+            className={styles["nav-account-menu-action"]}
             onClick={() => {
-              setShowLogoutConfirmation(true);
+              showMenu();
+              navigate("/account/settings");
+            }}>
+            Settings
+          </p>
+          <p
+            className={styles["nav-account-menu-action"]}
+            onClick={() => {
+              logout();
             }}
-            data-cy="nav-account-menu-logout">
+            data-cy="nav-account-logout">
             Logout
           </p>
         </div>
       )}
-      <ModalTemplate
-        changeModalView={showLogoutModal}
-        isOpen={showLogoutConfirmation}
-        dataCy="logout-confirmation-modal">
-        <div className={styles["logout-content"]}>
-          <h1
-            className={styles["logout-title"]}
-            data-cy="logout-confirmation-title">
-            Are you sure you wish to logout?
-          </h1>
-          <ButtonPrimary
-            text="Yes"
-            action={logout}
-            dataCy="logout-confirmation-yes-button"
-          />
-          <ButtonSecondary
-            text="No"
-            action={showLogoutModal}
-            dataCy="logout-confirmation-no-button"
-          />
-        </div>
-      </ModalTemplate>
     </div>
   );
 }

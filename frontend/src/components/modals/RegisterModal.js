@@ -14,7 +14,7 @@ function RegisterModal({ setModalIsOpen, modalIsOpen }) {
   const { registerUser, error, isPending, response } = useRegisterUser();
 
   function changeModalView() {
-    setModalIsOpen(!modalIsOpen);
+    setModalIsOpen(false);
   }
 
   function handleCreateAccount(e) {
