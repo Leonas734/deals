@@ -68,7 +68,8 @@ def test_create_deal_basic(test_user_3_verified, test_user_3_access_token, api_c
     assert resp.data['updated'] == None
     assert resp.data['rating'] == 1
     assert resp.data['rated_by_user'] == True
-    assert len(resp.data) == 17
+    assert resp.data['total_comments'] == 0
+    assert len(resp.data) == 18
 
 @pytest.mark.django_db
 def test_create_deal_postage(test_user_3_verified, test_user_3_access_token, api_client):
@@ -104,7 +105,8 @@ def test_create_deal_postage(test_user_3_verified, test_user_3_access_token, api
     assert resp.data['updated'] == None
     assert resp.data['rating'] == 1
     assert resp.data['rated_by_user'] == True
-    assert len(resp.data) == 17
+    assert resp.data['total_comments'] == 0
+    assert len(resp.data) == 18
 
 @pytest.mark.django_db
 def test_create_deal_instore(test_user_3_verified, test_user_3_access_token, api_client):
@@ -140,7 +142,8 @@ def test_create_deal_instore(test_user_3_verified, test_user_3_access_token, api
     assert resp.data['updated'] == None
     assert resp.data['rating'] == 1
     assert resp.data['rated_by_user'] == True
-    assert len(resp.data) == 17
+    assert resp.data['total_comments'] == 0
+    assert len(resp.data) == 18
 
 @pytest.mark.django_db
 def test_create_deal_custom_image(test_user_3_access_token, api_client):

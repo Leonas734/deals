@@ -52,7 +52,8 @@ def test_update_deal_to_postage(test_user_3_verified, test_user_3_access_token, 
     assert resp.data['deal_end_date'] == TEST_DEAL_1_DEAL_END_DATE
     assert resp.data['created'] != None
     assert resp.data['updated'] != None
-    assert len(resp.data) == 17
+    assert resp.data['total_comments'] == 0
+    assert len(resp.data) == 18
 
 @pytest.mark.django_db
 def test_update_deal_to_instore(test_user_3_verified, test_user_3_access_token, api_client, test_deal_1):
@@ -85,7 +86,8 @@ def test_update_deal_to_instore(test_user_3_verified, test_user_3_access_token, 
     assert resp.data['deal_end_date'] == TEST_DEAL_1_DEAL_END_DATE
     assert resp.data['created'] != None
     assert resp.data['updated'] != None
-    assert len(resp.data) == 17
+    assert resp.data['total_comments'] == 0
+    assert len(resp.data) == 18
 
 @pytest.mark.django_db
 def test_update_deal_image(test_user_3_verified, test_user_3_access_token, api_client, test_deal_1):
@@ -106,13 +108,11 @@ def test_update_deal_image(test_user_3_verified, test_user_3_access_token, api_c
         }
     )
     assert resp.status_code == 200
-    assert len(resp.data) == 17
+    assert len(resp.data) == 18
     assert resp.data['image'] == f'http://testserver/media/{settings.DEAL_IMAGE_DIR}/{image_name}'
     deal = Deal.objects.first()
     # Compare images pixel by pixel to ensure they match
     db_image = Image.open(f'{os.getcwd()}/media/{deal.image}')
-    print(db_image)
-    print(db_image)
     assert ImageChops.difference(image, db_image).getbbox() == None
     assert deal.image.name == f'{settings.DEAL_IMAGE_DIR}/{image_name}'
     # Delete test image file

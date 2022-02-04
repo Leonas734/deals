@@ -94,6 +94,7 @@ class DealSerializer(serializers.ModelSerializer):
     rating = serializers.ReadOnlyField()
     user = UserSerializer(read_only=True)
     rated_by_user = serializers.SerializerMethodField(read_only=True)
+    total_comments = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = Deal
         exclude = ('up_votes', 'down_votes',)
@@ -125,6 +126,9 @@ class DealSerializer(serializers.ModelSerializer):
     def get_rated_by_user(self, obj):
         username = self.context['request'].user.username
         return obj.rated_by_user(username)
+
+    def get_total_comments(self, obj):
+        return Comment.objects.filter(deal=obj).count()
 
 class DealVoteSerializer(serializers.Serializer):
     vote = serializers.BooleanField(allow_null=True)

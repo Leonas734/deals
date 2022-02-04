@@ -40,6 +40,11 @@ def test_create_deal_comment(test_user_3_verified, test_user_3_access_token, api
     assert resp.data['liked_by_user'] == False
     assert len(resp.data) == 8
 
+    resp = api_client.get(
+        f'/api/deal/{test_deal_1.id}/',
+    )
+    assert resp.data['total_comments'] == 1
+
 @pytest.mark.django_db
 def test_create_comment_quoted(
     test_user_3_verified, test_comment_1, test_user_3_access_token, api_client, test_deal_1):
@@ -70,6 +75,11 @@ def test_create_comment_quoted(
     assert resp.data['quoted_comment_data']['user'] == test_user_3_verified.username
     assert resp.data['quoted_comment_data']['text'] == test_comment_1.text
     assert resp.data['quoted_comment_data']['date'] == test_comment_1.created
+
+    resp = api_client.get(
+        f'/api/deal/{test_deal_1.id}/',
+    )
+    assert resp.data['total_comments'] == 2
 
 @pytest.mark.django_db
 def test_create_comment_no_auth(test_user_3_verified, api_client,test_deal_1):
