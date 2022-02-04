@@ -10,7 +10,7 @@ from deals.models import Deal
 def test_deal_upvote(test_user_3_verified, test_user_3_access_token, api_client, test_deal_1):
     api_client.credentials(HTTP_AUTHORIZATION='Bearer ' + test_user_3_access_token)
     resp = api_client.post(
-        f'/api/deal/{str(test_deal_1.id)}/vote/',
+        f'/api/deals/{str(test_deal_1.id)}/vote/',
         {
             'vote': True,
         }
@@ -26,7 +26,7 @@ def test_deal_upvote(test_user_3_verified, test_user_3_access_token, api_client,
 def test_deal_downvote(test_user_3_verified, test_user_3_access_token, api_client, test_deal_1):
     api_client.credentials(HTTP_AUTHORIZATION='Bearer ' + test_user_3_access_token)
     resp = api_client.post(
-        f'/api/deal/{str(test_deal_1.id)}/vote/',
+        f'/api/deals/{str(test_deal_1.id)}/vote/',
         {
             'vote': False,
         }
@@ -40,7 +40,7 @@ def test_deal_downvote(test_user_3_verified, test_user_3_access_token, api_clien
 def test_deal_unvote(test_user_3_verified, test_user_3_access_token, api_client, test_deal_1):
     api_client.credentials(HTTP_AUTHORIZATION='Bearer ' + test_user_3_access_token)
     resp = api_client.post(
-        f'/api/deal/{str(test_deal_1.id)}/vote/',
+        f'/api/deals/{str(test_deal_1.id)}/vote/',
         {
             'vote': True,
         }
@@ -49,7 +49,7 @@ def test_deal_unvote(test_user_3_verified, test_user_3_access_token, api_client,
     assert test_deal_1.rating == 1
 
     resp = api_client.post(
-        f'/api/deal/{str(test_deal_1.id)}/vote/',
+        f'/api/deals/{str(test_deal_1.id)}/vote/',
         {
             'vote': '',
         }
@@ -62,7 +62,7 @@ def test_deal_upvote_not_verified(
     test_user_3_verified, api_client, test_deal_1, test_user_1, test_user_1_access_token):
     api_client.credentials(HTTP_AUTHORIZATION='Bearer ' + test_user_1_access_token)
     resp = api_client.post(
-        f'/api/deal/{str(test_deal_1.id)}/vote/',
+        f'/api/deals/{str(test_deal_1.id)}/vote/',
         {
             'vote': True,
         }
@@ -74,7 +74,7 @@ def test_deal_upvote_not_verified(
 def test_deal_upvote_invalid_auth(test_user_3_verified, api_client, test_deal_1):
     api_client.credentials(HTTP_AUTHORIZATION='Bearer ' + 'invalid-token')
     resp = api_client.post(
-        f'/api/deal/{str(test_deal_1.id)}/vote/',
+        f'/api/deals/{str(test_deal_1.id)}/vote/',
         {
             'vote': True,
         }
@@ -85,7 +85,7 @@ def test_deal_upvote_invalid_auth(test_user_3_verified, api_client, test_deal_1)
 @pytest.mark.django_db
 def test_deal_upvote_no_auth(test_user_3_verified, api_client, test_deal_1):
     resp = api_client.post(
-        f'/api/deal/{str(test_deal_1.id)}/vote/',
+        f'/api/deals/{str(test_deal_1.id)}/vote/',
         {
             'vote': True,
         }

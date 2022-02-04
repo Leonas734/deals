@@ -26,7 +26,7 @@ def test_update_deal_to_postage(test_user_3_verified, test_user_3_access_token, 
     test_deal_1.save()
     
     resp = api_client.patch(
-        f'/api/deal/{str(test_deal_1.id)}/',
+        f'/api/deals/{str(test_deal_1.id)}/',
         {
             'price': TEST_DEAL_1_PRICE,
             'url': TEST_DEAL_1_URL,
@@ -61,7 +61,7 @@ def test_update_deal_to_instore(test_user_3_verified, test_user_3_access_token, 
     test_deal_1.postage_cost =  TEST_DEAL_1_POSTAGE_COST
     test_deal_1.sent_from = TEST_DEAL_1_SENT_FROM
     resp = api_client.patch(
-        f'/api/deal/{str(test_deal_1.id)}/',
+        f'/api/deals/{str(test_deal_1.id)}/',
         {
             'price': TEST_DEAL_1_PRICE,
             'url': TEST_DEAL_1_URL,
@@ -101,7 +101,7 @@ def test_update_deal_image(test_user_3_verified, test_user_3_access_token, api_c
     file.seek(0)
     
     resp = api_client.patch(
-        f'/api/deal/{str(test_deal_1.id)}/',
+        f'/api/deals/{str(test_deal_1.id)}/',
         format='multipart',
         data={
             'image': file
@@ -122,7 +122,7 @@ def test_update_deal_image(test_user_3_verified, test_user_3_access_token, api_c
 def test_update_deal_invalid_dates(test_user_3_verified, test_user_3_access_token, api_client, test_deal_1):
     api_client.credentials(HTTP_AUTHORIZATION='Bearer ' + test_user_3_access_token)
     resp = api_client.patch(
-        f'/api/deal/{str(test_deal_1.id)}/',
+        f'/api/deals/{str(test_deal_1.id)}/',
         {
             'deal_start_date': TEST_DEAL_1_DEAL_END_DATE,
             'deal_end_date': TEST_DEAL_1_DEAL_START_DATE
@@ -140,7 +140,7 @@ def test_update_deal_instore_and_postage_invalid(
     api_client.credentials(HTTP_AUTHORIZATION='Bearer ' + test_user_3_access_token)
     
     resp = api_client.patch(
-        f'/api/deal/{str(test_deal_1.id)}/',
+        f'/api/deals/{str(test_deal_1.id)}/',
         {
             'instore_only': True,
             'postage_cost': TEST_DEAL_1_POSTAGE_COST,
@@ -157,7 +157,7 @@ def test_update_deal_not_owner(
     api_client.credentials(HTTP_AUTHORIZATION='Bearer ' + test_user_1_access_token)
     
     resp = api_client.patch(
-        f'/api/deal/{str(test_deal_1.id)}/',
+        f'/api/deals/{str(test_deal_1.id)}/',
         {
             'title': 'New title.'
         }
@@ -168,7 +168,7 @@ def test_update_deal_not_owner(
 @pytest.mark.django_db
 def test_update_deal_not_verified(test_user_3_verified, api_client, test_deal_1):    
     resp = api_client.patch(
-        f'/api/deal/{str(test_deal_1.id)}/',
+        f'/api/deals/{str(test_deal_1.id)}/',
         {
             'title': 'New title.'
         }
@@ -180,7 +180,7 @@ def test_update_deal_not_verified(test_user_3_verified, api_client, test_deal_1)
 def test_update_deal_invalid_auth(test_user_3_verified, api_client, test_deal_1):
     api_client.credentials(HTTP_AUTHORIZATION='Bearer ' + 'invalid-auth-token')    
     resp = api_client.patch(
-        f'/api/deal/{str(test_deal_1.id)}/',
+        f'/api/deals/{str(test_deal_1.id)}/',
         {
             'title': 'New title.'
         }

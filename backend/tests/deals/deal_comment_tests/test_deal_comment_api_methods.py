@@ -44,7 +44,7 @@ def test_deal_comment_get_all_deal_comments(api_client, test_user_3_verified, te
     for method in ALL_METHODS:
         
         resp = getattr(api_client, method)(
-            '/api/deal/1/comments/',
+            '/api/deals/1/comments/',
             {}
         )
         if method in allowed_methods:

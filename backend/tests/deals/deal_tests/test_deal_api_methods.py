@@ -13,7 +13,7 @@ def test_deal_methods(api_client, test_user_3_verified, test_user_3_access_token
     for method in ALL_METHODS:
         
         resp = getattr(api_client, method)(
-            '/api/deal/',
+            '/api/deals/',
             {}
         )
         if method in allowed_methods:
@@ -31,7 +31,7 @@ def test_deal_methods_pk(
     for method in ALL_METHODS:
         
         resp = getattr(api_client, method)(
-            f'/api/deal/{str(test_deal_1.id)}/',
+            f'/api/deals/{str(test_deal_1.id)}/',
             {}
         )
         if method in allowed_methods:
@@ -49,7 +49,7 @@ def test_deal_methods_vote(
     for method in ALL_METHODS:
         
         resp = getattr(api_client, method)(
-            f'/api/deal/{str(test_deal_1.id)}/vote/',
+            f'/api/deals/{str(test_deal_1.id)}/vote/',
             {}
         )
         if method in allowed_methods:

@@ -11,7 +11,7 @@ export const useDealComments = () => {
     setAllDealCommentsError(null);
     setAllDealCommentsIsPending(true);
     try {
-      const res = await api.get(`/api/deal/${dealId}/comments/`);
+      const res = await api.get(`/api/deals/${dealId}/comments/`);
       setDealComments(res.data);
     } catch (err) {
       setAllDealCommentsError(err.response.data);

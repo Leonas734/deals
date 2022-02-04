@@ -76,9 +76,9 @@ User requested to relog once jwt-access token expires. Expire time inside settin
 
 # Deal API methods
 
-|     USAGE     |    URL     | METHOD | AUTH? | VERIFIED EMAIL? |
-| :-----------: | :--------: | :----: | :---: | :-------------: |
-| Get all deals | /api/deal/ |  GET   |  No   |       No        |
+|     USAGE     |     URL     | METHOD | AUTH? | VERIFIED EMAIL? |
+| :-----------: | :---------: | :----: | :---: | :-------------: |
+| Get all deals | /api/deals/ |  GET   |  No   |       No        |
 
 **Required fields:** `None`
 
@@ -86,9 +86,9 @@ User requested to relog once jwt-access token expires. Expire time inside settin
 
 ---
 
-|      USAGE      |    URL     | METHOD | AUTH? | VERIFIED EMAIL? |
-| :-------------: | :--------: | :----: | :---: | :-------------: |
-| Create new deal | /api/deal/ |  POST  |  Yes  |       Yes       |
+|      USAGE      |     URL     | METHOD | AUTH? | VERIFIED EMAIL? |
+| :-------------: | :---------: | :----: | :---: | :-------------: |
+| Create new deal | /api/deals/ |  POST  |  Yes  |       Yes       |
 
 **Required fields:** `{'title', 'description', 'category'}`
 
@@ -104,9 +104,9 @@ rated_by_user = Checks if current user has voted on this deal. True=Up vote, Fal
 
 ---
 
-|        USAGE        |         URL         | METHOD | AUTH? | VERIFIED EMAIL? |
-| :-----------------: | :-----------------: | :----: | :---: | :-------------: |
-| Update deal details | /api/deal/<deal_id> | PATCH  |  Yes  |       Yes       |
+|        USAGE        |         URL          | METHOD | AUTH? | VERIFIED EMAIL? |
+| :-----------------: | :------------------: | :----: | :---: | :-------------: |
+| Update deal details | /api/deals/<deal_id> | PATCH  |  Yes  |       Yes       |
 
 **Optional fields:** `{'title', 'description', 'category','image', 'price', 'url', 'instore_only','postage_cost', 'sent_from', 'deal_start_date', 'deal_end_date',}`
 
@@ -116,9 +116,9 @@ User must be owner of Deal object to be able to modify it. ⚠️
 
 ---
 
-|    USAGE    |         URL         | METHOD | AUTH? | VERIFIED EMAIL? |
-| :---------: | :-----------------: | :----: | :---: | :-------------: |
-| Delete deal | /api/deal/<deal_id> | DELETE |  Yes  |       Yes       |
+|    USAGE    |         URL          | METHOD | AUTH? | VERIFIED EMAIL? |
+| :---------: | :------------------: | :----: | :---: | :-------------: |
+| Delete deal | /api/deals/<deal_id> | DELETE |  Yes  |       Yes       |
 
 User must be owner of Deal object to be able to delete it. ⚠️
 
@@ -126,9 +126,9 @@ User must be owner of Deal object to be able to delete it. ⚠️
 
 ---
 
-|    USAGE     |            URL            | METHOD | AUTH? | VERIFIED EMAIL? |
-| :----------: | :-----------------------: | :----: | :---: | :-------------: |
-| Vote on deal | /api/deal/<deal_id>/vote/ |  POST  |  Yes  |       Yes       |
+|    USAGE     |            URL             | METHOD | AUTH? | VERIFIED EMAIL? |
+| :----------: | :------------------------: | :----: | :---: | :-------------: |
+| Vote on deal | /api/deals/<deal_id>/vote/ |  POST  |  Yes  |       Yes       |
 
 **Required fields:** `{'vote': True/False/None}`
 
@@ -148,9 +148,9 @@ True = Up vote, False = Down vote, None = Neutral. ⚠️
 
 ---
 
-|         USAGE         |              URL              | METHOD | AUTH? | VERIFIED EMAIL? |
-| :-------------------: | :---------------------------: | :----: | :---: | :-------------: |
-| Get all deal comments | /api/deal/{deal_id}/comments/ |  GET   |  No   |       No        |
+|         USAGE         |              URL               | METHOD | AUTH? | VERIFIED EMAIL? |
+| :-------------------: | :----------------------------: | :----: | :---: | :-------------: |
+| Get all deal comments | /api/deals/{deal_id}/comments/ |  GET   |  No   |       No        |
 
 **Returns:** `{Returns array of deal comments. Check "post comment on deal" method for more details}, status_code = 201`
 
@@ -166,9 +166,9 @@ Each time url is hit with post request, it will either unlike or like, depending
 
 ---
 
-|           USAGE           |              URL               | METHOD | AUTH? | VERIFIED EMAIL? |
-| :-----------------------: | :----------------------------: | :----: | :---: | :-------------: |
-| Get all deals by category | /api/deal/<category>/cateogry/ |  GET   |  No   |       No        |
+|           USAGE           |               URL               | METHOD | AUTH? | VERIFIED EMAIL? |
+| :-----------------------: | :-----------------------------: | :----: | :---: | :-------------: |
+| Get all deals by category | /api/deals/<category>/cateogry/ |  GET   |  No   |       No        |
 
 Category field must be a valid. Check choice_fields inside models.py Deal model for more detail. ⚠️
 

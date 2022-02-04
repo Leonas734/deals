@@ -44,7 +44,7 @@ def test_create_deal_db(test_user_3_verified, test_deal_1):
 def test_create_deal_basic(test_user_3_verified, test_user_3_access_token, api_client):
     api_client.credentials(HTTP_AUTHORIZATION='Bearer ' + test_user_3_access_token)
     resp = api_client.post(
-        '/api/deal/',
+        '/api/deals/',
         {
             **TEST_DEAL_1_BASIC_DATA,
         }
@@ -75,7 +75,7 @@ def test_create_deal_basic(test_user_3_verified, test_user_3_access_token, api_c
 def test_create_deal_postage(test_user_3_verified, test_user_3_access_token, api_client):
     api_client.credentials(HTTP_AUTHORIZATION='Bearer ' + test_user_3_access_token)
     resp = api_client.post(
-        '/api/deal/',
+        '/api/deals/',
         {
             **TEST_DEAL_1_BASIC_DATA,
             'price': TEST_DEAL_1_PRICE,
@@ -113,7 +113,7 @@ def test_create_deal_instore(test_user_3_verified, test_user_3_access_token, api
     api_client.credentials(HTTP_AUTHORIZATION='Bearer ' + test_user_3_access_token)
     
     resp = api_client.post(
-        '/api/deal/',
+        '/api/deals/',
         {
             **TEST_DEAL_1_BASIC_DATA,
             'price': TEST_DEAL_1_PRICE,
@@ -157,7 +157,7 @@ def test_create_deal_custom_image(test_user_3_access_token, api_client):
     file.seek(0)
     
     resp = api_client.post(
-        '/api/deal/',
+        '/api/deals/',
         format='multipart',
         data={
             **TEST_DEAL_1_BASIC_DATA,
@@ -179,7 +179,7 @@ def test_create_deal_custom_image(test_user_3_access_token, api_client):
 def test_create_deal_required_fields(test_user_3_verified, test_user_3_access_token, api_client):
     api_client.credentials(HTTP_AUTHORIZATION='Bearer ' + test_user_3_access_token)
     resp = api_client.post(
-        '/api/deal/',
+        '/api/deals/',
         {}
     )
 
@@ -195,7 +195,7 @@ def test_create_deal_invalid_choices(test_user_3_verified, test_user_3_access_to
     invalid_sent_from = 'Invalid-sent-from-location'
     invalid_category = 'Invalid-category'
     resp = api_client.post(
-        '/api/deal/',
+        '/api/deals/',
         {
             **TEST_DEAL_1_BASIC_DATA,
             'sent_from': invalid_sent_from,
@@ -212,7 +212,7 @@ def test_create_deal_invalid_choices(test_user_3_verified, test_user_3_access_to
 def test_create_deal_invalid_dates(test_user_3_verified, test_user_3_access_token, api_client):
     api_client.credentials(HTTP_AUTHORIZATION='Bearer ' + test_user_3_access_token)
     resp = api_client.post(
-        '/api/deal/',
+        '/api/deals/',
         {
             **TEST_DEAL_1_BASIC_DATA,
             'deal_start_date': TEST_DEAL_1_DEAL_END_DATE,
@@ -228,7 +228,7 @@ def test_create_deal_invalid_dates(test_user_3_verified, test_user_3_access_toke
 def test_create_deal_postage_and_instore_invalid(test_user_3_verified, test_user_3_access_token, api_client):
     api_client.credentials(HTTP_AUTHORIZATION='Bearer ' + test_user_3_access_token)
     resp = api_client.post(
-        '/api/deal/',
+        '/api/deals/',
         {
             **TEST_DEAL_1_BASIC_DATA,
             'price': TEST_DEAL_1_PRICE,
@@ -245,7 +245,7 @@ def test_create_deal_postage_and_instore_invalid(test_user_3_verified, test_user
 @pytest.mark.django_db
 def test_create_deal_no_auth(api_client):
     resp = api_client.post(
-        '/api/deal/',
+        '/api/deals/',
         TEST_DEAL_1_BASIC_DATA
     )
     assert resp.status_code == 401
@@ -255,7 +255,7 @@ def test_create_deal_no_auth(api_client):
 def test_create_deal_invalid_auth(api_client):
     api_client.credentials(HTTP_AUTHORIZATION='Bearer ' + 'invalid-auth')
     resp = api_client.post(
-        '/api/deal/',
+        '/api/deals/',
         TEST_DEAL_1_BASIC_DATA
     )
     assert resp.status_code == 401
@@ -265,7 +265,7 @@ def test_create_deal_invalid_auth(api_client):
 def test_create_deal_user_not_verified(test_user_1, test_user_1_access_token, api_client):
     api_client.credentials(HTTP_AUTHORIZATION='Bearer ' + test_user_1_access_token)
     resp = api_client.post(
-        '/api/deal/',
+        '/api/deals/',
         TEST_DEAL_1_BASIC_DATA
     )
     assert resp.status_code == 403

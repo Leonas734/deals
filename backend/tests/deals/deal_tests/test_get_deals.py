@@ -13,7 +13,7 @@ from tests.deals.testing_variables import (
 @pytest.mark.django_db
 def test_get_all_deals(test_user_3_verified, api_client, test_deal_1):
     resp = api_client.get(
-        '/api/deal/',
+        '/api/deals/',
     )
     assert resp.status_code == 200
     assert len(resp.data) == 1
@@ -21,7 +21,7 @@ def test_get_all_deals(test_user_3_verified, api_client, test_deal_1):
 @pytest.mark.django_db
 def test_get_deal_by_no_auth(test_user_3_verified, api_client, test_deal_1):
     resp = api_client.get(
-        f'/api/deal/{test_deal_1.id}/',
+        f'/api/deals/{test_deal_1.id}/',
     )
     assert resp.status_code == 200
     assert resp.data['id'] == str(Deal.objects.first().id)
@@ -50,7 +50,7 @@ def test_get_deal_by_pk_voted_up_by_user(test_user_3_verified, test_user_3_acces
 
     api_client.credentials(HTTP_AUTHORIZATION='Bearer ' + test_user_3_access_token)
     resp = api_client.get(
-        f'/api/deal/{test_deal_1.id}/',
+        f'/api/deals/{test_deal_1.id}/',
     )
     assert resp.status_code == 200
     assert resp.data['id'] == str(Deal.objects.first().id)
@@ -79,7 +79,7 @@ def test_get_deal_by_pk_voted_down_by_user(test_user_3_verified, test_user_3_acc
 
     api_client.credentials(HTTP_AUTHORIZATION='Bearer ' + test_user_3_access_token)
     resp = api_client.get(
-        f'/api/deal/{test_deal_1.id}/',
+        f'/api/deals/{test_deal_1.id}/',
     )
     assert resp.status_code == 200
     assert resp.data['id'] == str(Deal.objects.first().id)
@@ -106,7 +106,7 @@ def test_get_deal_by_pk_voted_down_by_user(test_user_3_verified, test_user_3_acc
 def test_get_deal_by_pk_no_votes(test_user_3_verified, test_user_3_access_token, api_client, test_deal_1):
     api_client.credentials(HTTP_AUTHORIZATION='Bearer ' + test_user_3_access_token)
     resp = api_client.get(
-        f'/api/deal/{test_deal_1.id}/',
+        f'/api/deals/{test_deal_1.id}/',
     )
     assert resp.status_code == 200
     assert resp.data['id'] == str(Deal.objects.first().id)
@@ -132,7 +132,7 @@ def test_get_deal_by_pk_no_votes(test_user_3_verified, test_user_3_access_token,
 @pytest.mark.django_db
 def test_get_deal_by_category(test_user_3_verified, api_client, test_deal_1):
     resp = api_client.get(
-        f'/api/deal/{test_deal_1.category}/category/',
+        f'/api/deals/{test_deal_1.category}/category/',
     )
     assert resp.status_code == 200
     assert len(resp.data) == 1

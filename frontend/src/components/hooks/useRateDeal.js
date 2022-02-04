@@ -15,7 +15,7 @@ export const useRateDeal = () => {
 
   const rateDeal = async (dealId, vote) => {
     try {
-      const res = await api.post(`/api/deal/${dealId}/vote/`, {
+      const res = await api.post(`/api/deals/${dealId}/vote/`, {
         vote,
       });
       setRateDealResponse(res.data.deal);

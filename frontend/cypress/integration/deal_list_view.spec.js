@@ -53,7 +53,7 @@ describe("Deal list view displays correct information", function () {
   });
 
   it("Deal with no expiration date, no price and no postage cost displays correct data", function () {
-    cy.intercept("GET", "/api/deal/", {
+    cy.intercept("GET", "/api/deals/", {
       statusCode: 200,
       body: [this.dealOne],
     });
@@ -85,7 +85,7 @@ describe("Deal list view displays correct information", function () {
   });
 
   it("Deal with expiration date, price and postage cost displays correct data", function () {
-    cy.intercept("GET", "/api/deal/", {
+    cy.intercept("GET", "/api/deals/", {
       statusCode: 200,
       body: [this.dealTwo],
     });
@@ -134,7 +134,7 @@ describe("Deal list view click for specific deal view", function () {
   });
 
   it("Can click deal title to view full deal", function () {
-    cy.intercept("GET", "/api/deal/", {
+    cy.intercept("GET", "/api/deals/", {
       statusCode: 200,
       body: [this.dealOne],
     });
@@ -148,7 +148,7 @@ describe("Deal list view click for specific deal view", function () {
   });
 
   it("Can click deal image to view full deal", function () {
-    cy.intercept("GET", "/api/deal/", {
+    cy.intercept("GET", "/api/deals/", {
       statusCode: 200,
       body: [this.dealOne],
     });
@@ -174,11 +174,11 @@ describe("Deal list view rate functions", function () {
   });
 
   it("Authorised user can up vote", function () {
-    cy.intercept("GET", "/api/deal/", {
+    cy.intercept("GET", "/api/deals/", {
       statusCode: 200,
       body: [this.dealOne],
     });
-    cy.intercept(`/api/deal/${this.dealOne.id}/vote/`, {
+    cy.intercept(`/api/deals/${this.dealOne.id}/vote/`, {
       deal: {
         ...this.dealOne,
         rated_by_user: true,
@@ -198,7 +198,7 @@ describe("Deal list view rate functions", function () {
   });
 
   it("Authorised user can undo up vote", function () {
-    cy.intercept("GET", "/api/deal/", {
+    cy.intercept("GET", "/api/deals/", {
       statusCode: 200,
       body: [
         {
@@ -208,7 +208,7 @@ describe("Deal list view rate functions", function () {
         },
       ],
     });
-    cy.intercept(`/api/deal/${this.dealOne.id}/vote/`, {
+    cy.intercept(`/api/deals/${this.dealOne.id}/vote/`, {
       deal: {
         ...this.dealOne,
         rated_by_user: null,
@@ -228,12 +228,12 @@ describe("Deal list view rate functions", function () {
   });
 
   it("Authorised user can down vote", function () {
-    cy.intercept("GET", "/api/deal/", {
+    cy.intercept("GET", "/api/deals/", {
       statusCode: 200,
       body: [this.dealOne],
     });
 
-    cy.intercept(`/api/deal/${this.dealOne.id}/vote/`, {
+    cy.intercept(`/api/deals/${this.dealOne.id}/vote/`, {
       deal: {
         ...this.dealOne,
         rated_by_user: false,
@@ -254,7 +254,7 @@ describe("Deal list view rate functions", function () {
   });
 
   it("Authorised user can undo down vote", function () {
-    cy.intercept("GET", "/api/deal/", {
+    cy.intercept("GET", "/api/deals/", {
       statusCode: 200,
       body: [
         {
@@ -265,7 +265,7 @@ describe("Deal list view rate functions", function () {
       ],
     });
 
-    cy.intercept(`/api/deal/${this.dealOne.id}/vote/`, {
+    cy.intercept(`/api/deals/${this.dealOne.id}/vote/`, {
       deal: {
         ...this.dealOne,
         rating: +this.dealOne.rating + 1,
@@ -285,7 +285,7 @@ describe("Deal list view rate functions", function () {
   });
 
   it("Authorised user can down vote from up vote", function () {
-    cy.intercept("GET", "/api/deal/", {
+    cy.intercept("GET", "/api/deals/", {
       statusCode: 200,
       body: [
         {
@@ -296,7 +296,7 @@ describe("Deal list view rate functions", function () {
       ],
     });
 
-    cy.intercept(`/api/deal/${this.dealOne.id}/vote/`, {
+    cy.intercept(`/api/deals/${this.dealOne.id}/vote/`, {
       deal: {
         ...this.dealOne,
         rated_by_user: false,
@@ -317,7 +317,7 @@ describe("Deal list view rate functions", function () {
   });
 
   it("Authorised user can up vote from down vote", function () {
-    cy.intercept("GET", "/api/deal/", {
+    cy.intercept("GET", "/api/deals/", {
       statusCode: 200,
       body: [
         {
@@ -328,7 +328,7 @@ describe("Deal list view rate functions", function () {
       ],
     });
 
-    cy.intercept(`/api/deal/${this.dealOne.id}/vote/`, {
+    cy.intercept(`/api/deals/${this.dealOne.id}/vote/`, {
       deal: {
         ...this.dealOne,
         rated_by_user: true,
@@ -349,12 +349,12 @@ describe("Deal list view rate functions", function () {
   });
 
   it("Unauthorised user can't rate deals up", function () {
-    cy.intercept("GET", "/api/deal/", {
+    cy.intercept("GET", "/api/deals/", {
       statusCode: 200,
       body: [this.dealOne],
     });
 
-    cy.intercept(`/api/deal/${this.dealOne.id}/vote/`, {
+    cy.intercept(`/api/deals/${this.dealOne.id}/vote/`, {
       deal: {
         ...this.dealOne,
         rated_by_user: true,
@@ -375,12 +375,12 @@ describe("Deal list view rate functions", function () {
   });
 
   it("Unauthorised user can't rate deals down", function () {
-    cy.intercept("GET", "/api/deal/", {
+    cy.intercept("GET", "/api/deals/", {
       statusCode: 200,
       body: [this.dealOne],
     });
 
-    cy.intercept(`/api/deal/${this.dealOne.id}/vote/`, {
+    cy.intercept(`/api/deals/${this.dealOne.id}/vote/`, {
       deal: {
         ...this.dealOne,
         rated_by_user: false,
@@ -401,12 +401,12 @@ describe("Deal list view rate functions", function () {
   });
 
   it("Unauthorised user can't rate deals down", function () {
-    cy.intercept("GET", "/api/deal/", {
+    cy.intercept("GET", "/api/deals/", {
       statusCode: 200,
       body: [this.dealOne],
     });
 
-    cy.intercept(`/api/deal/${this.dealOne.id}/vote/`, {
+    cy.intercept(`/api/deals/${this.dealOne.id}/vote/`, {
       deal: {
         ...this.dealOne,
         rated_by_user: false,
@@ -429,12 +429,12 @@ describe("Deal list view rate functions", function () {
   it("Unverified user can't rate deals up", function () {
     cy.intercept("POST", "api/sign_up").as("signUp");
 
-    cy.intercept("GET", "/api/deal/", {
+    cy.intercept("GET", "/api/deals/", {
       statusCode: 200,
       body: [this.dealOne],
     });
 
-    cy.intercept(`/api/deal/${this.dealOne.id}/vote/`, {
+    cy.intercept(`/api/deals/${this.dealOne.id}/vote/`, {
       deal: {
         ...this.dealOne,
         rated_by_user: true,
@@ -469,12 +469,12 @@ describe("Deal list view rate functions", function () {
   it("Unverified user can't rate deals down", function () {
     cy.intercept("POST", "api/sign_up").as("signUp");
 
-    cy.intercept("GET", "/api/deal/", {
+    cy.intercept("GET", "/api/deals/", {
       statusCode: 200,
       body: [this.dealOne],
     });
 
-    cy.intercept(`/api/deal/${this.dealOne.id}/vote/`, {
+    cy.intercept(`/api/deals/${this.dealOne.id}/vote/`, {
       deal: {
         ...this.dealOne,
         rated_by_user: true,
@@ -497,12 +497,12 @@ describe("Deal list view rate functions", function () {
 
   it("Unverified users can close unverified email modal", function () {
     cy.intercept("POST", "api/sign_up").as("signUp");
-    cy.intercept("GET", "/api/deal/", {
+    cy.intercept("GET", "/api/deals/", {
       statusCode: 200,
       body: [this.dealOne],
     });
 
-    cy.intercept(`/api/deal/${this.dealOne.id}/vote/`, {
+    cy.intercept(`/api/deals/${this.dealOne.id}/vote/`, {
       deal: {
         ...this.dealOne,
         rated_by_user: true,

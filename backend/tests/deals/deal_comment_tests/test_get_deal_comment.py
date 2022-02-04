@@ -15,7 +15,7 @@ def test_get_all_deal_comments(
         )
 
     resp = client.get(
-        f'/api/deal/{test_deal_1.id}/comments/'
+        f'/api/deals/{test_deal_1.id}/comments/'
     )
     assert resp.status_code == 200
     assert len(resp.data) == 2

@@ -11,7 +11,7 @@ export const useDeal = () => {
     setDealError(null);
     setDealIsPending(true);
     try {
-      const res = await api.get(`/api/deal/${dealId}`);
+      const res = await api.get(`/api/deals/${dealId}`);
       setDeal(res.data);
     } catch (err) {
       setDealError(err.response.data);
