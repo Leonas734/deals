@@ -25,4 +25,11 @@ html {
   --colour-secondary: #74b9ff;
   --colour-grey: #b8b8b8;
   --colour-grey-dark: #9b9b9b;
+  --colour-grey-light: #dddddd;
+}
+
+@media only screen and (max-width: 675px) {
+  html {
+    font-size: 57.5%;
+  }
 }

@@ -5,7 +5,8 @@
 .website {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: 7rem repeat(10, minmax(10vh, 1fr)) 20rem;
+  grid-template-rows: 7rem 5rem repeat(9, minmax(auto, 1fr)) 20rem;
+  background-color: var(--colour-grey-light);
 }
 
 .footer {

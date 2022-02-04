@@ -3,7 +3,7 @@ import { AuthProvider } from "./components/context/authContext";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import styles from "./App.module.css";
 import Nav from "./components/nav/Nav";
-import Main from "./components/main/Main";
+import AllDeals from "./components/deals/AllDeals";
 import EmailVerification from "./components/emails/EmailVerification";
 
 function App() {
@@ -13,7 +13,7 @@ function App() {
         <BrowserRouter>
           <Nav />
           <Routes>
-            <Route path="/" element={<Main />}></Route>
+            <Route path="/" element={<AllDeals />}></Route>
             <Route
               path="email_verification/:userId/:emailToken"
               element={<EmailVerification />}></Route>

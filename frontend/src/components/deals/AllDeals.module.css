@@ -1,19 +1,22 @@
-.all-deals-main {
-  display: flex;
-  flex-direction: column;
-  row-gap: 2rem;
-  background-color: rgb(233, 233, 233);
-  padding: 0 25rem;
+.all-deals-main-toolbar {
+  grid-column: 1/13;
+  grid-row: 2/3;
+  text-align: right;
+  background-color: white;
 }
 
-.all-deals-main-toolbar {
-  text-align: right;
-  background-color: rgb(233, 233, 233);
-  padding: 0.5rem 25rem 0 25rem;
+.all-deals-main {
+  grid-column: 3/11;
+  grid-row: 3/12;
 }
 
 .all-deals-main-toolbar-filter {
   right: 0;
-  height: 4rem;
-  width: 4rem;
+  height: 3.5rem;
+}
+
+@media only screen and (max-width: 1150px) {
+  .all-deals-main {
+    grid-column: 1/13;
+  }
 }

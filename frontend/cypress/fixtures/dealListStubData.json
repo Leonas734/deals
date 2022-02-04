@@ -14,6 +14,7 @@
     "sent_from": null,
     "updated": null,
     "url": "https://localhost:8000",
+    "total_comments": 1,
     "user": {
       "profile_picture": "http://127.0.0.1:8000/media/profile_pictures/DEFAULT-USER-PROFILE-PICTURE.jpg",
       "username": "test-user-1"
@@ -21,20 +22,21 @@
   },
   "deal_2": {
     "id": "75e3fe96-b8c6-4545-bf95-971f12a01888",
-    "title": "WiFi printer 30% off, free delivery",
+    "title": "WiFi printer 30% off!",
     "description": "Good value for money. Never seen it this cheap before. Comes with black and white ink cartiridge.",
     "category": "ELECTRONICS",
     "image": "http://127.0.0.1:8000/media/deal_images/printer-image.jpg",
     "created": "2022-01-11T14:07:13.540000Z",
-    "deal_end_date": null,
+    "deal_end_date": "2022-01-18T14:07:13.540000Z",
     "deal_start_date": null,
     "instore_only": false,
-    "postage_cost": "0.00",
+    "postage_cost": "2.99",
     "price": "24.99",
     "rating": 3,
     "sent_from": null,
     "updated": null,
     "url": "https://localhost:8000",
+    "total_comments": 2,
     "user": {
       "profile_picture": "http://127.0.0.1:8000/media/profile_pictures/DEFAULT-USER-PROFILE-PICTURE.jpg",
       "username": "test-user-2"

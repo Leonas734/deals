@@ -19,6 +19,9 @@ function AllDeals() {
   useEffect(() => {
     getAllDeals();
   }, [userAuth.state]);
+
+  if (allDeals?.length === 0) return <div>Sorry no deals found</div>;
+
   return (
     <>
       <div className={styles["all-deals-main-toolbar"]}>
@@ -27,13 +30,20 @@ function AllDeals() {
           src={filterIcon}
         />
       </div>
-      <div className={styles["all-deals-main"]} data-cy="all-deals-main">
-        {allDeals &&
-          allDeals.map((deal) => {
-            return (
-              <DealListView deal={deal} setDeals={setAllDeals} key={deal.id} />
-            );
-          })}
+
+      <div className={styles["all-deals-main"]}>
+        <div className={styles["all-deals-main"]} data-cy="all-deals-main">
+          {allDeals &&
+            allDeals.map((deal) => {
+              return (
+                <DealListView
+                  deal={deal}
+                  setDeals={setAllDeals}
+                  key={deal.id}
+                />
+              );
+            })}
+        </div>
       </div>
     </>
   );
