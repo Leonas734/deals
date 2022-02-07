@@ -1,15 +1,34 @@
 .user-icon {
   display: flex;
   align-items: center;
-  width: 15rem;
+  justify-content: center;
+  width: minmax(14rem, min-content);
+  border: 1px solid var(--colour-grey);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  column-gap: 0.5rem;
+  height: 80%;
+  align-self: center;
+  cursor: pointer;
+  transition: all 0.5s;
+}
+
+.user-icon:hover {
+  background-color: var(--colour-primary);
+  border: none;
+  color: white;
+  font-weight: bold;
+  transform: scale(1.05);
 }
 .user-icon > img {
-  height: 3rem;
-  width: 3rem;
+  height: 2.5rem;
+  width: 2.5rem;
   border-radius: 50%;
+  margin-left: 0.3rem;
 }
 
 .user-icon > p {
-  font-size: 1.4rem;
-  margin: 1rem;
+  font-size: 1.6rem;
+  margin-right: 0.5rem;
 }

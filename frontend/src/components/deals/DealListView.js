@@ -8,6 +8,7 @@ import verticalDotsIcon from "../../assets/vertical-dots-icon.svg";
 import LoginModal from "../modals/LoginModal";
 import VerifyEmailModal from "../modals/VerifyEmailModal";
 import DealRating from "../rating/DealRating";
+import UserIcon from "../misc/UserIcon";
 
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -116,16 +117,11 @@ function DealListView({ deal, setDeals }) {
         )}
       </div>
       <div className={styles["deal-list-view-extras"]}>
-        <div
-          className={styles["deal-list-view-user"]}
-          data-cy="deal-list-view-user">
-          <img
-            src={deal.user.profile_picture}
-            alt="User"
-            className={styles["deal-list-view-user-profile-picture"]}
-          />
-          <p>{deal.user.username}</p>
-        </div>
+        <UserIcon
+          username={deal.user.username}
+          profilePictureUrl={deal.user.profile_picture}
+          dataCy="deal-list-view-user"
+        />
 
         <div className={styles["deal-list-view-comments"]}>
           <img
