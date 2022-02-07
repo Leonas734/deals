@@ -1,6 +1,7 @@
 .nav-account {
   position: relative;
   grid-column: 6/7;
+  justify-self: right;
 }
 
 .nav-account-image {

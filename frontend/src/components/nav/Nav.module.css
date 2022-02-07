@@ -4,7 +4,9 @@
   align-items: center;
   column-gap: 1rem;
   padding: 0 1rem;
-  grid-template-columns: 10rem 20rem 4rem auto 4rem 20rem 10rem;
+  grid-template-columns:
+    12rem 20rem 1fr 40% 1fr 20rem
+    12rem;
   background-color: white;
   border-bottom: 2px solid var(--colour-grey);
 }
