@@ -1,6 +1,4 @@
 import styles from "./DealListView.module.css";
-import arrowDownIcon from "../../assets/arrow-down-icon.svg";
-import arrowUpIcon from "../../assets/arrow-up-icon.svg";
 import clockIcon from "../../assets/clock-icon.svg";
 import calendarIcon from "../../assets/calendar-icon.svg";
 import deliveryIcon from "../../assets/delivery-icon.svg";
@@ -9,9 +7,10 @@ import urlIcon from "../../assets/link-icon.svg";
 import verticalDotsIcon from "../../assets/vertical-dots-icon.svg";
 import LoginModal from "../modals/LoginModal";
 import VerifyEmailModal from "../modals/VerifyEmailModal";
+import DealRating from "../rating/DealRating";
 
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRateDeal } from "../hooks/useRateDeal";
 import { useAuth } from "../context/authContext";
 
@@ -25,45 +24,6 @@ function DealListView({ deal, setDeals }) {
   const [showDatesOnMobile, setShowDatesOnMobile] = useState(false);
   const { state: userAuthState } = useAuth();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (rateDealResponse) {
-      setDeals((prevState) => {
-        const newState = prevState.map((stateDeal) => {
-          if (stateDeal.id === rateDealResponse.id) {
-            return {
-              ...stateDeal,
-              rated_by_user: rateDealResponse.rated_by_user,
-              rating: rateDealResponse.rating,
-            };
-          }
-          return stateDeal;
-        });
-
-        return newState;
-      });
-    }
-  }, [rateDealResponse, userAuthState]);
-
-  function sendNewRating(e) {
-    let rating = null;
-    if (!userAuthState) {
-      setShowLoginModal(true);
-      return;
-    }
-    if (!userAuthState.emailVerified) {
-      setShowVerifyEmailModal(true);
-      return;
-    }
-    // null = no vote, true = vote up, false = vote down.
-    if (e.target.id === "rate-deal-up") {
-      deal.rated_by_user === true ? (rating = null) : (rating = true);
-    }
-    if (e.target.id === "rate-deal-down") {
-      deal.rated_by_user === false ? (rating = null) : (rating = false);
-    }
-    rateDeal(deal.id, rating);
-  }
 
   function goToDealView() {
     navigate(`/deal/${deal.id}`);
@@ -87,33 +47,12 @@ function DealListView({ deal, setDeals }) {
         onClick={goToDealView}
       />
       <div className={styles["deal-list-view-rating-and-dates-container"]}>
-        <div
-          className={styles["deal-list-view-rating"]}
-          data-cy="deal-list-view-rating">
-          <img
-            src={arrowUpIcon}
-            id="rate-deal-up"
-            alt="Arrow up"
-            onClick={sendNewRating}
-            className={`${styles["deal-list-view-rating-arrow-icon"]} ${
-              deal.rated_by_user === true
-                ? styles["deal-list-view-rating-arrow-icon-active"]
-                : null
-            }`}
-          />
-          <p>{deal.rating}</p>
-          <img
-            src={arrowDownIcon}
-            id="rate-deal-down"
-            alt="Arrow down"
-            onClick={sendNewRating}
-            className={`${styles["deal-list-view-rating-arrow-icon"]} ${
-              deal.rated_by_user === false
-                ? styles["deal-list-view-rating-arrow-icon-active"]
-                : null
-            }`}
-          />
-        </div>
+        <DealRating
+          deal={deal}
+          userAuthState={userAuthState}
+          setDeals={setDeals}
+          dataCy={"deal-list-view-rating"}
+        />
         <div className={styles["deal-list-view-deal-posted-date"]}>
           <img
             src={clockIcon}

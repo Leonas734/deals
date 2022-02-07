@@ -2,7 +2,7 @@ import { useState } from "react";
 import useAxios from "./useAxios";
 
 export const useRateDeal = () => {
-  const [rateDealError, setRateDealError] = useState({});
+  const [rateDealError, setRateDealError] = useState(null);
   const [rateDealIsPending, setRateDealIsPending] = useState(false);
   const [rateDealResponse, setRateDealResponse] = useState(null);
   const api = useAxios();
