@@ -1,5 +1,6 @@
 .nav-account {
   position: relative;
+  grid-column: 6/7;
 }
 
 .nav-account-image {
