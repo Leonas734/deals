@@ -5,6 +5,7 @@ import styles from "./App.module.css";
 import Nav from "./components/nav/Nav";
 import AllDeals from "./components/deals/AllDeals";
 import EmailVerification from "./components/emails/EmailVerification";
+import DealView from "./components/deals/DealView";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Nav />
           <Routes>
             <Route path="/" element={<AllDeals />}></Route>
+            <Route path="/deal/:dealId" element={<DealView />}></Route>
             <Route
               path="email_verification/:userId/:emailToken"
               element={<EmailVerification />}></Route>
