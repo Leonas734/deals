@@ -171,7 +171,7 @@ class DealViewSet(viewsets.ModelViewSet):
         # Ensure deal exists
         get_object_or_404(Deal, id=pk)
         comments = Comment.objects.filter(deal=pk)
-        serializer = CommentSerializer(comments, many=True, context={'request': request})
+        serializer = CommentSerializer(comments.order_by('created'), many=True, context={'request': request})
         return Response(serializer.data,
                             status=status.HTTP_200_OK)
 

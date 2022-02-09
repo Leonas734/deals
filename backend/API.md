@@ -156,9 +156,9 @@ True = Up vote, False = Down vote, None = Neutral. ⚠️
 
 ---
 
-|       USAGE       |                URL                | METHOD | AUTH? | VERIFIED EMAIL? |
-| :---------------: | :-------------------------------: | :----: | :---: | :-------------: |
-| Like deal comment | /api/deal_comment/{deal_id}/like/ |  POST  |  Yes  |       Yes       |
+|       USAGE       |                 URL                  | METHOD | AUTH? | VERIFIED EMAIL? |
+| :---------------: | :----------------------------------: | :----: | :---: | :-------------: |
+| Like deal comment | /api/deal_comment/{comment_id}/like/ |  POST  |  Yes  |       Yes       |
 
 Each time url is hit with post request, it will either unlike or like, depending on previous state ⚠️
 
