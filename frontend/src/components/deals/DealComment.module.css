@@ -1,0 +1,110 @@
+.deal-view-comment {
+  display: grid;
+  grid-template-columns: auto repeat(2, 1fr);
+  grid-template-rows: repeat(4, min-content);
+  padding: 1rem;
+  font-size: 1.8rem;
+  column-gap: 1rem;
+  border-bottom: 1px solid var(--colour-grey-dark);
+}
+
+.deal-view-comment-quoted-comment {
+  grid-row: 2/3;
+  grid-column: 2/3;
+  padding-left: 1.5rem;
+  border-left: solid 1px var(--colour-grey-dark);
+  color: var(--colour-grey-dark);
+  margin-bottom: 1rem;
+}
+.deal-view-comment-quoted-comment-user {
+  font-weight: bold;
+}
+
+.deal-view-comment-user-profile-picture {
+  grid-column: 1/2;
+  grid-row: 1/2;
+  height: 4rem;
+  width: 4rem;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+}
+
+.deal-view-comment-user-username {
+  align-self: center;
+  grid-column: 2/3;
+  grid-row: 1/2;
+}
+
+.deal-view-comment-date {
+  grid-column: 3/4;
+  grid-row: 1/2;
+  justify-self: right;
+  color: var(--colour-grey-dark);
+}
+
+.deal-view-comment-text {
+  grid-column: 2/4;
+  grid-row: 3/4;
+  margin-bottom: 1rem;
+}
+
+.deal-view-comment-extras {
+  display: flex;
+  column-gap: 2rem;
+  grid-column: 2/4;
+  grid-row: 4/5;
+}
+
+.deal-view-comment-extras-icon {
+  height: 2rem;
+  width: 2rem;
+}
+
+.deal-view-comment-like {
+  display: flex;
+  align-items: center;
+  column-gap: 0.25rem;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.deal-view-comment-like-active {
+  filter: invert(46%) sepia(81%) saturate(4619%) hue-rotate(187deg)
+    brightness(96%) contrast(93%);
+}
+
+.deal-view-comment-like:hover {
+  transform: scale(1.05);
+  filter: invert(46%) sepia(81%) saturate(4619%) hue-rotate(187deg)
+    brightness(96%) contrast(93%);
+}
+
+.deal-view-comment-like > p {
+  font-size: 1.5rem;
+}
+
+.deal-view-comment-quote {
+  display: flex;
+  align-items: center;
+  column-gap: 0.5rem;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.deal-view-comment-quote:hover {
+  transform: scale(1.05);
+  filter: invert(46%) sepia(81%) saturate(4619%) hue-rotate(187deg)
+    brightness(96%) contrast(93%);
+}
+
+.deal-view-comment-quote > p {
+  font-size: 1.5rem;
+}
+
+.deal-view-comment-total-likes {
+  display: flex;
+  margin-left: auto;
+  column-gap: 0.5rem;
+  filter: invert(64%) sepia(9%) saturate(2292%) hue-rotate(174deg)
+    brightness(105%) contrast(102%);
+}

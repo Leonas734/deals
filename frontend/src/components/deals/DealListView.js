@@ -123,7 +123,13 @@ function DealListView({ deal, setDeals }) {
           dataCy="deal-list-view-user"
         />
 
-        <div className={styles["deal-list-view-comments"]}>
+        <div
+          className={styles["deal-list-view-comments"]}
+          onClick={() =>
+            navigate(`/deal/${deal.id}`, {
+              state: { scrollToCommentsOnLoad: true },
+            })
+          }>
           <img
             src={commentIcon}
             alt="Comments"

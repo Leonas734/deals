@@ -6,7 +6,7 @@
   padding: 1rem;
   margin: 1rem;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: minmax(min-content, 40rem) 4rem repeat(3, 1fr);
+  grid-template-rows: minmax(min-content, 40rem) 4rem 1fr repeat(3, min-content);
   column-gap: 1rem;
   row-gap: 1rem;
 }
@@ -42,6 +42,11 @@
   justify-self: right;
   display: flex;
   grid-column: 2/3;
+  cursor: pointer;
+}
+.deal-view-view-comments:hover {
+  filter: invert(58%) sepia(97%) saturate(358%) hue-rotate(183deg)
+    brightness(101%) contrast(102%);
 }
 
 .deal-view-view-comments-icon {
@@ -155,6 +160,96 @@
   grid-column: 1/3;
 }
 
+.deal-view-comments-header {
+  background-color: var(--colour-primary);
+  color: white;
+  grid-column: 1/3;
+  font-size: 3rem;
+  padding-left: 1rem;
+}
+
+.deal-view-comments {
+  grid-column: 1/3;
+}
+
+.deal-view-no-comments {
+  font-size: 3rem;
+  text-align: center;
+}
+
+.deal-view-new-comment {
+  padding: 1rem;
+
+  grid-column: 1/3;
+  display: grid;
+  grid-template-rows: min-content min-content 1fr min-content;
+  grid-template-columns: min-content 1fr;
+}
+.deal-view-new-comment > p {
+  font-size: 2rem;
+  grid-column: 1/3;
+  margin-bottom: 1rem;
+}
+
+.deal-view-new-comment > img {
+  grid-column: 1/2;
+  grid-row: 3/4;
+  height: 6rem;
+  width: 6rem;
+  align-self: center;
+  border-radius: 50%;
+}
+.deal-view-new-comment > textarea {
+  border-radius: 5px;
+  grid-row: 3/4;
+  margin: 1rem;
+  font-size: 2rem;
+  font-family: inherit;
+}
+
+.deal-view-new-comment > button {
+  grid-row: 5/6;
+  grid-column: 1/3;
+  justify-self: center;
+}
+
+.deal-view-new-comment-quoted-comment {
+  background-color: white;
+  grid-column: 2/3;
+  margin: 0 1rem;
+  border-left: solid 1px var(--colour-grey-dark);
+  display: grid;
+}
+
+.deal-view-new-comment-quoted-comment-close-icon {
+  height: 3rem;
+  width: 3rem;
+  grid-row: 1/2;
+  justify-self: right;
+  cursor: pointer;
+}
+
+.deal-view-new-comment-quoted-comment > p {
+  padding-left: 1rem;
+  color: var(--colour-grey-dark);
+}
+
+.deal-view-new-comment-quoted-comment-user {
+  grid-row: 1/2;
+  grid-column: 1/2;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.deal-view-new-comment-quoted-comment-text {
+  font-size: 1.7rem;
+}
+
+.deal-view-new-comment-error {
+  color: red;
+  text-align: center;
+  grid-row: 4/5;
+}
 @media only screen and (max-width: 1150px) {
   .deal-view-main {
     background-color: white;
@@ -164,7 +259,7 @@
 
 @media only screen and (max-width: 675px) {
   .deal-view-main {
-    grid-template-rows: 20rem min-content 4rem repeat(3, 1fr);
+    grid-template-rows: 20rem min-content 4rem repeat(3, min-content);
   }
   .deal-view-image {
     grid-column: 1/3;
@@ -173,6 +268,7 @@
     justify-self: center;
   }
   .deal-view-details {
+    grid-template-rows: repeat(5, min-content);
     grid-column: 1/3;
     row-gap: 1rem;
   }

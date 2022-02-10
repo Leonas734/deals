@@ -1,0 +1,34 @@
+{
+  "deal_1_comment_1": {
+    "created": "2022-01-08T21:02:13.540000Z",
+    "deal": "805dca15-a448-4e6e-85f1-5473fd96a999",
+    "id": "2ddc8039-460b-45a8-85e4-1041976409a9",
+    "liked_by_user": true,
+    "quoted_comment_data": null,
+    "text": "Very good deal!!! Make sure to check T&C's before applying.",
+    "total_likes": 4,
+    "user": {
+      "profile_picture": "http://127.0.0.1:8000/media/profile_pictures/DEFAULT-USER-PROFILE-PICTURE.jpg",
+      "username": "test-user-2"
+    }
+  },
+
+  "deal_1_comment_2": {
+    "created": "2022-01-08T21:02:13.540000Z",
+    "deal": "805dca15-a448-4e6e-85f1-5473fd96a999",
+    "id": "3fe3046a-e7aa-4ecc-8e62-0fffb9c42a2a",
+    "liked_by_user": false,
+    "quoted_comment_data": {
+      "date": "2022-01-08T21:02:13.540000Z",
+      "id": "2ddc8039-460b-45a8-85e4-1041976409a9",
+      "text": "Very good deal!!! Make sure to check T&C's before applying.",
+      "user": "test-user-2"
+    },
+    "text": "Good point!",
+    "total_likes": 0,
+    "user": {
+      "profile_picture": "http://127.0.0.1:8000/media/profile_pictures/DEFAULT-USER-PROFILE-PICTURE.jpg",
+      "username": "test-user-1"
+    }
+  }
+}

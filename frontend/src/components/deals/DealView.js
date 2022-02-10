@@ -1,8 +1,9 @@
-import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect, useState, useRef } from "react";
+import { useParams, useLocation } from "react-router-dom";
 import { useDealComments } from "../hooks/useDealComments";
 import { useDeal } from "../hooks/useDeal";
 import { useAuth } from "../context/authContext";
+import { useCreateComment } from "../hooks/useCreateComment";
 
 import createdAgoDateTime from "../../utils/createdAgoDateTime";
 
@@ -10,13 +11,26 @@ import styles from "./DealView.module.css";
 import commentIcon from "../../assets/annotation-icon.svg";
 import deliveryIcon from "../../assets/delivery-icon.svg";
 import urlIcon from "../../assets/link-icon.svg";
-import DealRating from "../rating/DealRating";
-import UserIcon from "../misc/UserIcon";
 import clockIcon from "../../assets/clock-icon.svg";
 import calendarIcon from "../../assets/calendar-icon.svg";
+import closeIcon from "../../assets/x-icon.svg";
+
+import DealComment from "./DealComment";
+import ButtonPrimary from "../buttons/ButtonPrimary";
+import DealRating from "../rating/DealRating";
+import UserIcon from "../misc/UserIcon";
+import LoginModal from "../modals/LoginModal";
+import VerifyEmailModal from "../modals/VerifyEmailModal";
 
 function DealView() {
+  const { state: locationState } = useLocation();
   const params = useParams();
+  const commentsDiv = useRef(null);
+  const newCommentDiv = useRef(null);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showVerifyEmailModal, setShowVerifyEmailModal] = useState(false);
+  const [quotedComment, setQuotedComment] = useState(null);
+  const [newComment, setNewComment] = useState("");
   const { state: userAuthState } = useAuth();
   const { getDeal, setDeal, dealError, dealIsPending, deal } = useDeal();
   const {
@@ -26,14 +40,91 @@ function DealView() {
     dealCommentsIsPending,
     dealComments,
   } = useDealComments();
+
+  const {
+    createComment,
+    createCommentError,
+    createCommentIsPending,
+    createCommentResponse,
+    setCreateCommentResponse,
+  } = useCreateComment();
+
   useEffect(() => {
     getDeal(params.dealId);
     getDealComments(params.dealId);
-  }, [userAuthState]);
 
-  if (deal) {
+    // On successfull comment submission clear fields
+    if (createCommentResponse && !createCommentError) {
+      setNewComment("");
+      setQuotedComment(null);
+    }
+    return () => {
+      // scrollToCommentsOnLoad state unmount to avoid scrolling down on page refresh
+      window.history.replaceState({}, document.title);
+    };
+  }, [userAuthState, createCommentError, createCommentResponse]);
+
+  // Used when comment is liked
+  function updateComment(newComment) {
+    setDealComments((prevState) => {
+      const newState = prevState.map((prevStateComment) => {
+        if (prevStateComment.id === newComment.id) {
+          return {
+            ...prevStateComment,
+            liked_by_user: newComment.liked_by_user,
+            total_likes: newComment.total_likes,
+            quoted_comment_data: newComment.quoted_comment_data,
+          };
+        }
+        return prevStateComment;
+      });
+      return newState;
+    });
+  }
+  function userHasAccessToAllFeatures() {
+    if (!userAuthState) {
+      setShowLoginModal(true);
+      return false;
+    }
+    if (!userAuthState.emailVerified) {
+      setShowVerifyEmailModal(true);
+      return false;
+    }
+    return true;
+  }
+  function scrollToComments() {
+    commentsDiv.current.scrollIntoView({ behavior: "smooth" });
+  }
+
+  function scrollToPostNewComment() {
+    newCommentDiv.current.scrollIntoView({ behavior: "smooth" });
+  }
+
+  function quoteComment(comment) {
+    setQuotedComment(comment);
+    scrollToPostNewComment();
+  }
+
+  function postNewComment() {
+    if (!userHasAccessToAllFeatures()) return;
+    createComment(deal.id, newComment, quotedComment);
+  }
+
+  if (deal && dealComments) {
+    if (locationState?.scrollToCommentsOnLoad && commentsDiv.current) {
+      scrollToComments();
+      locationState.scrollToCommentsOnLoad = null;
+    }
     return (
       <div className={styles["deal-view-main"]}>
+        <VerifyEmailModal
+          setModalIsOpen={setShowVerifyEmailModal}
+          modalIsOpen={showVerifyEmailModal}
+        />
+        <LoginModal
+          setModalIsOpen={setShowLoginModal}
+          modalIsOpen={showLoginModal}
+        />
         <img
           src={deal.image}
           alt="Deal"
@@ -48,7 +139,9 @@ function DealView() {
             extraClassName={styles["deal-view-rating"]}
             dataCy="deal-view-rating"
           />
-          <div className={styles["deal-view-view-comments"]}>
+          <div
+            className={styles["deal-view-view-comments"]}
+            onClick={scrollToComments}>
             <img
               src={commentIcon}
               alt="Comments"
@@ -57,7 +150,7 @@ function DealView() {
             <p
               className={styles["deal-view-view-comments-total"]}
               data-cy="deal-view-comments-total">
-              {deal.total_comments}
+              {dealComments.length}
             </p>
           </div>
           <h1 className={styles["deal-view-title"]}>{deal.title}</h1>
@@ -124,6 +217,79 @@ function DealView() {
           data-cy="deal-view-description">
           {deal.description}
         </p>
+        <p className={styles["deal-view-comments-header"]} ref={commentsDiv}>
+          {dealComments.length} Comment
+          {dealComments.length > 1 || dealComments.length === 0 ? "s" : ""}
+        </p>
+
+        <div className={styles["deal-view-comments"]}>
+          {dealComments.length === 0 && (
+            <p className={styles["deal-view-no-comments"]}>
+              There are currently no comments for this deal.
+            </p>
+          )}
+          {dealComments &&
+            dealComments.map((comment) => {
+              return (
+                <DealComment
+                  key={comment.id}
+                  comment={comment}
+                  updateComment={updateComment}
+                  userAuthState={userAuthState}
+                  quoteComment={quoteComment}
+                  userHasAccessToAllFeatures={userHasAccessToAllFeatures}
+                />
+              );
+            })}
+        </div>
+        <div className={styles["deal-view-new-comment"]} ref={newCommentDiv}>
+          <p>Post a comment</p>
+          {quotedComment && (
+            <div className={styles["deal-view-new-comment-quoted-comment"]}>
+              <img
+                src={closeIcon}
+                alt="Close"
+                className={
+                  styles["deal-view-new-comment-quoted-comment-close-icon"]
+                }
+                onClick={() => {
+                  setQuotedComment(null);
+                }}
+              />
+              <p
+                className={styles["deal-view-new-comment-quoted-comment-user"]}>
+                {quotedComment.user.username}
+              </p>
+              <p
+                className={styles["deal-view-new-comment-quoted-comment-text"]}>
+                {quotedComment.text}
+              </p>
+            </div>
+          )}
+          <img
+            src={
+              new URL(deal.user.profile_picture, process.env.REACT_APP_BASE_URL)
+                .href
+            }
+          />
+          <textarea
+            rows="4"
+            cols="100"
+            value={newComment}
+            onChange={(e) => setNewComment(e.target.value)}
+            data-cy="deal-view-new-comment-textarea"
+          />
+          <ButtonPrimary
+            text={"Submit"}
+            action={postNewComment}
+            dataCy={"deal-view-new-comment-submit-button"}
+          />
+          {createCommentError && (
+            <p className={styles["deal-view-new-comment-error"]}>
+              {createCommentError.text}
+            </p>
+          )}
+        </div>
       </div>
     );
   } else {

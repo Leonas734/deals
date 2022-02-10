@@ -62,7 +62,6 @@ function DealRating({
     if (e.target.id === "rate-deal-down") {
       deal.rated_by_user === false ? (rating = null) : (rating = false);
     }
-    console.log(deal.id, rating);
     rateDeal(deal.id, rating);
   }
 

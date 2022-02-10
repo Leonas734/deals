@@ -14,7 +14,7 @@
     "sent_from": null,
     "updated": null,
     "url": "https://localhost:8000",
-    "total_comments": 1,
+    "total_comments": 0,
     "user": {
       "profile_picture": "http://127.0.0.1:8000/media/profile_pictures/DEFAULT-USER-PROFILE-PICTURE.jpg",
       "username": "test-user-1"
@@ -36,7 +36,7 @@
     "sent_from": null,
     "updated": null,
     "url": "https://localhost:8000",
-    "total_comments": 2,
+    "total_comments": 0,
     "user": {
       "profile_picture": "http://127.0.0.1:8000/media/profile_pictures/DEFAULT-USER-PROFILE-PICTURE.jpg",
       "username": "test-user-2"

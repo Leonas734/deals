@@ -7,7 +7,7 @@ import { useEffect } from "react";
 function ModalTemplate({ changeModalView, children, dataCy, isOpen }) {
   useEffect(() => {
     document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") {
+      if (e.key === "Escape" && isOpen) {
         changeModalView();
       }
     });

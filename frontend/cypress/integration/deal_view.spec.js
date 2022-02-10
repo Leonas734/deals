@@ -54,6 +54,11 @@ describe("Deal view displays correct information", function () {
       body: this.dealOne,
     }).as("deal");
 
+    cy.intercept("GET", `/api/deals/${this.dealOne.id}/comments`, {
+      statusCode: 200,
+      body: [],
+    });
+
     cy.visit(`deal/${this.dealOne.id}/`);
     getDealTitle(this.dealOne.title).should("have.text", this.dealOne.title);
     getDealRating().should("have.text", this.dealOne.rating);
@@ -83,7 +88,10 @@ describe("Deal view displays correct information", function () {
       statusCode: 200,
       body: this.dealTwo,
     }).as("deal");
-
+    cy.intercept("GET", `/api/deals/${this.dealTwo.id}/comments`, {
+      statusCode: 200,
+      body: [],
+    });
     cy.visit(`deal/${this.dealTwo.id}/`);
     getDealTitle(this.dealTwo.title).should("have.text", this.dealTwo.title);
     getDealRating().should("have.text", this.dealTwo.rating);
@@ -130,6 +138,10 @@ describe("Deal view rate functions", function () {
       statusCode: 200,
       body: this.dealOne,
     }).as("deal");
+    cy.intercept("GET", `/api/deals/${this.dealOne.id}/comments`, {
+      statusCode: 200,
+      body: [],
+    });
     cy.intercept(`/api/deals/${this.dealOne.id}/vote/`, {
       deal: {
         ...this.dealOne,
@@ -159,6 +171,10 @@ describe("Deal view rate functions", function () {
         rated_by_user: true,
       },
     }).as("deal");
+    cy.intercept("GET", `/api/deals/${this.dealOne.id}/comments`, {
+      statusCode: 200,
+      body: [],
+    });
     cy.intercept(`/api/deals/${this.dealOne.id}/vote/`, {
       deal: this.dealOne,
     }).as("dealVote");
@@ -182,6 +198,10 @@ describe("Deal view rate functions", function () {
       statusCode: 200,
       body: this.dealOne,
     }).as("deal");
+    cy.intercept("GET", `/api/deals/${this.dealOne.id}/comments`, {
+      statusCode: 200,
+      body: [],
+    });
     cy.intercept(`/api/deals/${this.dealOne.id}/vote/`, {
       deal: {
         ...this.dealOne,
@@ -213,7 +233,10 @@ describe("Deal view rate functions", function () {
         rated_by_user: false,
       },
     }).as("deal");
-    console.log(this.dealOne);
+    cy.intercept("GET", `/api/deals/${this.dealOne.id}/comments`, {
+      statusCode: 200,
+      body: [],
+    });
     cy.intercept(`/api/deals/${this.dealOne.id}/vote/`, {
       deal: this.dealOne,
     }).as("dealVote");
@@ -240,7 +263,10 @@ describe("Deal view rate functions", function () {
         rating: +this.dealOne.rating + 1,
       },
     }).as("deal");
-
+    cy.intercept("GET", `/api/deals/${this.dealOne.id}/comments`, {
+      statusCode: 200,
+      body: [],
+    });
     cy.intercept(`/api/deals/${this.dealOne.id}/vote/`, {
       deal: {
         ...this.dealOne,
@@ -271,7 +297,10 @@ describe("Deal view rate functions", function () {
         rating: +this.dealOne.rating - 1,
       },
     }).as("deal");
-
+    cy.intercept("GET", `/api/deals/${this.dealOne.id}/comments`, {
+      statusCode: 200,
+      body: [],
+    });
     cy.intercept(`/api/deals/${this.dealOne.id}/vote/`, {
       deal: {
         ...this.dealOne,
@@ -298,7 +327,10 @@ describe("Deal view rate functions", function () {
       statusCode: 200,
       body: this.dealOne,
     }).as("deal");
-
+    cy.intercept("GET", `/api/deals/${this.dealOne.id}/comments`, {
+      statusCode: 200,
+      body: [],
+    });
     cy.intercept(`/api/deals/${this.dealOne.id}/vote/`, {
       deal: {
         ...this.dealOne,
@@ -325,7 +357,10 @@ describe("Deal view rate functions", function () {
       statusCode: 200,
       body: this.dealOne,
     }).as("deal");
-
+    cy.intercept("GET", `/api/deals/${this.dealOne.id}/comments`, {
+      statusCode: 200,
+      body: [],
+    });
     cy.intercept(`/api/deals/${this.dealOne.id}/vote/`, {
       deal: {
         ...this.dealOne,
@@ -354,7 +389,10 @@ describe("Deal view rate functions", function () {
       statusCode: 200,
       body: this.dealOne,
     }).as("deal");
-
+    cy.intercept("GET", `/api/deals/${this.dealOne.id}/comments`, {
+      statusCode: 200,
+      body: [],
+    });
     cy.intercept(`/api/deals/${this.dealOne.id}/vote/`, {
       deal: {
         ...this.dealOne,
@@ -395,7 +433,10 @@ describe("Deal view rate functions", function () {
       statusCode: 200,
       body: this.dealOne,
     }).as("deal");
-
+    cy.intercept("GET", `/api/deals/${this.dealOne.id}/comments`, {
+      statusCode: 200,
+      body: [],
+    });
     cy.intercept(`/api/deals/${this.dealOne.id}/vote/`, {
       deal: {
         ...this.dealOne,
@@ -424,7 +465,10 @@ describe("Deal view rate functions", function () {
       statusCode: 200,
       body: this.dealOne,
     }).as("deal");
-
+    cy.intercept("GET", `/api/deals/${this.dealOne.id}/comments`, {
+      statusCode: 200,
+      body: [],
+    });
     cy.intercept(`/api/deals/${this.dealOne.id}/vote/`, {
       deal: {
         ...this.dealOne,
