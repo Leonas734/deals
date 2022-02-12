@@ -2,7 +2,6 @@ from rest_framework import serializers
 from deals.models import CustomUser, Deal, Comment
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from django.utils.timezone import now
-from django.shortcuts import get_object_or_404
 
 class UserSerializer(serializers.ModelSerializer):    
     class Meta:
@@ -105,12 +104,17 @@ class DealSerializer(serializers.ModelSerializer):
     def validate(self, attrs):
         if attrs.get('instore_only') and (
             attrs.get('postage_cost') or attrs.get('sent_from')):
-            raise serializers.ValidationError({'detail': 'Please select either instore only or shipping only.'})
+            raise serializers.ValidationError({'postage_cost': 'Please select either instore only or shipping only.'})
 
         # Ensures Deal start date is before deal end date
         if (attrs.get('deal_start_date') != None and attrs.get('deal_end_date') != None) and (
             attrs.get('deal_start_date') > attrs.get('deal_end_date')):
-            raise serializers.ValidationError({'detail': 'Invalid dates.'})
+            raise serializers.ValidationError({'deal_end_date': 'Invalid date.'})
+
+        # Ensures Deal end date is not before current date.
+        if (attrs.get('deal_end_date') != None) and (
+            attrs.get('deal_end_date') < now().date()):
+            raise serializers.ValidationError({'deal_end_date': 'Invalid date.'})
 
         if self.context['request'].method == 'PATCH':
             attrs['updated'] = now()

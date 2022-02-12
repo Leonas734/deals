@@ -4,6 +4,8 @@ import os
 import pytest
 from django.conf import settings
 from deals.models import Deal
+import datetime
+
 from tests.deals.testing_fixtures import (
     test_user_3_verified, test_deal_1, api_client, test_user_3_access_token,
     test_user_1, test_user_1_access_token,
@@ -222,7 +224,22 @@ def test_create_deal_invalid_dates(test_user_3_verified, test_user_3_access_toke
 
     assert resp.status_code == 400
     assert len(resp.data) == 1
-    assert resp.data['detail'][0] == 'Invalid dates.'
+    assert resp.data['deal_end_date'][0] == 'Invalid date.'
+
+@pytest.mark.django_db
+def test_create_deal_invalid_deal_end_date(test_user_3_verified, test_user_3_access_token, api_client):
+    api_client.credentials(HTTP_AUTHORIZATION='Bearer ' + test_user_3_access_token)
+    resp = api_client.post(
+        '/api/deals/',
+        {
+            **TEST_DEAL_1_BASIC_DATA,
+            'deal_end_date': (datetime.datetime.now() + datetime.timedelta(days=-1)).strftime('%Y-%m-%d')
+        }
+    )
+
+    assert resp.status_code == 400
+    assert len(resp.data) == 1
+    assert resp.data['deal_end_date'][0] == 'Invalid date.'
 
 @pytest.mark.django_db
 def test_create_deal_postage_and_instore_invalid(test_user_3_verified, test_user_3_access_token, api_client):
@@ -240,7 +257,7 @@ def test_create_deal_postage_and_instore_invalid(test_user_3_verified, test_user
     )
 
     assert resp.status_code == 400
-    assert resp.data['detail'][0] == 'Please select either instore only or shipping only.'
+    assert resp.data['postage_cost'][0] == 'Please select either instore only or shipping only.'
 
 @pytest.mark.django_db
 def test_create_deal_no_auth(api_client):

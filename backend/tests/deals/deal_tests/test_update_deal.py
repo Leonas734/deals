@@ -131,7 +131,7 @@ def test_update_deal_invalid_dates(test_user_3_verified, test_user_3_access_toke
 
     assert resp.status_code == 400
     assert len(resp.data) == 1
-    assert resp.data['detail'][0] == 'Invalid dates.'
+    assert resp.data['deal_end_date'][0] == 'Invalid date.'
 
 @pytest.mark.django_db
 def test_update_deal_instore_and_postage_invalid(
@@ -148,7 +148,7 @@ def test_update_deal_instore_and_postage_invalid(
         }
     )
     assert resp.status_code == 400
-    assert resp.data['detail'][0] == 'Please select either instore only or shipping only.'
+    assert resp.data['postage_cost'][0] == 'Please select either instore only or shipping only.'
 
 @pytest.mark.django_db
 def test_update_deal_not_owner(
