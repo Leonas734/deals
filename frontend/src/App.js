@@ -1,30 +1,39 @@
 import React from "react";
-import { AuthProvider } from "./components/context/authContext";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useAuth } from "./components/context/authContext";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import styles from "./App.module.css";
 import Nav from "./components/nav/Nav";
 import AllDeals from "./components/deals/AllDeals";
 import EmailVerification from "./components/emails/EmailVerification";
 import DealView from "./components/deals/DealView";
+import NewDeal from "./components/deals/NewDeal";
 
 function App() {
+  const { state: userAuthState } = useAuth();
   return (
-    <AuthProvider>
-      <div className={styles["website"]}>
-        <BrowserRouter>
-          <Nav />
-          <Routes>
-            <Route path="/" element={<AllDeals />}></Route>
-            <Route path="/deal/:dealId" element={<DealView />}></Route>
-            <Route
-              path="email_verification/:userId/:emailToken"
-              element={<EmailVerification />}></Route>
-          </Routes>
-        </BrowserRouter>
+    <div className={styles["website"]}>
+      <BrowserRouter>
+        <Nav />
+        <Routes>
+          <Route path="/" element={<AllDeals />}></Route>
+          <Route path="deal/:dealId" element={<DealView />}></Route>
+          <Route
+            path="email_verification/:userId/:emailToken"
+            element={<EmailVerification />}></Route>
+          <Route
+            path={"new_deal/"}
+            element={
+              userAuthState && userAuthState.emailVerified ? (
+                <NewDeal />
+              ) : (
+                <Navigate to="/" />
+              )
+            }></Route>
+        </Routes>
+      </BrowserRouter>
 
-        <div className={styles["footer"]} id="footer"></div>
-      </div>
-    </AuthProvider>
+      <div className={styles["footer"]} id="footer"></div>
+    </div>
   );
 }
 

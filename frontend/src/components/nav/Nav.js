@@ -9,6 +9,7 @@ import closeIcon from "../../assets/x-icon.svg";
 
 import LoginModal from "../modals/LoginModal";
 import RegisterModal from "../modals/RegisterModal";
+import VerifyEmailModal from "../modals/VerifyEmailModal";
 import NavAccount from "./NavAccount";
 import { useAuth } from "../context/authContext";
 
@@ -17,6 +18,7 @@ function Nav() {
   const [mobileView, setMobileView] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
+  const [showVerifyEmailModal, setShowVerifyEmailModal] = useState(false);
   const navigate = useNavigate();
   const { state: userAuthState, dispatch: userAuthDispatch } = useAuth();
 
@@ -39,6 +41,18 @@ function Nav() {
     userAuthDispatch({ type: "logout" });
   }
 
+  function navigateToNewDeal() {
+    if (!userAuthState) {
+      setShowLoginModal(true);
+      return;
+    }
+    if (!userAuthState.emailVerified) {
+      setShowVerifyEmailModal(true);
+      return;
+    }
+    navigate("new_deal/");
+  }
+
   return (
     <div className={styles["nav"]} id="nav">
       {!userAuthState && (
@@ -54,6 +68,10 @@ function Nav() {
           modalIsOpen={showRegisterModal}
         />
       )}
+      <VerifyEmailModal
+        setModalIsOpen={setShowVerifyEmailModal}
+        modalIsOpen={showVerifyEmailModal}
+      />
       {!showMobileSearchBar && (
         <h1 className={styles["nav-title"]} onClick={() => navigate("/")}>
           Deals
@@ -101,7 +119,12 @@ function Nav() {
         </div>
       )}
       {userAuthState && <NavAccount user={userAuthState} logout={logUserOut} />}
-      <div className={`${styles["nav-button"]} ${styles["nav-button-submit"]}`}>
+      <div
+        className={`${styles["nav-button"]} ${styles["nav-button-submit"]}`}
+        data-cy="go-to-new-deal-button"
+        onClick={() => {
+          navigateToNewDeal();
+        }}>
         <img src={plusIcon} className={styles["nav-icon"]} alt="Plus" />
         <p>Submit</p>
       </div>

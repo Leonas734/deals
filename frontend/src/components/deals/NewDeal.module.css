@@ -1,0 +1,56 @@
+.new-deal-main {
+  grid-column: 2/12;
+  text-align: center;
+  padding: 1rem;
+  background-color: white;
+}
+
+.new-deal-main > h1 {
+  font-size: 5rem;
+  margin-bottom: 1rem;
+}
+
+.new-deal-form > label > * {
+  display: block;
+  margin: auto;
+  font-size: 3rem;
+  width: 60%;
+}
+
+.new-deal-form > label > .new-deal-error {
+  color: red;
+  font-size: 2rem;
+}
+
+.new-deal-form > label > input {
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.new-deal-form > label > textarea {
+  font-family: inherit;
+  text-align: center;
+}
+
+.new-deal-form > label > select {
+  font-family: inherit;
+  text-align: center;
+}
+
+.new-deal-file-input {
+  text-align-last: center;
+}
+
+.new-deal-main > button {
+  width: 50%;
+  font-size: 3.5rem;
+}
+
+@media only screen and (max-width: 675px) {
+  .new-deal-main {
+    grid-column: 1/13;
+  }
+  .new-deal-form > label > * {
+    width: 80%;
+  }
+}
