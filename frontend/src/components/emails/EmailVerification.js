@@ -1,9 +1,7 @@
-import React from "react";
-import { useParams, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import useEmailVerification from "../hooks/useEmailVerification";
 import styles from "./EmailVerification.module.css";
-import { useAuth } from "../context/authContext";
 
 function EmailVerification() {
   const params = useParams();
@@ -13,7 +11,6 @@ function EmailVerification() {
     emailVerificationIsPending,
     emailVerificationResponse,
   } = useEmailVerification();
-  const { dispatch } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -21,12 +18,9 @@ function EmailVerification() {
       verifyEmail(params.userId, params.emailToken);
     }
     if (emailVerificationResponse && !emailVerificationError) {
-      dispatch({
-        type: "logout",
-      });
       setTimeout(() => {
         navigate("/");
-      }, 5000);
+      }, 3000);
     }
   }, [params, emailVerificationResponse]);
   return (
