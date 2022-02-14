@@ -51,7 +51,7 @@ class EmailVerificationView(mixins.CreateModelMixin,
             user.email_verified = True
             user.email_verification_token_date = None
             user.save()
-            refresh = LogInSerializer().get_token(user=request.user)
+            refresh = LogInSerializer().get_token(user=user)
 
             return Response({
                 'detail': 'Email successfully verified.',
