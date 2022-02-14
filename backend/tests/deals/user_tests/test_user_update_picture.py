@@ -28,7 +28,7 @@ def test_update_picture(test_user_1, api_client, test_user_1_access_token):
     )
     assert resp.status_code == 200
     assert resp.data['detail'] == 'Profile picture updated successfully.'
-    assert len(resp.data) == 1
+    assert len(resp.data) == 2
 
     test_user_1.refresh_from_db()
     db_image = Image.open(f'{os.getcwd()}/media/{test_user_1.profile_picture.name}')    

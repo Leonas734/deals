@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework_simplejwt.tokens import RefreshToken
 from deals.permissions import IsOwnerOrReadOnly, IsVerified
 
 from deals.models import CustomUser, Deal, Comment
@@ -86,7 +87,13 @@ class UpdateUserEmailView(mixins.CreateModelMixin,
         instance.email_verification_token_date = now()
         instance.save()
         send_email.send_verification_for_email_address(instance)
-        return Response({'detail': 'Email updated successfully.'}, status=status.HTTP_200_OK)
+        refresh = LogInSerializer().get_token(user=request.user)
+        return Response({
+            'detail': 'Email updated successfully.',
+             'token': {'refresh': str(refresh),
+              'access': str(refresh.access_token)
+              }
+            }, status=status.HTTP_200_OK)
     
 class UpdateUserProfilePictureView(mixins.CreateModelMixin,
                             viewsets.GenericViewSet):
@@ -102,7 +109,11 @@ class UpdateUserProfilePictureView(mixins.CreateModelMixin,
             return Response({'password': 'Invalid password.'}, status=status.HTTP_400_BAD_REQUEST)
         instance.profile_picture = serializer.validated_data['profile_picture']
         instance.save()
-        return Response({'detail': 'Profile picture updated successfully.'}, status=status.HTTP_200_OK)
+        refresh = LogInSerializer().get_token(user=request.user)
+        return Response({
+            'detail': 'Profile picture updated successfully.',
+            'token': {'refresh': str(refresh),
+            'access': str(refresh.access_token)}}, status=status.HTTP_200_OK)
     
 class UpdateUserPasswordView(mixins.CreateModelMixin,
                             viewsets.GenericViewSet):

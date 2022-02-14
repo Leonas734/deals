@@ -17,7 +17,7 @@ def test_update_email_field(test_user_1, api_client, test_user_1_access_token):
 
     test_user_1.refresh_from_db()
     assert resp.status_code == 200
-    assert len(resp.data) == 1
+    assert len(resp.data) == 2
     assert resp.data['detail'] == 'Email updated successfully.'
     assert test_user_1.email == new_email
 
@@ -40,7 +40,7 @@ def test_verified_user_update_email(test_user_1, api_client, test_user_1_access_
         }
     )
     assert resp.status_code == 200
-    assert len(resp.data) == 1
+    assert len(resp.data) == 2
     assert resp.data['detail'] == 'Email updated successfully.'
     test_user_1.refresh_from_db()
     assert test_user_1.email_verified == False
