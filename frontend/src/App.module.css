@@ -5,7 +5,7 @@
 .website {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: 7rem min-content repeat(9, minmax(auto, 1fr)) 20rem;
+  grid-template-rows: 7rem min-content repeat(9, minmax(auto, 1fr)) min-content;
   background-color: var(--colour-grey-light);
 }
 
@@ -13,4 +13,21 @@
   background-color: blue;
   grid-column: 1/13;
   grid-row: 12/13;
+  font-size: 2rem;
+  color: white;
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 2rem;
+}
+
+.footer-links > a {
+  display: block;
+  text-decoration: none;
+  color: white;
+}
+
+.footer-links > a:hover {
+  text-decoration: underline;
+  font-weight: bold;
 }

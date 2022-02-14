@@ -20,3 +20,7 @@
     grid-column: 1/13;
   }
 }
+
+.all-deals-loading {
+  height: 85vh;
+}

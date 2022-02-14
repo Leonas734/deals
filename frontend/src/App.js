@@ -38,7 +38,17 @@ function App() {
         </Routes>
       </BrowserRouter>
 
-      <div className={styles["footer"]} id="footer"></div>
+      <div className={styles["footer"]} id="footer">
+        <div className={styles["footer-links"]}>
+          <a href="https://github.com/Leonas734/deals">Project repository</a>
+          <a href="https://ladomaitis.com">My website</a>
+        </div>
+        <p className={styles["footer-disclaimer"]}>
+          This website was built for educational purposes. I do not own any of
+          the images shown on this website. All rights and credit go directly to
+          its rightful owners. No copyright infringement intended.
+        </p>
+      </div>
     </div>
   );
 }

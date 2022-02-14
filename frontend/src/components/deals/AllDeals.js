@@ -21,7 +21,8 @@ function AllDeals() {
   }, [userAuth.state]);
 
   if (allDeals?.length === 0) return <div>Sorry no deals found</div>;
-
+  if (allDealsIsPending)
+    return <div className={styles["all-deals-loading"]}></div>;
   return (
     <>
       <div className={styles["all-deals-main-toolbar"]}>

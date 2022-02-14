@@ -110,6 +110,9 @@ function DealView() {
     createComment(deal.id, newComment, quotedComment);
   }
 
+  if (dealIsPending || dealCommentsIsPending)
+    return <div className={styles["deal-view-loading"]}></div>;
+
   if (deal && dealComments) {
     if (locationState?.scrollToCommentsOnLoad && commentsDiv.current) {
       scrollToComments();

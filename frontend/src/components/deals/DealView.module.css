@@ -11,6 +11,10 @@
   row-gap: 1rem;
 }
 
+.deal-view-loading {
+  height: 85vh;
+}
+
 .deal-view-details {
   grid-column: 2/3;
   display: grid;

@@ -10,17 +10,17 @@
   column-gap: 0.5rem;
   height: 80%;
   align-self: center;
-  cursor: pointer;
+  /* cursor: pointer; */
   transition: all 0.5s;
 }
 
-.user-icon:hover {
+/* .user-icon:hover {
   background-color: var(--colour-primary);
   border: none;
   color: white;
   font-weight: bold;
   transform: scale(1.05);
-}
+} */
 .user-icon > img {
   height: 2.5rem;
   width: 2.5rem;
