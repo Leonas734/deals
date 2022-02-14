@@ -15,7 +15,7 @@ def test_user_email_verification_success(client, test_user_1):
     )
     assert resp.status_code == 200
     assert resp.data['detail'] == 'Email successfully verified.'
-    assert len(resp.data) == 1
+    assert len(resp.data) == 2
     test_user_1.refresh_from_db()
     assert test_user_1.email_verified == True
     assert test_user_1.email_verification_token_date == None

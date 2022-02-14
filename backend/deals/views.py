@@ -51,9 +51,14 @@ class EmailVerificationView(mixins.CreateModelMixin,
             user.email_verified = True
             user.email_verification_token_date = None
             user.save()
+            refresh = LogInSerializer().get_token(user=request.user)
 
-            return Response({'detail': 'Email successfully verified.'},
-                            status=status.HTTP_200_OK)
+            return Response({
+                'detail': 'Email successfully verified.',
+                'token': {
+                    'refresh': str(refresh),
+                    'access': str(refresh.access_token)
+                    }},status=status.HTTP_200_OK)
         else:
             return Response({'detail': 'Email already verified or the verification link has expired.'},
                             status=status.HTTP_400_BAD_REQUEST)
