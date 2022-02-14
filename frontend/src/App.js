@@ -7,6 +7,7 @@ import AllDeals from "./components/deals/AllDeals";
 import EmailVerification from "./components/emails/EmailVerification";
 import DealView from "./components/deals/DealView";
 import NewDeal from "./components/deals/NewDeal";
+import AccountSettings from "./components/settings/AccountSettings";
 
 function App() {
   const { state: userAuthState } = useAuth();
@@ -20,6 +21,11 @@ function App() {
           <Route
             path="email_verification/:userId/:emailToken"
             element={<EmailVerification />}></Route>
+          <Route
+            path="account_settings/"
+            element={
+              userAuthState ? <AccountSettings /> : <Navigate to="/" />
+            }></Route>
           <Route
             path={"new_deal/"}
             element={

@@ -1,0 +1,65 @@
+.account-settings-main {
+  padding: 1rem;
+  grid-column: 2/12;
+  text-align: center;
+  background-color: white;
+  min-height: 80vh;
+}
+.account-settings-main-verify-email-message {
+  font-size: 3rem;
+}
+
+.account-settings-error {
+  font-size: 2.5rem;
+  color: red;
+}
+
+.account-settings-response {
+  font-size: 2.5rem;
+  color: var(--colour-primary);
+  font-weight: bold;
+}
+
+.account-settings-main-option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 2rem;
+}
+
+.account-settings-main-option > img {
+  height: 3rem;
+  cursor: pointer;
+}
+
+.account-settings-main-option > p {
+  font-size: 3rem;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.account-settings-main > label > input {
+  font-size: 3rem;
+  display: block;
+  margin: auto;
+}
+.account-settings-update-profile-picture-new-pic-input {
+  display: none !important;
+}
+
+.account-settings-update-profile-picture-new-pic-label {
+  font-size: 3rem;
+  border: 0.5px solid black;
+  display: block;
+  width: 32rem;
+  margin: auto;
+}
+.account-settings-main > label > span {
+  font-size: 3rem;
+}
+
+@media only screen and (max-width: 1150px) {
+  .account-settings-main {
+    grid-column: 1/13;
+  }
+}

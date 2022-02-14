@@ -44,6 +44,7 @@
   font-size: 4rem;
   color: black;
   background-color: white;
+  cursor: pointer;
 }
 
 .nav-account-menu-action:hover {

@@ -28,10 +28,11 @@ function NavAccount({ user, logout }) {
         <div className={styles["nav-account-menu"]}>
           <p className={styles["nav-account-menu-username"]}>{user.username}</p>
           <p
+            data-cy="nav-account-settings"
             className={styles["nav-account-menu-action"]}
             onClick={() => {
               showMenu();
-              navigate("/account/settings");
+              navigate("/account_settings");
             }}>
             Settings
           </p>
