@@ -78,6 +78,13 @@
   text-decoration: underline;
 }
 
+.modal-resend-email {
+  text-decoration: underline;
+  color: blue;
+  cursor: pointer;
+  font-size: 2.5rem;
+}
+
 @media only screen and (max-width: 600px) {
   .modal-main {
     width: 80%;

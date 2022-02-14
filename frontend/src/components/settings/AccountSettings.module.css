@@ -9,6 +9,17 @@
   font-size: 3rem;
 }
 
+.account-settings-main-verify-email-message-success {
+  font-size: 3rem;
+  color: var(--colour-primary);
+}
+.account-settings-main-verify-email-link {
+  font-size: 2.5rem;
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 .account-settings-error {
   font-size: 2.5rem;
   color: red;

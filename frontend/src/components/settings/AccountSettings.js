@@ -6,9 +6,17 @@ import ButtonPrimary from "../buttons/ButtonPrimary";
 import { useUpdateUserEmail } from "../hooks/useUpdateUserEmail";
 import { useUpdateUserPassword } from "../hooks/useUpdateUserPassword";
 import { useUpdateUserProfilePicture } from "../hooks/useUpdateUserProfilePicture";
+import { useResendEmailVerification } from "../hooks/useResendEmailVerification";
 
 export default function AccountSettings() {
   const { state: userAuthState } = useAuth();
+  const {
+    resendEmailVerification,
+    resendEmailVerificationResponse,
+    resendEmailVerificationIsPending,
+    resendEmailVerificationError,
+  } = useResendEmailVerification();
+
   const {
     updateUserPassword,
     updateUserPasswordResponse,
@@ -56,10 +64,31 @@ export default function AccountSettings() {
   return (
     <div className={styles["account-settings-main"]}>
       {!userAuthState.emailVerified && (
-        <div
-          data-cy="account-settings-main-verify-email-message"
-          className={styles["account-settings-main-verify-email-message"]}>
-          Email verification required
+        <div data-cy="account-settings-main-verify-email-message">
+          {!resendEmailVerificationResponse && (
+            <>
+              <p
+                className={
+                  styles["account-settings-main-verify-email-message"]
+                }>
+                Email verification required
+              </p>
+
+              <p
+                onClick={() => resendEmailVerification()}
+                className={styles["account-settings-main-verify-email-link"]}>
+                Click here if you want us to send you another verification email
+              </p>
+            </>
+          )}
+          {resendEmailVerificationResponse && (
+            <p
+              className={
+                styles["account-settings-main-verify-email-message-success"]
+              }>
+              New email verification sent. Please check your inbox
+            </p>
+          )}
         </div>
       )}
       <div className={styles["account-settings-main-option"]}>
