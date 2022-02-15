@@ -10,7 +10,7 @@ from tests.deals.testing_variables import (
 @pytest.mark.django_db
 def test_user_view_with_post(client, test_user_3_verified, test_deal_1 ):
     resp = client.get(
-        f'/api/user/{test_user_3_verified.id}/',
+        f'/api/user/{test_user_3_verified.username}/',
     )
     assert resp.status_code == 200
     assert len(resp.data) == 3
@@ -23,7 +23,7 @@ def test_user_view_with_post(client, test_user_3_verified, test_deal_1 ):
 @pytest.mark.django_db
 def test_user_view_without_post(client, test_user_3_verified, test_deal_1, test_user_1 ):
     resp = client.get(
-        f'/api/user/{test_user_1.id}/',
+        f'/api/user/{test_user_1.username}/',
     )
     assert resp.status_code == 200
     assert len(resp.data) == 3
