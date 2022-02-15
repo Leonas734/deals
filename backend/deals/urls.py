@@ -1,7 +1,7 @@
 from deals.views import (
     SignUpView, LogInView, EmailVerificationView, UpdateUserEmailView,
     UpdateUserProfilePictureView, UpdateUserPasswordView, DealViewSet,
-    CommentViewSet
+    CommentViewSet, UserView
     )
 
 from rest_framework_simplejwt.views import TokenRefreshView
@@ -27,6 +27,7 @@ urlpatterns = [
     UpdateUserProfilePictureView.as_view({'post': 'create'}), name='update_user_profile_picture'),
     path('user/update_password/',
     UpdateUserPasswordView.as_view({'post': 'create'}), name='update_user_password'),
+    path('user/<str:pk>/',UserView.as_view(), name='user_view'),
     path('deal_comment/<str:comment_id>/', CommentViewSet.as_view({'get': 'retrieve'}), name='get_deal_comment'),
     path('deal_comment/', CommentViewSet.as_view({'post': 'create'}), name='create_deal_comment'),
     path('deal_comment/<str:comment_id>/like/', CommentViewSet.as_view({'post': 'like'}), name='like_deal_comment')

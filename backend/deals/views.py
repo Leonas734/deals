@@ -1,11 +1,10 @@
 from rest_framework import mixins
 from rest_framework import viewsets, status, generics
-from rest_framework.decorators import action, permission_classes
+from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.views import TokenObtainPairView
-from rest_framework_simplejwt.tokens import RefreshToken
 from deals.permissions import IsOwnerOrReadOnly, IsVerified
 
 from deals.models import CustomUser, Deal, Comment
@@ -13,7 +12,7 @@ from deals.serializers import (
     CreateUserSerializer, LogInSerializer,
     UpdateUserEmailSerializer, UpdateUserProfilePictureSerializer,
     UpdateUserPasswordSerializer, DealSerializer, DealVoteSerializer,
-    CommentSerializer
+    CommentSerializer, UserSerializer
     )
 from deals.utils import email_token_generator, send_email
 
@@ -223,5 +222,7 @@ class CommentViewSet(viewsets.ViewSet):
         return Response(serializer.data,
                         status=status.HTTP_200_OK)
 
-
+class UserView(generics.RetrieveAPIView):
+    queryset = get_user_model().objects.all()
+    serializer_class = UserSerializer
 

@@ -15,9 +15,6 @@ def test_user_login_username_success(client, test_user_1):
         }
     )
     assert resp.status_code == 200
-    print(resp.data)
-    print(resp.data)
-    print(resp.data)
     access = resp.data['access']
     header, payload, signature = access.split('.')
     decoded_payload = base64.b64decode(f'{payload}==')

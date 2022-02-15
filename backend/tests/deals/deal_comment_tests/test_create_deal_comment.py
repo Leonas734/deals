@@ -30,7 +30,7 @@ def test_create_deal_comment(test_user_3_verified, test_user_3_access_token, api
     assert resp.status_code == 201
     assert resp.data['id'] != None
     assert resp.data['deal'] == test_deal_1.id
-    assert len(resp.data['user']) == 2
+    assert len(resp.data['user']) == 3
     assert resp.data['user']['username'] == test_user_3_verified.username
     assert resp.data['user']['profile_picture'] == f'http://testserver/media/{test_user_3_verified.profile_picture}'
     assert resp.data['text'] == TEST_COMMENT_1_TEXT
@@ -61,7 +61,7 @@ def test_create_comment_quoted(
     assert resp.status_code == 201
     assert resp.data['id'] != None
     assert resp.data['deal'] == test_deal_1.id
-    assert len(resp.data['user']) == 2
+    assert len(resp.data['user']) == 3
     assert resp.data['user']['username'] == test_user_3_verified.username
     assert resp.data['user']['profile_picture'] == f'http://testserver/media/{test_user_3_verified.profile_picture}'
     assert resp.data['text'] == TEST_COMMENT_2_TEXT

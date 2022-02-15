@@ -4,10 +4,14 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from django.utils.timezone import now
 
 class UserSerializer(serializers.ModelSerializer):    
+    total_deals_posted = serializers.SerializerMethodField()
     class Meta:
         model = CustomUser
-        fields = ('username', 'profile_picture')
+        fields = ('username', 'profile_picture', 'total_deals_posted')
 
+    def get_total_deals_posted(self, obj):
+        return Deal.objects.filter(user=obj).count()
+        
 class UserSerializerPrivate(serializers.ModelSerializer):    
     class Meta:
         model = CustomUser

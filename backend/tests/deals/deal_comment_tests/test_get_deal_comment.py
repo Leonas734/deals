@@ -23,7 +23,7 @@ def test_get_all_deal_comments(
     for deal in resp.data:
         assert deal['id'] != None
         assert deal['deal'] == test_deal_1.id
-        assert len(deal['user']) == 2
+        assert len(deal['user']) == 3
         assert deal['user']['username'] == test_user_3_verified.username
         assert deal['user']['profile_picture'] == f'http://testserver/media/{test_user_3_verified.profile_picture}'
         assert deal['text'] == TEST_COMMENT_1_TEXT
@@ -43,7 +43,7 @@ def test_get_single_comment(
     assert resp.status_code == 200
     assert resp.data['id'] != None
     assert resp.data['deal'] == test_deal_1.id
-    assert len (resp.data['user']) == 2
+    assert len (resp.data['user']) == 3
     assert resp.data['user']['username'] == test_user_3_verified.username
     assert resp.data['user']['profile_picture'] == f'http://testserver/media/{test_user_3_verified.profile_picture}'
     assert resp.data['text'] == TEST_COMMENT_1_TEXT

@@ -91,3 +91,17 @@ def test_update_user_password_methods(
         else:
             # 405 == METHOD NOT ALLOWED
             assert resp.status_code == 405
+
+@pytest.mark.django_db
+def test_user_view_metohds(client, test_user_1):
+    allowed_methods = ['get',]
+    for method in ALL_METHODS:
+        resp = getattr(client, method)(
+            f'/api/user/{test_user_1.id}/',
+            {}
+        )
+        if method in allowed_methods:
+            assert resp.status_code != 405
+        else:
+            # 405 == METHOD NOT ALLOWED
+            assert resp.status_code == 405
