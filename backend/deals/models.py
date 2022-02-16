@@ -58,10 +58,7 @@ class Deal(models.Model):
     down_votes = models.JSONField(default=list)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(default=None, null=True)
-    
-    @property
-    def rating(self):
-        return len(self.up_votes) - len(self.down_votes)
+    rating= models.IntegerField(default=0)
 
     def vote(self, username, vote):
         """If vote True=Up vote, False=Down vote, None=No vote"""
@@ -72,11 +69,12 @@ class Deal(models.Model):
                 self.down_votes.remove(username)
 
         clear_votes(username)
-
         if vote == True:
             self.up_votes.append(username)
         if vote == False:
             self.down_votes.append(username)
+        self.save()
+        self.rating = len(self.up_votes) - len(self.down_votes) 
         self.save()
 
     def rated_by_user(self, username):

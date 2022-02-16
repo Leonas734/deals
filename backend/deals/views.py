@@ -1,11 +1,11 @@
-from rest_framework import mixins
-from rest_framework import viewsets, status, generics
+from rest_framework import viewsets, status, generics, mixins, filters
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.views import TokenObtainPairView
 from deals.permissions import IsOwnerOrReadOnly, IsVerified
+from django_filters.rest_framework import DjangoFilterBackend
 
 from deals.models import CustomUser, Deal, Comment
 from deals.serializers import (
@@ -145,9 +145,12 @@ class DealViewSet(viewsets.ModelViewSet):
     queryset = Deal.objects.all()
     permission_classes = []
     http_method_names = ['get', 'post', 'patch', 'delete']
+    filter_backends = [filters.OrderingFilter, DjangoFilterBackend]
+    ordering_fields = ['rating', 'created'] # Order deals by
+    ordering = ['-rating'] # Default ordering
+    filterset_fields = ['category'] # Can filter by category
 
     def get_permissions(self):
-        print(self.action)
         if (self.action == 'list' or 
             self.action == 'comments' or 
             self.action == 'retrieve' or 
@@ -160,14 +163,9 @@ class DealViewSet(viewsets.ModelViewSet):
             return (IsOwnerOrReadOnly(), IsAuthenticated())
     
     def perform_create(self, serializer):
-        return serializer.save(user=self.request.user, up_votes=[self.request.user.username])
-
-    @action(detail=True, methods=['get'])
-    def category(self, request, pk=None):
-        filtered_deals = Deal.objects.filter(category=pk.upper())
-        serializer = self.serializer_class(filtered_deals, many=True, context={'request': request})
-        return Response(serializer.data,
-                            status=status.HTTP_200_OK)
+        return serializer.save(
+            user=self.request.user, up_votes=[self.request.user.username], rating=1
+            )
 
     @action(detail=True, methods=['post'])
     def vote(self, request, pk=None):
@@ -183,7 +181,6 @@ class DealViewSet(viewsets.ModelViewSet):
                             status=status.HTTP_400_BAD_REQUEST)
     @action(detail=True, methods=['get'])
     def comments(self, request, pk=None):
-        # Ensure deal exists
         get_object_or_404(Deal, id=pk)
         comments = Comment.objects.filter(deal=pk)
         serializer = CommentSerializer(comments.order_by('created'), many=True, context={'request': request})
@@ -191,7 +188,6 @@ class DealViewSet(viewsets.ModelViewSet):
                             status=status.HTTP_200_OK)
 
 class CommentViewSet(viewsets.ViewSet):
-
     def get_permissions(self):
         if self.action == 'create' or self.action == 'like':
             permission_classes = [IsAuthenticated, IsVerified]

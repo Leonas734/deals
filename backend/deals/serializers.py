@@ -94,7 +94,6 @@ class UpdateUserPasswordSerializer(serializers.ModelSerializer):
         return data
 
 class DealSerializer(serializers.ModelSerializer):
-    rating = serializers.ReadOnlyField()
     user = UserSerializer(read_only=True)
     rated_by_user = serializers.SerializerMethodField(read_only=True)
     total_comments = serializers.SerializerMethodField(read_only=True)

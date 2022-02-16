@@ -1,9 +1,10 @@
 import pytest
+import datetime
 from django.conf import settings
 from deals.models import Deal
 from tests.deals.testing_fixtures import (
     test_user_3_verified, test_deal_1, api_client, test_user_3_access_token,
-    test_user_1, test_user_1_access_token)
+    test_user_1, test_user_1_access_token, test_deal_2)
 from tests.deals.testing_variables import (
     TEST_DEAL_1_TITLE, TEST_DEAL_1_DESCRIPTION, TEST_DEAL_1_CATEOGRY,
     TEST_DEAL_1_SENT_FROM, TEST_DEAL_1_URL, TEST_DEAL_1_PRICE, TEST_DEAL_1_POSTAGE_COST,
@@ -132,8 +133,37 @@ def test_get_deal_by_pk_no_votes(test_user_3_verified, test_user_3_access_token,
 @pytest.mark.django_db
 def test_get_deal_by_category(test_user_3_verified, api_client, test_deal_1):
     resp = api_client.get(
-        f'/api/deals/{test_deal_1.category}/category/',
+        f'/api/deals/?category={test_deal_1.category.replace(" & ", "+%26+")}',
     )
     assert resp.status_code == 200
     assert len(resp.data) == 1
     assert resp.data[0]['category'] == test_deal_1.category
+
+    
+@pytest.mark.django_db
+def test_get_deals_sort_by_rating(test_user_3_verified, api_client, test_deal_1, test_deal_2, test_user_1):
+    resp = api_client.get(
+        '/api/deals/?ordering=rating',
+    )
+    previous_rating = resp.data[0]['rating']
+    assert resp.status_code == 200
+    assert len(resp.data) == 2
+    # Sorted by deal ratings ascending 
+    for deal in resp.data:
+        assert(deal['rating'] >= previous_rating) == True
+        previous_rating = deal['rating']
+
+
+@pytest.mark.django_db
+def test_get_deals_sort_by_created(test_user_3_verified, api_client, test_deal_1, test_deal_2, test_user_1):
+    resp = api_client.get(
+        '/api/deals/?ordering=created',
+    )
+    previous_date = datetime.datetime.strptime(resp.data[0]['created'], '%Y-%m-%dT%H:%M:%S.%f%z')
+    assert resp.status_code == 200
+    assert len(resp.data) == 2
+    # Sorted by deal created date ascending 
+    for deal in resp.data:
+        deal_date = datetime.datetime.strptime(deal['created'], '%Y-%m-%dT%H:%M:%S.%f%z')
+        assert(deal_date >= previous_date) == True
+        previous_date = datetime.datetime.strptime(deal['created'], '%Y-%m-%dT%H:%M:%S.%f%z')

@@ -166,10 +166,21 @@ Each time url is hit with post request, it will either unlike or like, depending
 
 ---
 
-|           USAGE           |               URL               | METHOD | AUTH? | VERIFIED EMAIL? |
-| :-----------------------: | :-----------------------------: | :----: | :---: | :-------------: |
-| Get all deals by category | /api/deals/<category>/cateogry/ |  GET   |  No   |       No        |
+|           USAGE           |               URL                | METHOD | AUTH? | VERIFIED EMAIL? |
+| :-----------------------: | :------------------------------: | :----: | :---: | :-------------: |
+| Get all deals by category | /api/deals/?category={category}/ |  GET   |  No   |       No        |
 
 Category field must be a valid. Check choice_fields inside models.py Deal model for more detail. ⚠️
+If there is a "&" symbol in the category replace it with "+%26+" . ⚠️
+Can be used with sort by order. For example "/api/deals/?category=GROCERIES&ordering=rating". ⚠️
+
+**Returns:** `Array with all deals filtered by category, status_code = 200`
+
+|               USAGE                |                  URL                   | METHOD | AUTH? | VERIFIED EMAIL? |
+| :--------------------------------: | :------------------------------------: | :----: | :---: | :-------------: |
+| Sort deals by rating/created value | /api/deals/?ordering={rating/created}/ |  GET   |  No   |       No        |
+
+Adding a "-" before "rating" or "created" will sort by descending. ⚠️
+Can be used with category filtering. For example "/api/deals/?category=GROCERIES&ordering=rating". ⚠️
 
 **Returns:** `Array with all deals filtered by category, status_code = 200`

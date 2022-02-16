@@ -9,6 +9,7 @@
       "category": "FINANCE & INSURANCE",
       "image": "/deal_images/credit-card-image.jpg",
       "url": "https://localhost:8000",
+      "rating": 3,
       "up_votes": ["test-user-1", "test-user-2", "test-user-3"],
       "created": "2022-01-07T14:07:13.540000Z"
     }
@@ -25,6 +26,7 @@
       "price": "24.99",
       "postage_cost": "0.00",
       "url": "https://localhost:8000",
+      "rating": 3,
       "up_votes": ["test-user-1", "test-user-2", "test-user-3"],
       "created": "2022-01-11T14:07:13.540000Z"
     }
@@ -40,6 +42,7 @@
       "image": "/deal_images/sofa-image.jpg",
       "url": "https://localhost:8000/sale/",
       "price": "299.99",
+      "rating": 1,
       "up_votes": ["test-user-3"],
       "created": "2022-01-06T14:07:13.540000Z"
     }
