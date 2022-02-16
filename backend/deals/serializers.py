@@ -7,7 +7,7 @@ class UserSerializer(serializers.ModelSerializer):
     total_deals_posted = serializers.SerializerMethodField()
     class Meta:
         model = CustomUser
-        fields = ('username', 'profile_picture', 'total_deals_posted')
+        fields = ('username', 'profile_picture', 'total_deals_posted', 'date_joined')
 
     def get_total_deals_posted(self, obj):
         return Deal.objects.filter(user=obj).count()
