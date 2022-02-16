@@ -1,0 +1,71 @@
+.user-view-main {
+  min-height: 85vh;
+  grid-column: 1/13;
+}
+
+.user-view-error {
+  font-size: 4rem;
+  text-align: center;
+}
+
+.user-view-user-details {
+  display: grid;
+  padding: 1rem;
+  grid-template-columns: 1fr min-content 30rem 1fr;
+  grid-template-rows: repeat(3, min-content min-content min-content);
+  column-gap: 2rem;
+  justify-items: center;
+}
+
+.user-view-profile-picture {
+  height: 20rem;
+  width: 20rem;
+  grid-column: 2/3;
+  grid-row: 1/4;
+}
+
+.user-view-username {
+  font-size: 4rem;
+  font-weight: bold;
+  grid-row: 1/2;
+  grid-column: 3/4;
+}
+
+.user-view-total-deals-posted {
+  font-size: 2rem;
+  grid-column: 3/4;
+  grid-row: 2/3;
+}
+
+.user-view-user-joined {
+  grid-row: 3/4;
+  grid-column: 3/4;
+  font-size: 2rem;
+}
+
+@media only screen and (max-width: 600px) {
+  .user-view-user-details {
+    grid-template-rows: repeat(4, min-content min-content min-content);
+    grid-template-columns: 1fr;
+    column-gap: 2rem;
+  }
+  .user-view-profile-picture {
+    grid-column: 1/2;
+    grid-row: 1/2;
+  }
+
+  .user-view-username {
+    grid-column: 1/2;
+    grid-row: 2/3;
+  }
+
+  .user-view-total-deals-posted {
+    grid-column: 1/2;
+    grid-row: 3/4;
+  }
+
+  .user-view-user-joined {
+    grid-column: 1/2;
+    grid-row: 4/5;
+  }
+}
