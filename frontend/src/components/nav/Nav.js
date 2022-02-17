@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import styles from "./Nav.module.css";
 import searchIcon from "../../assets/search-icon.svg";
 import plusIcon from "../../assets/plus-icon.svg";
@@ -20,6 +20,7 @@ function Nav() {
   const [showRegisterModal, setShowRegisterModal] = useState(false);
   const [showVerifyEmailModal, setShowVerifyEmailModal] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
   const { state: userAuthState, dispatch: userAuthDispatch } = useAuth();
 
   useEffect(() => {
@@ -39,6 +40,14 @@ function Nav() {
 
   function logUserOut() {
     userAuthDispatch({ type: "logout" });
+  }
+
+  function navigateHome() {
+    if (location.pathname === "/") {
+      window.location.reload();
+    } else {
+      navigate("/");
+    }
   }
 
   function navigateToNewDeal() {
@@ -73,7 +82,7 @@ function Nav() {
         modalIsOpen={showVerifyEmailModal}
       />
       {!showMobileSearchBar && (
-        <h1 className={styles["nav-title"]} onClick={() => navigate("/")}>
+        <h1 className={styles["nav-title"]} onClick={() => navigateHome()}>
           Deals
         </h1>
       )}
