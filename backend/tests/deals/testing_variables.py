@@ -14,7 +14,7 @@ TEST_USER_3_USERNAME = 'test_user_3'
 TEST_USER_3_EMAIL = 'test_user_3@email.com'
 TEST_USER_3_PASSWORD = 'test-user-3-password'
 
-TEST_DEAL_1_TITLE = 'Test Deal 1 title!'
+TEST_DEAL_1_TITLE = 'Grocery shopping voucher!'
 TEST_DEAL_1_DESCRIPTION= 'Test Deal 1 description. Text, text, text.'
 TEST_DEAL_1_CATEOGRY = 'GROCERIES'
 TEST_DEAL_1_SENT_FROM = 'UNITED KINGDOM'
@@ -23,6 +23,12 @@ TEST_DEAL_1_PRICE = '29.99'
 TEST_DEAL_1_POSTAGE_COST = '3.99'
 TEST_DEAL_1_DEAL_START_DATE = (datetime.datetime.now()).strftime('%Y-%m-%d')
 TEST_DEAL_1_DEAL_END_DATE= (datetime.datetime.now() + datetime.timedelta(days=1)).strftime('%Y-%m-%d')
+
+TEST_DEAL_2_TITLE = 'Sofa 50 percent off!'
+TEST_DEAL_2_DESCRIPTION= 'Test Deal 2 description. Text, text, text.'
+TEST_DEAL_2_CATEOGRY = 'HOME & GARDEN'
+TEST_DEAL_2_URL = 'https://www.testurl.com'
+TEST_DEAL_2_PRICE = '299.99'
 
 TEST_COMMENT_1_TEXT = 'Test comment 1'
 TEST_COMMENT_2_TEXT = 'Test comment 2'

@@ -167,3 +167,20 @@ def test_get_deals_sort_by_created(test_user_3_verified, api_client, test_deal_1
         deal_date = datetime.datetime.strptime(deal['created'], '%Y-%m-%dT%H:%M:%S.%f%z')
         assert(deal_date >= previous_date) == True
         previous_date = datetime.datetime.strptime(deal['created'], '%Y-%m-%dT%H:%M:%S.%f%z')
+
+@pytest.mark.django_db
+def test_search_deals(test_user_3_verified,  test_user_1, api_client, test_deal_1, test_deal_2):
+    resp = api_client.get(
+        f'/api/deals/?search={test_deal_2.title[0:4]}',
+    )
+    assert resp.status_code == 200
+    assert len(resp.data) == 1
+    assert resp.data[0]['title'] == test_deal_2.title
+
+@pytest.mark.django_db
+def test_search_deals_no_deals_found(api_client):
+    resp = api_client.get(
+        f'/api/deals/?search=invalid+deal+title',
+    )
+    assert resp.status_code == 200
+    assert len(resp.data) == 0

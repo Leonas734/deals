@@ -145,10 +145,11 @@ class DealViewSet(viewsets.ModelViewSet):
     queryset = Deal.objects.all()
     permission_classes = []
     http_method_names = ['get', 'post', 'patch', 'delete']
-    filter_backends = [filters.OrderingFilter, DjangoFilterBackend]
+    filter_backends = [filters.OrderingFilter, DjangoFilterBackend, filters.SearchFilter]
     ordering_fields = ['rating', 'created'] # Order deals by
     ordering = ['-rating'] # Default ordering
     filterset_fields = ['category'] # Can filter by category
+    search_fields = ['title', 'description']
 
     def get_permissions(self):
         if (self.action == 'list' or 

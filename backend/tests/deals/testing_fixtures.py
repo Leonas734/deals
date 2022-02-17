@@ -66,8 +66,8 @@ def test_deal_1(test_user_3_verified):
 @pytest.fixture
 def test_deal_2(test_user_3_verified, test_user_1):
     return Deal.objects.create(
-        user=test_user_3_verified, title=TEST_DEAL_1_TITLE, description=TEST_DEAL_1_DESCRIPTION,
-        category=TEST_DEAL_1_CATEOGRY, rating=2, up_votes=[test_user_3_verified.username, test_user_1.username]
+        user=test_user_3_verified, title=TEST_DEAL_2_TITLE, description=TEST_DEAL_2_DESCRIPTION,
+        category=TEST_DEAL_2_CATEOGRY, rating=2, up_votes=[test_user_3_verified.username, test_user_1.username]
         )
 
 @pytest.fixture
