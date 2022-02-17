@@ -12,31 +12,43 @@ import RegisterModal from "../modals/RegisterModal";
 import VerifyEmailModal from "../modals/VerifyEmailModal";
 import NavAccount from "./NavAccount";
 import { useAuth } from "../context/authContext";
+import { useAllDeals } from "../hooks/useAllDeals";
 
 function Nav() {
+  const mobileWidth = 600;
   const [showMobileSearchBar, setShowMobileSearchBar] = useState(false);
   const [mobileView, setMobileView] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
   const [showVerifyEmailModal, setShowVerifyEmailModal] = useState(false);
+  const [searchContent, setSearchContent] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
   const { state: userAuthState, dispatch: userAuthDispatch } = useAuth();
+  const {
+    getAllDeals: searchDeals,
+    allDeals: searchDealsResults,
+    allDealsIsPending,
+    allDealsError,
+  } = useAllDeals();
+
+  window.addEventListener("resize", () => {
+    if (window.innerWidth <= mobileWidth) {
+      setMobileView(true);
+    } else {
+      setMobileView(false);
+      setShowMobileSearchBar(false);
+    }
+  });
 
   useEffect(() => {
-    const mobileWidth = 600;
     if (window.innerWidth <= mobileWidth) {
       setMobileView(true);
     }
-    window.addEventListener("resize", () => {
-      if (window.innerWidth <= mobileWidth) {
-        setMobileView(true);
-      } else {
-        setMobileView(false);
-        setShowMobileSearchBar(false);
-      }
-    });
-  }, [userAuthState]);
+    if (searchContent.length > 0) {
+      searchDeals({ search: searchContent });
+    }
+  }, [userAuthState, searchContent]);
 
   function logUserOut() {
     userAuthDispatch({ type: "logout" });
@@ -104,7 +116,39 @@ function Nav() {
               onClick={() => setShowMobileSearchBar(!showMobileSearchBar)}
             />
           )}
-          <input className={styles["nav-search-bar-input"]} />
+          <input
+            data-cy="nav-search-bar-input"
+            className={styles["nav-search-bar-input"]}
+            value={searchContent}
+            onChange={(e) => setSearchContent(e.target.value)}
+          />
+          {searchContent.length > 0 && searchDealsResults && (
+            <div
+              className={styles["nav-search-bar-results"]}
+              data-cy="nav-search-bar-results">
+              {searchDealsResults.map((deal) => {
+                return (
+                  <div
+                    onClick={() => {
+                      navigate(`deal/${deal.id}`);
+                      setSearchContent("");
+                    }}
+                    key={deal.id}
+                    className={styles["nav-search-bar-result"]}>
+                    <img
+                      className={styles["nav-search-bar-result-img"]}
+                      src={
+                        new URL(deal.image, process.env.REACT_APP_BASE_URL).href
+                      }
+                    />
+                    <p className={styles["nav-search-bar-result-title"]}>
+                      {deal.title}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
       )}
       {mobileView && !showMobileSearchBar && (
