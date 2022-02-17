@@ -7,11 +7,27 @@ export const useAllDeals = () => {
   const [allDeals, setAllDeals] = useState(null);
   const api = useAxios();
 
-  const getAllDeals = async () => {
+  const getAllDeals = async (filters = null) => {
     setAllDealsError(null);
     setAllDealsIsPending(true);
+    let sortOrder;
+    let sortBy;
+    const category = filters?.category?.replace(" & ", "+%26+");
+    if (filters && filters.sortBy) {
+      sortOrder = filters?.sortBy.toLowerCase().includes("descending")
+        ? "-"
+        : "";
+      sortBy = filters?.sortBy.toLowerCase().includes("rating")
+        ? `${sortOrder}rating`
+        : `${sortOrder}created`;
+    }
+    let url = "/api/deals/";
+    if (category && !sortBy) url += `?category=${category}`;
+    if (sortBy && !category) url += `?ordering=${sortBy}`;
+    if (category && sortBy) url += `?category=${category}&ordering=${sortBy}`;
+
     try {
-      const res = await api.get("/api/deals/");
+      const res = await api.get(url);
       setAllDeals(res.data);
     } catch (err) {
       setAllDealsError(err.response.data);

@@ -30,6 +30,12 @@ const getDealViewExpirationDate = () =>
 const getDealViewCommentTotal = () =>
   cy.get("[data-cy=deal-list-view-comments-total]");
 const getDealViewGetDealBtn = () => cy.get("[data-cy=deal-list-view-get-deal]");
+const getToolBarIcon = () => cy.get("[data-cy=all-deals-toolbar-icon]");
+const getToolBarSaveBtn = () => cy.get("[data-cy=all-deals-toolbar-save-btn]");
+const getToolBarCategorySelector = () =>
+  cy.get("[data-cy=all-deals-toolbar-categories]");
+const getToolBarSortBySelector = () =>
+  cy.get("[data-cy=all-deals-toolbar-sort-by]");
 
 const loginUser = (username, password) => {
   cy.intercept("POST", "api/log_in").as("logIn");
@@ -524,5 +530,150 @@ describe("Deal list view rate functions", function () {
     cy.get("[data-cy=verify-email-modal-close-icon]").click();
     cy.get("[data-cy=verify-email-modal-background]").should("not.exist");
     cy.get("[data-cy=verify-email-modal-main]").should("not.exist");
+  });
+});
+
+describe("Deal list view sort by", function () {
+  beforeEach(function () {
+    cy.fixture("verifiedUserData.json").then((userData) => {
+      this.user = userData;
+    });
+    cy.fixture("dealListStubData.json").then((stubDeals) => {
+      this.dealOne = stubDeals.deal_1;
+      this.dealTwo = stubDeals.deal_2;
+    });
+  });
+
+  it("Can sort deals by rating ascending", function () {
+    cy.intercept("GET", "/api/deals/", {
+      statusCode: 200,
+      body: [this.dealOne],
+    });
+    cy.intercept("GET", `/api/deals/?ordering=rating`, (req) => {
+      expect(req.url).to.include(
+        "http://127.0.0.1:8000/api/deals/?ordering=rating"
+      );
+    });
+
+    cy.visit("");
+    getToolBarIcon().click();
+    getToolBarSortBySelector().select("RATING - ASCENDING");
+    getToolBarSaveBtn().click();
+  });
+
+  it("Can sort deals by rating descending", function () {
+    cy.intercept("GET", "/api/deals/", {
+      statusCode: 200,
+      body: [this.dealOne],
+    });
+    cy.intercept("GET", `/api/deals/?ordering=-rating`, (req) => {
+      expect(req.url).to.include(
+        "http://127.0.0.1:8000/api/deals/?ordering=-rating"
+      );
+    });
+
+    cy.visit("");
+    getToolBarIcon().click();
+    getToolBarSortBySelector().select("RATING - DESCENDING");
+    getToolBarSaveBtn().click();
+  });
+
+  it("Can sort deals by created ascending", function () {
+    cy.intercept("GET", "/api/deals/", {
+      statusCode: 200,
+      body: [this.dealOne],
+    });
+    cy.intercept("GET", `/api/deals/?ordering=created`, (req) => {
+      expect(req.url).to.include(
+        "http://127.0.0.1:8000/api/deals/?ordering=created"
+      );
+    });
+
+    cy.visit("");
+    getToolBarIcon().click();
+    getToolBarSortBySelector().select("UPLOADED - ASCENDING");
+    getToolBarSaveBtn().click();
+  });
+
+  it("Can sort deals by created descending", function () {
+    cy.intercept("GET", "/api/deals/", {
+      statusCode: 200,
+      body: [this.dealOne],
+    });
+    cy.intercept("GET", `/api/deals/?ordering=-created`, (req) => {
+      expect(req.url).to.include(
+        "http://127.0.0.1:8000/api/deals/?ordering=-created"
+      );
+    });
+
+    cy.visit("");
+    getToolBarIcon().click();
+    getToolBarSortBySelector().select("UPLOADED - DESCENDING");
+    getToolBarSaveBtn().click();
+  });
+});
+
+describe("Deal list view filter by category", function () {
+  beforeEach(function () {
+    cy.fixture("verifiedUserData.json").then((userData) => {
+      this.user = userData;
+    });
+    cy.fixture("dealListStubData.json").then((stubDeals) => {
+      this.dealOne = stubDeals.deal_1;
+      this.dealTwo = stubDeals.deal_2;
+    });
+  });
+
+  it("Can filter deals by category", function () {
+    cy.intercept("GET", "/api/deals/", {
+      statusCode: 200,
+      body: [this.dealOne],
+    });
+    cy.intercept("GET", `/api/deals/?category=GROCERIES`, (req) => {
+      expect(req.url).to.include(
+        "http://127.0.0.1:8000/api/deals/?category=GROCERIES"
+      );
+    });
+
+    cy.visit("");
+    getToolBarIcon().click();
+    cy.wait(2000);
+    getToolBarCategorySelector().select("GROCERIES");
+    getToolBarSaveBtn().click();
+  });
+});
+
+describe("Deal list view filter by category and sort", function () {
+  beforeEach(function () {
+    cy.fixture("verifiedUserData.json").then((userData) => {
+      this.user = userData;
+    });
+    cy.fixture("dealListStubData.json").then((stubDeals) => {
+      this.dealOne = stubDeals.deal_1;
+      this.dealTwo = stubDeals.deal_2;
+    });
+  });
+
+  it("Can filter deals and sort deals", function () {
+    cy.intercept("GET", "/api/deals/", {
+      statusCode: 200,
+      body: [this.dealOne],
+    });
+    cy.intercept(
+      "GET",
+      `/api/deals/?category=GROCERIES&ordering=created`,
+      (req) => {
+        expect(req.url).to.include(
+          "http://127.0.0.1:8000/api/deals/?category=GROCERIES&ordering=created"
+        );
+      }
+    );
+
+    cy.visit("");
+    getToolBarIcon().click();
+    cy.wait(2000);
+    getToolBarCategorySelector().select("GROCERIES");
+    getToolBarSortBySelector().select("UPLOADED - ASCENDING");
+    getToolBarSaveBtn().click();
   });
 });
