@@ -25,7 +25,8 @@ export const useAllDeals = () => {
     if (category && !sortBy) url += `?category=${category}`;
     if (sortBy && !category) url += `?ordering=${sortBy}`;
     if (category && sortBy) url += `?category=${category}&ordering=${sortBy}`;
-
+    if (filters && filters.search)
+      url += `?search=${filters.search.toLowerCase().replace(" ", "+")}`;
     try {
       const res = await api.get(url);
       setAllDeals(res.data);

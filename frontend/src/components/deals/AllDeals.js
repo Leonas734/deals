@@ -79,11 +79,6 @@ function AllDeals() {
                   return <option key={category}>{category}</option>;
                 })}
               </select>
-              {/* {createDealError && createDealError.category && (
-                <p className={styles["new-deal-error"]}>
-                  {createDealError.category}
-                </p>
-              )} */}
             </label>
             <label>
               <span>Sort</span>
@@ -95,11 +90,6 @@ function AllDeals() {
                   return <option key={sortOption}>{sortOption}</option>;
                 })}
               </select>
-              {/* {createDealError && createDealError.category && (
-                <p className={styles["new-deal-error"]}>
-                  {createDealError.category}
-                </p>
-              )} */}
             </label>
             <ButtonPrimary
               text="Save"
