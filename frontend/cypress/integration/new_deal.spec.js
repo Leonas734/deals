@@ -1,14 +1,6 @@
-import createdAgoDateTime from "../../src/utils/createdAgoDateTime";
-const faker = require("faker");
 import "cypress-file-upload";
-
-const randomEmail = faker.internet.email();
-const randomUsername = faker.internet.userName();
-const userPassword = "password";
 const navLoginRegisterBtn = "[data-cy=nav-login-register-button]";
 const loginModalBtn = "[data-cy=login-modal-button]";
-const createAccBtn = "[data-cy=create-account-button]";
-
 const getNewDealButton = () => cy.get("[data-cy=go-to-new-deal-button]");
 const getNewDealTitleInput = () => cy.get("[data-cy=new-deal-title]");
 const getNewDealDescriptionInput = () =>
