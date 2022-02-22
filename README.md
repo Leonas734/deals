@@ -15,3 +15,6 @@ Technology used:
    - Docker
    - SendGrid (Used for sending email verifications)
    
+API:
+  - You can view all the available api methods by clicking the link below.
+  - [Link to API.md file](https://github.com/Leonas734/deals/blob/master/backend/API.md) 
