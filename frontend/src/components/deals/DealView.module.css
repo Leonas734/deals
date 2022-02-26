@@ -12,7 +12,9 @@
 }
 
 .deal-view-loading {
-  height: 85vh;
+  text-align: center;
+  font-size: 3rem;
+  justify-self: center;
 }
 
 .deal-view-details {

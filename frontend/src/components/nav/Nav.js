@@ -28,8 +28,9 @@ function Nav() {
   const {
     getAllDeals: searchDeals,
     allDeals: searchDealsResults,
-    allDealsIsPending,
+    allDealsIsPending: searchDealsIsPending,
     allDealsError,
+    setAllDeals: setSearchDeals,
   } = useAllDeals();
 
   window.addEventListener("resize", () => {
@@ -47,6 +48,9 @@ function Nav() {
     }
     if (searchContent.length > 0) {
       searchDeals({ search: searchContent });
+    }
+    if (searchDealsResults && searchContent.length === 0) {
+      setSearchDeals([]);
     }
   }, [userAuthState, searchContent]);
 
@@ -122,31 +126,49 @@ function Nav() {
             value={searchContent}
             onChange={(e) => setSearchContent(e.target.value)}
           />
-          {searchContent.length > 0 && searchDealsResults && (
+          {searchContent.length > 0 && (
             <div
               className={styles["nav-search-bar-results"]}
               data-cy="nav-search-bar-results">
-              {searchDealsResults.map((deal) => {
-                return (
-                  <div
-                    onClick={() => {
-                      navigate(`deal/${deal.id}`);
-                      setSearchContent("");
-                    }}
-                    key={deal.id}
-                    className={styles["nav-search-bar-result"]}>
-                    <img
-                      className={styles["nav-search-bar-result-img"]}
-                      src={
-                        new URL(deal.image, process.env.REACT_APP_BASE_URL).href
-                      }
-                    />
-                    <p className={styles["nav-search-bar-result-title"]}>
-                      {deal.title}
-                    </p>
-                  </div>
-                );
-              })}
+              {/* Show each deal in search results */}
+              {searchDealsResults &&
+                !searchDealsIsPending &&
+                searchDealsResults.map((deal) => {
+                  return (
+                    <div
+                      onClick={() => {
+                        navigate(`deal/${deal.id}`);
+                        setSearchContent("");
+                      }}
+                      key={deal.id}
+                      className={styles["nav-search-bar-result"]}>
+                      <img
+                        className={styles["nav-search-bar-result-img"]}
+                        src={
+                          new URL(deal.image, process.env.REACT_APP_BASE_URL)
+                            .href
+                        }
+                      />
+                      <p className={styles["nav-search-bar-result-title"]}>
+                        {deal.title}
+                      </p>
+                    </div>
+                  );
+                })}
+              {searchDealsIsPending && (
+                <div className={styles["nav-search-bar-result"]}>
+                  <p className={styles["nav-search-bar-result-title"]}>
+                    Searching...
+                  </p>
+                </div>
+              )}
+              {searchDealsResults?.length === 0 && !searchDealsIsPending && (
+                <div className={styles["nav-search-bar-result"]}>
+                  <p className={styles["nav-search-bar-result-title"]}>
+                    Sorry nothing found...
+                  </p>
+                </div>
+              )}
             </div>
           )}
         </div>

@@ -1,25 +1,26 @@
-.all-deals-main {
+.all-deals-loading {
+  min-height: 100vh;
+  text-align: center;
+  font-size: 3rem;
   grid-column: 3/11;
   grid-row: 3/12;
-  min-height: 85vh;
-}
-
-.all-deals-loading {
-  height: 85vh;
+  justify-self: center;
 }
 
 .all-deals-no-deals-found {
   font-size: 4rem;
-  grid-column: 1/13;
   text-align: center;
 }
 
 .all-deals-toolbar {
-  grid-column: 1/13;
+  grid-column: 3/11;
   grid-row: 2/3;
   text-align: right;
   background-color: white;
   position: relative;
+  margin: 0 1rem;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
 }
 
 .all-deals-toolbar-icon {
@@ -61,12 +62,6 @@
   animation: 1s ease-out 0s 1 growFromTop;
 }
 
-@media only screen and (max-width: 1150px) {
-  .all-deals-main {
-    grid-column: 1/13;
-  }
-}
-
 @keyframes slideInFromTop {
   0% {
     opacity: 0;
@@ -83,7 +78,7 @@
 
 @keyframes growFromTop {
   0% {
-    max-height: 0;
+    max-height: 5rem;
   }
   100% {
     max-height: 28rem;

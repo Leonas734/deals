@@ -21,11 +21,12 @@ html {
 }
 
 :root {
-  --colour-primary: #1255e7;
-  --colour-secondary: #74b9ff;
+  --colour-primary: #398ab9;
+  --colour-secondary: #1c658c;
+  --colour-tretiary: #d8d2cb;
   --colour-grey: #b8b8b8;
   --colour-grey-dark: #9b9b9b;
-  --colour-grey-light: #dddddd;
+  --colour-grey-light: #eeeeee;
 }
 
 @media only screen and (max-width: 675px) {

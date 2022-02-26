@@ -9,8 +9,20 @@
   background-color: var(--colour-grey-light);
 }
 
+.main {
+  min-height: 100vh;
+  grid-column: 3/11;
+  grid-row: 3/12;
+}
+
+@media only screen and (max-width: 1150px) {
+  .main {
+    grid-column: 1/13;
+  }
+}
+
 .footer {
-  background-color: blue;
+  background-color: var(--colour-secondary);
   grid-column: 1/13;
   grid-row: 12/13;
   font-size: 2rem;

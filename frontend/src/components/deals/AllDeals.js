@@ -51,54 +51,59 @@ function AllDeals() {
     setShowToolBarMenu(false);
   }
 
-  if (allDealsIsPending)
-    return <div className={styles["all-deals-loading"]}></div>;
   return (
     <>
-      <div
-        className={`${styles["all-deals-toolbar"]} ${
-          showToolBarMenu ? `${styles["all-deals-open-toolbar"]}` : null
-        }`}>
-        <img
-          data-cy="all-deals-toolbar-icon"
-          className={styles["all-deals-toolbar-icon"]}
-          src={filterIcon}
-          onClick={() => {
-            setShowToolBarMenu(!showToolBarMenu);
-          }}
-        />
-        {showToolBarMenu && (
-          <div className={styles["all-deals-toolbar-menu"]}>
-            <label>
-              <span>Category filter</span>
-              <select
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-                data-cy="all-deals-toolbar-categories">
-                {CATEGORIES.map((category) => {
-                  return <option key={category}>{category}</option>;
-                })}
-              </select>
-            </label>
-            <label>
-              <span>Sort</span>
-              <select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
-                data-cy="all-deals-toolbar-sort-by">
-                {SORT_BY.map((sortOption) => {
-                  return <option key={sortOption}>{sortOption}</option>;
-                })}
-              </select>
-            </label>
-            <ButtonPrimary
-              text="Save"
-              action={sortAndFilterDeals}
-              dataCy="all-deals-toolbar-save-btn"
-            />
-          </div>
-        )}
-      </div>
+      {allDealsIsPending && (
+        <div className={styles["all-deals-loading"]}>
+          <p>Loading...</p>
+        </div>
+      )}
+      {!allDealsIsPending && (
+        <div
+          className={`${styles["all-deals-toolbar"]} ${
+            showToolBarMenu ? `${styles["all-deals-open-toolbar"]}` : null
+          }`}>
+          <img
+            data-cy="all-deals-toolbar-icon"
+            className={styles["all-deals-toolbar-icon"]}
+            src={filterIcon}
+            onClick={() => {
+              setShowToolBarMenu(!showToolBarMenu);
+            }}
+          />
+          {showToolBarMenu && (
+            <div className={styles["all-deals-toolbar-menu"]}>
+              <label>
+                <span>Category filter</span>
+                <select
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
+                  data-cy="all-deals-toolbar-categories">
+                  {CATEGORIES.map((category) => {
+                    return <option key={category}>{category}</option>;
+                  })}
+                </select>
+              </label>
+              <label>
+                <span>Sort</span>
+                <select
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value)}
+                  data-cy="all-deals-toolbar-sort-by">
+                  {SORT_BY.map((sortOption) => {
+                    return <option key={sortOption}>{sortOption}</option>;
+                  })}
+                </select>
+              </label>
+              <ButtonPrimary
+                text="Save"
+                action={sortAndFilterDeals}
+                dataCy="all-deals-toolbar-save-btn"
+              />
+            </div>
+          )}
+        </div>
+      )}
       {allDeals?.length === 0 && (
         <div className={styles["all-deals-no-deals-found"]}>
           Sorry no deals found

@@ -16,28 +16,30 @@ function App() {
     <div className={styles["website"]}>
       <BrowserRouter>
         <Nav />
-        <Routes>
-          <Route path="/" element={<AllDeals />}></Route>
-          <Route path="deal/:dealId" element={<DealView />}></Route>
-          <Route
-            path="email_verification/:userId/:emailToken"
-            element={<EmailVerification />}></Route>
-          <Route
-            path="account_settings/"
-            element={
-              userAuthState ? <AccountSettings /> : <Navigate to="/" />
-            }></Route>
-          <Route path="user/:userName/" element={<UserView />}></Route>
-          <Route
-            path={"new_deal/"}
-            element={
-              userAuthState && userAuthState.emailVerified ? (
-                <NewDeal />
-              ) : (
-                <Navigate to="/" />
-              )
-            }></Route>
-        </Routes>
+        <div className={styles["main"]}>
+          <Routes>
+            <Route path="/" element={<AllDeals />}></Route>
+            <Route path="deal/:dealId" element={<DealView />}></Route>
+            <Route
+              path="email_verification/:userId/:emailToken"
+              element={<EmailVerification />}></Route>
+            <Route
+              path="account_settings/"
+              element={
+                userAuthState ? <AccountSettings /> : <Navigate to="/" />
+              }></Route>
+            <Route path="user/:userName/" element={<UserView />}></Route>
+            <Route
+              path={"new_deal/"}
+              element={
+                userAuthState && userAuthState.emailVerified ? (
+                  <NewDeal />
+                ) : (
+                  <Navigate to="/" />
+                )
+              }></Route>
+          </Routes>
+        </div>
       </BrowserRouter>
 
       <div className={styles["footer"]} id="footer">

@@ -127,7 +127,7 @@ function DealListView({ deal, setDeals }) {
           className={styles["deal-list-view-comments"]}
           onClick={() =>
             navigate(`/deal/${deal.id}`, {
-              state: { scrollToCommentsOnLoad: true },
+              state: { userRequestedDealCommentsOnLoad: true },
             })
           }>
           <img

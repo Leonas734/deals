@@ -7,8 +7,7 @@
   grid-template-columns:
     12rem 20rem 1fr 40% 1fr 20rem
     12rem;
-  background-color: white;
-  border-bottom: 2px solid var(--colour-grey);
+  background-color: #1c658c;
 }
 
 .nav-title {
@@ -16,11 +15,12 @@
   grid-column: 1/2;
   cursor: pointer;
   justify-self: left;
+  color: white;
 }
 
 .nav-search-bar {
   grid-column: 4/5;
-  outline: solid 0.2rem var(--colour-grey);
+  outline: none;
   border-radius: 5px;
   position: relative;
 }
@@ -30,7 +30,7 @@
 }
 
 .nav-search-bar:focus-within {
-  outline: 0.2rem solid var(--colour-primary);
+  outline: 0.2rem solid white;
   border-radius: 5px;
 }
 
@@ -58,9 +58,9 @@
 .nav-search-bar-results {
   transform: translateY(-2.5px);
   position: absolute;
-  width: 100.8%;
+  width: 100%;
   z-index: 999;
-  background-color: var(--colour-grey-light);
+  background-color: var(--colour-primary);
   min-height: min-content;
   max-height: 20rem;
   overflow: hidden;
@@ -76,7 +76,7 @@
   column-gap: 0.5rem;
   padding: 1rem;
   margin: 1rem;
-  background-color: var(--colour-grey);
+  background-color: var(--colour-grey-light);
 }
 
 .nav-search-bar-result-title {
